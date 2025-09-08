@@ -2,12 +2,14 @@ from pydantic_settings import BaseSettings
 from typing import List, Optional
 import os
 from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
 load_dotenv()
 
 class Settings(BaseSettings):
     # Database
     DATABASE_NAME: str = os.getenv("DATABASE_NAME", "hrm_system")
+    MONGODB_URL: str = os.getenv("MONGODB_URL", "mongodb://localhost:27017")
     
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
@@ -16,12 +18,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
     # CORS
-    ALLOWED_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3001"
-    ]
+    ALLOWED_ORIGINS: List[str] = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001").split(",")
     
     # Email (for notifications)
     SMTP_HOST: Optional[str] = os.getenv("SMTP_HOST")

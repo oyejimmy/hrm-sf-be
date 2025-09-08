@@ -145,10 +145,17 @@ async def login(user_credentials: UserLogin, db: AsyncSession = Depends(get_db))
     
     logger.info(f"User logged in: {user_credentials.email}")
     
+    redirect_url = "/dashboard"
+    if user.role == UserRole.ADMIN:
+        redirect_url = "/admin/dashboard"
+    elif user.role == UserRole.EMPLOYEE:
+        redirect_url = "/employee/dashboard"
+
     return Token(
         access_token=access_token,
         refresh_token=refresh_token,
-        token_type="bearer"
+        token_type="bearer",
+        redirect_url=redirect_url
     )
 
 @router.post("/refresh", response_model=Token)

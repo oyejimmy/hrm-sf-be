@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 
 from app.core.config import settings
 from app.core.logger import logger
-from app.db import init_db
-from app.database import create_tables
+from app.db.mongodb import connect_to_mongo, close_mongo_connection
 from app.routers import auth, employees, attendance, leave, reports, recruitment, performance, training, documents, notifications, announcements
 
 # Load environment variables
@@ -19,10 +18,11 @@ load_dotenv()
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting HRM API server...")
-    await create_tables()
-    logger.info("Database initialized successfully")
+    await connect_to_mongo()
+    logger.info("MongoDB initialized successfully")
     yield
     # Shutdown
+    await close_mongo_connection()
     logger.info("Shutting down HRM API server...")
 
 app = FastAPI(
@@ -70,7 +70,7 @@ async def health_check():
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        "app.main:app",
         host="0.0.0.0",
         port=8000,
         reload=True,

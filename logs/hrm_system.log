@@ -965,3 +965,228 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-09-08 19:40:53,204 - hrm_system - INFO - Connected to MongoDB successfully
 2025-09-08 19:41:23,316 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68beeaf588c2009a4c92523d, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
 2025-09-08 19:41:23,446 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68beeaf4eeab3a63fd3e4cbd, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:44:03,482 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:44:03,523 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:44:03,525 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:44:03,526 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,545 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:44:03,564 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,568 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:44:03,576 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,581 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:44:03,582 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,594 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:44:03,596 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,604 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:44:03,606 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,612 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:44:03,621 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,626 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:44:03,646 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,649 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:44:03,653 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,655 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:44:03,656 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,658 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:44:03,659 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,662 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:44:03,662 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,666 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:44:03,668 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:44:03,672 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:44:03,673 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:44:03,745 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:44:33,907 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68beebb3743537f1d325f912, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:44:43,198 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:44:43,290 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:44:43,293 - sqlalchemy.engine.Engine - INFO - [generated in 0.00428s] ('assa@dsd.vom',)
+2025-09-08 19:44:43,298 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\All Data\github\hrm-sf-be\.venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-08 19:44:43,724 - sqlalchemy.engine.Engine - INFO - INSERT INTO users (email, password_hash, first_name, last_name, role, status, team_id, phone, profile_picture, updated_at, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2025-09-08 19:44:43,725 - sqlalchemy.engine.Engine - INFO - [generated in 0.00139s] ('assa@dsd.vom', '$2b$12$5VDJQ6APkLDSg92kHiCuTO6WtpzDIGFyOJ7GRI1LCq5aKP/aPSbxK', 'as', 'asas', 'TEAM_LEAD', 'ACTIVE', None, None, None, None, None)
+2025-09-08 19:44:43,746 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:44:43,762 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:44:43,765 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:44:43,766 - sqlalchemy.engine.Engine - INFO - [generated in 0.00120s] (3,)
+2025-09-08 19:44:43,774 - hrm_system - INFO - New user registered: assa@dsd.vom
+2025-09-08 19:44:43,916 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:44:51,057 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:44:51,058 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:44:51,062 - sqlalchemy.engine.Engine - INFO - [cached since 7.771s ago] ('admin@hrm.com',)
+2025-09-08 19:44:51,935 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 19:44:51,936 - sqlalchemy.engine.Engine - INFO - [generated in 0.00101s] ('2025-09-08 14:44:51.933183', 1)
+2025-09-08 19:44:51,939 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:44:51,956 - hrm_system - INFO - User logged in: admin@hrm.com
+2025-09-08 19:45:05,530 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:45:05,531 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:45:05,540 - sqlalchemy.engine.Engine - INFO - [cached since 22.25s ago] ('admin@hrm.com',)
+2025-09-08 19:45:05,956 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 19:45:05,960 - sqlalchemy.engine.Engine - INFO - [cached since 14.03s ago] ('2025-09-08 14:45:05.955076', 1)
+2025-09-08 19:45:05,963 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:45:05,978 - hrm_system - INFO - User logged in: admin@hrm.com
+2025-09-08 19:47:54,085 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:47:54,590 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:47:54,611 - sqlalchemy.engine.Engine - INFO - [generated in 0.02787s] (1,)
+2025-09-08 19:47:55,497 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:48:36,200 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:48:36,403 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:48:36,438 - sqlalchemy.engine.Engine - INFO - [cached since 41.84s ago] (1,)
+2025-09-08 19:48:37,224 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:48:37,278 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:48:37,309 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:48:37,325 - sqlalchemy.engine.Engine - INFO - [cached since 42.74s ago] (1,)
+2025-09-08 19:48:37,503 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:49:49,251 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:49:49,260 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:49:49,281 - sqlalchemy.engine.Engine - INFO - [cached since 114.7s ago] (1,)
+2025-09-08 19:49:49,301 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:49:49,334 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:49:49,383 - sqlalchemy.engine.Engine - INFO - [cached since 114.8s ago] (1,)
+2025-09-08 19:49:49,486 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:49:49,586 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:50:20,989 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:50:21,009 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:50:21,028 - sqlalchemy.engine.Engine - INFO - [cached since 146.4s ago] (1,)
+2025-09-08 19:50:21,039 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:50:21,049 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:50:21,060 - sqlalchemy.engine.Engine - INFO - [cached since 146.5s ago] (1,)
+2025-09-08 19:50:21,068 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:50:21,074 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:50:43,703 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:50:43,706 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:50:43,707 - sqlalchemy.engine.Engine - INFO - [cached since 360.4s ago] ('test@test.com',)
+2025-09-08 19:50:44,158 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 19:50:44,159 - sqlalchemy.engine.Engine - INFO - [cached since 352.2s ago] ('2025-09-08 14:50:44.139934', 2)
+2025-09-08 19:50:44,172 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:50:44,190 - hrm_system - INFO - User logged in: test@test.com
+2025-09-08 19:50:44,306 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:50:44,309 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 19:50:44,322 - sqlalchemy.engine.Engine - INFO - [cached since 169.7s ago] (2,)
+2025-09-08 19:50:44,353 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 20:58:15,576 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 20:58:15,592 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 20:58:15,594 - sqlalchemy.engine.Engine - INFO - [cached since 4412s ago] ('admin@hrm.com',)
+2025-09-08 20:58:16,122 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 20:58:16,123 - sqlalchemy.engine.Engine - INFO - [cached since 4404s ago] ('2025-09-08 15:58:16.119011', 1)
+2025-09-08 20:58:16,191 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 20:58:16,209 - hrm_system - INFO - User logged in: admin@hrm.com
+2025-09-08 20:58:16,369 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 20:58:16,372 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 20:58:16,376 - sqlalchemy.engine.Engine - INFO - [cached since 4222s ago] (1,)
+2025-09-08 20:58:16,408 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 20:58:43,247 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 20:58:43,248 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 20:58:43,250 - sqlalchemy.engine.Engine - INFO - [cached since 4249s ago] (1,)
+2025-09-08 20:58:43,262 - hrm_system - INFO - User logged out: admin@hrm.com
+2025-09-08 20:58:43,294 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 20:58:55,769 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 20:58:55,772 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 20:58:55,775 - sqlalchemy.engine.Engine - INFO - [cached since 4452s ago] ('test@test.com',)
+2025-09-08 20:58:56,185 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 20:58:56,186 - sqlalchemy.engine.Engine - INFO - [cached since 4444s ago] ('2025-09-08 15:58:56.185676', 2)
+2025-09-08 20:58:56,227 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 20:58:56,243 - hrm_system - INFO - User logged in: test@test.com
+2025-09-08 20:58:56,310 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 20:58:56,312 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 20:58:56,321 - sqlalchemy.engine.Engine - INFO - [cached since 4262s ago] (2,)
+2025-09-08 20:58:56,325 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:00:23,128 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:00:23,128 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:00:23,153 - sqlalchemy.engine.Engine - INFO - [cached since 4349s ago] (2,)
+2025-09-08 21:00:23,156 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:00:23,158 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:00:23,169 - sqlalchemy.engine.Engine - INFO - [cached since 4349s ago] (2,)
+2025-09-08 21:00:23,173 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:00:23,204 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:06:48,655 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:06:48,668 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:06:48,675 - sqlalchemy.engine.Engine - INFO - [cached since 4734s ago] (2,)
+2025-09-08 21:06:48,696 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:06:48,712 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:06:48,777 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:06:48,802 - sqlalchemy.engine.Engine - INFO - [cached since 4734s ago] (2,)
+2025-09-08 21:06:48,887 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:07:20,374 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:07:20,385 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:07:20,387 - sqlalchemy.engine.Engine - INFO - [cached since 4766s ago] (2,)
+2025-09-08 21:07:20,392 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:07:20,398 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:07:20,401 - sqlalchemy.engine.Engine - INFO - [cached since 4766s ago] (2,)
+2025-09-08 21:07:20,405 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:07:20,418 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:07:26,840 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:07:26,845 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:07:26,849 - sqlalchemy.engine.Engine - INFO - [cached since 4772s ago] (2,)
+2025-09-08 21:07:26,855 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:07:26,865 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:07:26,881 - sqlalchemy.engine.Engine - INFO - [cached since 4772s ago] (2,)
+2025-09-08 21:07:26,914 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:07:26,933 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:08:17,431 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:08:17,437 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:08:17,439 - sqlalchemy.engine.Engine - INFO - [cached since 4823s ago] (2,)
+2025-09-08 21:08:17,455 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 21:08:17,459 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 21:08:17,469 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-08 21:08:17,473 - sqlalchemy.engine.Engine - INFO - [cached since 4823s ago] (2,)
+2025-09-08 21:08:17,478 - sqlalchemy.engine.Engine - INFO - ROLLBACK

@@ -2,49 +2,42 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime, date, time
 from enum import Enum
-from bson import ObjectId
 
 class AttendanceStatus(str, Enum):
     PRESENT = "present"
     ABSENT = "absent"
     LATE = "late"
     HALF_DAY = "half_day"
-    ON_LEAVE = "on_leave"
+    WORK_FROM_HOME = "work_from_home"
 
 class AttendanceBase(BaseModel):
     user_id: str
     date: date
-    check_in: Optional[time] = None
-    check_out: Optional[time] = None
-    status: AttendanceStatus = AttendanceStatus.ABSENT
-    work_hours: Optional[float] = None
-    overtime_hours: Optional[float] = None
-    notes: Optional[str] = None
+    check_in_time: Optional[time] = None
+    check_out_time: Optional[time] = None
+    status: AttendanceStatus
+    work_hours: Optional[float] = Field(None, ge=0, le=24)
+    overtime_hours: Optional[float] = Field(None, ge=0)
+    notes: Optional[str] = Field(None, max_length=500)
 
 class AttendanceCreate(AttendanceBase):
     pass
 
 class AttendanceUpdate(BaseModel):
-    check_in: Optional[time] = None
-    check_out: Optional[time] = None
+    check_in_time: Optional[time] = None
+    check_out_time: Optional[time] = None
     status: Optional[AttendanceStatus] = None
-    work_hours: Optional[float] = None
-    overtime_hours: Optional[float] = None
-    notes: Optional[str] = None
+    work_hours: Optional[float] = Field(None, ge=0, le=24)
+    overtime_hours: Optional[float] = Field(None, ge=0)
+    notes: Optional[str] = Field(None, max_length=500)
 
-class AttendanceInDB(AttendanceBase):
+class AttendanceResponse(AttendanceBase):
     id: str = Field(alias="_id")
     created_at: datetime
     updated_at: datetime
 
     class Config:
         populate_by_name = True
-        json_encoders = {ObjectId: str}
-
-class AttendanceResponse(AttendanceBase):
-    id: str
-    created_at: datetime
-    updated_at: datetime
 
 class AttendanceSummary(BaseModel):
     user_id: str

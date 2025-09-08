@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from app.core.config import settings
 from app.core.logger import logger
+from app.database import create_tables
 from app.db.mongodb import connect_to_mongo, close_mongo_connection
 from app.routers import auth, employees, attendance, leave, reports, recruitment, performance, training, documents, notifications, announcements
 
@@ -18,8 +19,9 @@ load_dotenv()
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting HRM API server...")
+    await create_tables()
+    logger.info("SQLite database initialized successfully")
     await connect_to_mongo()
-    logger.info("MongoDB initialized successfully")
     yield
     # Shutdown
     await close_mongo_connection()
@@ -41,7 +43,7 @@ app.add_middleware(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=["*"] if settings.ENVIRONMENT == "development" else settings.allowed_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

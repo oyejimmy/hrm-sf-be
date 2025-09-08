@@ -26,11 +26,12 @@ A full-stack Human Resource Management system built with FastAPI (backend) and R
 
 ### Backend
 - **FastAPI**: Modern Python web framework
-- **MongoDB**: NoSQL database with Motor async driver
+- **SQLite**: Lightweight SQL database with SQLAlchemy ORM
 - **JWT**: Secure authentication with refresh tokens
 - **Pydantic**: Data validation and serialization
 - **Python-Jose**: JWT token handling
 - **Passlib**: Password hashing with bcrypt
+- **SQLAlchemy**: Modern Python SQL toolkit and ORM
 
 ### Frontend
 - **React 19**: Latest React with TypeScript
@@ -95,7 +96,6 @@ HRM/
 4. **Set up environment variables**:
    Create a `.env` file in the `hrm-be` directory:
    ```env
-   MONGODB_URL=mongodb://localhost:27017
    DATABASE_NAME=hrm_system
    SECRET_KEY=your-super-secret-key-change-in-production
    ALGORITHM=HS256
@@ -106,8 +106,11 @@ HRM/
    DEBUG=True
    ```
 
-5. **Start MongoDB**:
-   Make sure MongoDB is running on your system.
+5. **Initialize the database**:
+   ```bash
+   python init_db.py
+   ```
+   This will create the SQLite database and optionally create an admin user.
 
 6. **Run the backend server**:
    ```bash

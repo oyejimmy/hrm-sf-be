@@ -1,20 +1,19 @@
 import logging
 import sys
-from datetime import datetime
-from app.core.config import settings
+from pathlib import Path
+
+# Create logs directory if it doesn't exist
+log_dir = Path("logs")
+log_dir.mkdir(exist_ok=True)
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO if not settings.DEBUG else logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler("logs/hrm.log", mode="a")
+        logging.FileHandler(log_dir / "hrm_system.log"),
+        logging.StreamHandler(sys.stdout)
     ]
 )
 
-logger = logging.getLogger("hrm")
-
-# Create logs directory if it doesn't exist
-import os
-os.makedirs("logs", exist_ok=True)
+logger = logging.getLogger("hrm_system")

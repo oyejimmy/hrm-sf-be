@@ -3,7 +3,7 @@ from typing import List, Optional
 from datetime import datetime
 from bson import ObjectId
 
-from app.models.user import UserRole
+from app.models.sql_models import UserRole
 from app.routers.auth import get_current_active_user, require_role
 from app.db import get_database
 from app.core.logger import logger

@@ -1,0 +1,967 @@
+2025-09-08 17:54:30,181 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 17:54:31,088 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 17:55:01,524 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bed206b454aa0fb3c86fde, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 17:55:01,525 - hrm_system - INFO - MongoDB initialized successfully
+2025-09-08 18:22:41,648 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 18:22:41,767 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 18:23:04,449 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 18:23:04,574 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 18:23:33,989 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 18:23:34,023 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 18:23:34,600 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bed8b83c81295cfed0e30a, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 18:23:34,600 - hrm_system - INFO - MongoDB initialized successfully
+2025-09-08 18:24:04,463 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bed8d556b6755b513ddbb2, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 18:24:04,467 - hrm_system - INFO - MongoDB initialized successfully
+2025-09-08 19:07:55,143 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:07:55,490 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:07:55,494 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:07:55,495 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,558 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:07:55,560 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,563 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:07:55,564 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,566 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:07:55,567 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,570 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:07:55,571 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,575 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:07:55,578 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,580 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:07:55,582 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,584 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:07:55,586 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,589 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:07:55,594 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,598 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:07:55,599 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,602 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:07:55,603 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,605 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:07:55,607 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,615 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:07:55,616 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:07:55,621 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:07:55,624 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:09:30,542 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:09:30,543 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:09:30,543 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,549 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:09:30,549 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,553 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:09:30,553 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,553 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:09:30,553 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,561 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:09:30,561 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,563 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:09:30,563 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,582 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:09:30,582 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,586 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:09:30,586 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,587 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:09:30,587 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,587 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:09:30,595 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:09:30,599 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:09:30,617 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:12:58,463 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:12:58,464 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:12:58,464 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,467 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:12:58,468 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,468 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:12:58,468 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,472 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:12:58,472 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,477 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:12:58,477 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,479 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:12:58,480 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,481 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:12:58,481 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:12:58,485 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,493 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:12:58,493 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,493 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:12:58,501 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,502 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:12:58,502 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:12:58,502 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:16,840 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:14:25,881 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:14:25,914 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:14:25,961 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:14:25,980 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:25,992 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:14:26,008 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,014 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:14:26,048 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,157 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:14:26,161 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,176 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:14:26,215 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,220 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:14:26,222 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,229 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:14:26,238 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,286 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:14:26,290 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,293 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:14:26,297 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,301 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:14:26,306 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,309 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:14:26,326 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,363 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:14:26,373 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,375 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:14:26,382 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:26,407 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:26,419 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:14:26,420 - hrm_system - ERROR - Failed to connect to MongoDB: 'Settings' object has no attribute 'MONGODB_URL'
+2025-09-08 19:14:38,910 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:14:38,914 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:14:38,915 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:14:38,916 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,919 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:14:38,921 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,924 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:14:38,925 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,927 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:14:38,928 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,931 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:14:38,931 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,933 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:14:38,934 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,937 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:14:38,937 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,939 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:14:38,942 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,959 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:14:38,961 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,963 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:14:38,964 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,967 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:14:38,967 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,975 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:14:38,977 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,979 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:14:38,980 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:38,984 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:38,992 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:14:38,992 - hrm_system - ERROR - Failed to connect to MongoDB: 'Settings' object has no attribute 'MONGODB_URL'
+2025-09-08 19:14:49,120 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:14:49,125 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:14:49,126 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:14:49,127 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,131 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:14:49,132 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,135 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:14:49,135 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,137 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:14:49,137 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,139 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:14:49,140 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,148 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:14:49,148 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,150 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:14:49,151 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,153 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:14:49,154 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,156 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:14:49,157 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,158 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:14:49,161 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,170 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:14:49,174 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,174 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:14:49,182 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,183 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:14:49,183 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,198 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:49,199 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:14:49,232 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:14:49,250 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:14:49,255 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:14:49,255 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:14:49,256 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,259 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:14:49,264 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,269 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:14:49,270 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,274 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:14:49,274 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,287 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:14:49,288 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,290 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:14:49,290 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,293 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:14:49,302 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,305 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:14:49,319 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,323 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:14:49,324 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,330 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:14:49,332 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,335 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:14:49,336 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,338 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:14:49,339 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,341 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:14:49,341 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:49,348 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:49,350 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:14:49,366 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:14:56,956 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:14:56,961 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:14:56,961 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:14:56,962 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,965 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:14:56,965 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,968 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:14:56,969 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,972 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:14:56,973 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,975 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:14:56,975 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,977 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:14:56,979 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,985 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:14:56,988 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,991 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:14:56,991 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,993 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:14:56,994 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:56,998 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:14:57,004 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:57,009 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:14:57,009 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:57,011 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:14:57,011 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:57,014 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:14:57,015 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:14:57,019 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:14:57,020 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:14:57,052 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:15:19,771 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee4d9be5267f88010feef, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:15:27,504 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee4e1bd25c8f09cbc9dcf, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:18:38,059 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:18:38,059 - hrm_system - INFO - MongoDB connection closed
+r...
+2025-09-08 19:18:38,062 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:18:43,216 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:18:43,220 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:18:43,222 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:18:43,222 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,226 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:18:43,227 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:18:43,228 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,228 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:18:43,232 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,232 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:18:43,235 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:18:43,236 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:18:43,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,237 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,238 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:18:43,243 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,243 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:18:43,245 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,245 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:18:43,246 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,246 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:18:43,246 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,246 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:18:43,249 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,250 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:18:43,251 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,251 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:18:43,252 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,252 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:18:43,256 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,258 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:18:43,259 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:18:43,259 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,259 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,259 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:18:43,265 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:18:43,266 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,266 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,269 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:18:43,269 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:18:43,270 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,270 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,274 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:18:43,275 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:18:43,276 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,276 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,278 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:18:43,278 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,278 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,282 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:18:43,282 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,283 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:18:43,284 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:18:43,284 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:18:43,286 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,288 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:18:43,290 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:18:43,294 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:18:43,295 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:18:43,314 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:18:43,314 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:19:13,823 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee5c361b05f35b04b253b, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:19:13,823 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee5c3fbc9bad43d9d8b7c, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:20:01,703 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:20:01,703 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:20:01,703 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:20:01,704 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:20:07,301 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:20:07,306 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:20:07,306 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:20:07,309 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,313 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:20:07,314 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,314 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:20:07,314 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,319 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:20:07,320 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,322 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:20:07,322 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,326 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:20:07,327 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,329 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:20:07,329 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,331 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:20:07,333 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,335 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:20:07,336 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,340 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:20:07,342 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,347 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:20:07,348 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,350 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:20:07,350 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,353 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:20:07,354 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,354 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:20:07,359 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:20:07,360 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:20:07,367 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:20:07,368 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:20:07,370 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,374 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:20:07,375 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,378 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:20:07,378 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,381 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:20:07,382 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,386 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:20:07,387 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,393 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:20:07,394 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,394 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:20:07,399 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:20:07,400 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,402 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:20:07,403 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,407 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:20:07,408 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,411 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:20:07,412 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,415 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:20:07,416 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,416 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:20:07,416 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,422 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:20:07,423 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:07,427 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:20:07,429 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:20:07,443 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:20:37,695 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee61727dee1b877344de5, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:20:37,758 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee617c8b172be34aaa7b9, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:20:43,100 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:20:43,105 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:20:43,105 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:20:43,106 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,112 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:20:43,113 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,118 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:20:43,118 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,120 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:20:43,121 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,123 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:20:43,125 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,125 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:20:43,132 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,178 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:20:43,173 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:20:43,183 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,183 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:20:43,188 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,190 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:20:43,190 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:20:43,207 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:20:43,209 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,209 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,214 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:20:43,217 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:20:43,220 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,223 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:20:43,224 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,224 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:20:43,228 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,228 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:20:43,228 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,228 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:20:43,236 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:20:43,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,242 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:20:43,242 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:20:43,246 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,246 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,251 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:20:43,252 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:20:43,251 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:20:43,261 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,267 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:20:43,275 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,282 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:20:43,280 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:20:43,293 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,297 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:20:43,301 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,303 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:20:43,305 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,307 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:20:43,311 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,317 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:20:43,319 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:20:43,323 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:20:43,325 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:20:43,340 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:21:13,718 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee63b3f2ba307c8fb2881, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:21:13,718 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee63b93821286d3551bc5, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:23:01,967 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:23:01,968 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:23:01,981 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:23:01,982 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:23:13,806 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:23:13,822 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:23:13,825 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:23:13,829 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,830 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:23:13,837 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,845 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:23:13,845 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,853 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:23:13,856 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,858 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:23:13,858 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,860 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:23:13,861 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,865 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:23:13,866 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,868 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:23:13,868 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,868 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:23:13,868 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,877 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:23:13,878 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,879 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:23:13,879 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,883 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:23:13,884 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,887 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:23:13,889 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:13,893 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:23:13,895 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:23:13,924 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:23:14,146 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:23:14,149 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:23:14,150 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:23:14,152 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,153 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:23:14,153 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,159 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:23:14,160 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,163 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:23:14,163 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,164 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:23:14,165 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,167 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:23:14,168 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,173 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:23:14,174 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,176 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:23:14,178 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,180 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:23:14,181 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,181 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:23:14,189 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,193 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:23:14,194 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,202 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:23:14,206 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,209 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:23:14,213 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:23:14,217 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:23:14,219 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:23:14,237 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:23:44,319 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee6d1da042a1481aa9453, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:23:44,610 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee6d2e8afd19412e8374a, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:27:48,483 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:27:48,484 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:27:48,535 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:27:48,536 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:27:53,290 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:27:53,295 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:27:53,298 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:27:53,299 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,299 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:27:53,302 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:27:53,305 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,306 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:27:53,307 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:27:53,307 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:27:53,307 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,308 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,309 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:27:53,310 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,310 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:27:53,313 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:27:53,313 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,315 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,317 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:27:53,318 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:27:53,319 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,319 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,321 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:27:53,321 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:27:53,322 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,323 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,324 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:27:53,325 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,325 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:27:53,326 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,327 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:27:53,327 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,328 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:27:53,331 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:27:53,332 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,332 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,334 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:27:53,334 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:27:53,335 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,337 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:27:53,338 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,338 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,340 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:27:53,340 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,341 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:27:53,342 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,344 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:27:53,346 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:27:53,345 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:27:53,351 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,354 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:27:53,355 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,357 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:27:53,358 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,360 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:27:53,360 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,364 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:27:53,365 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:27:53,370 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:27:53,372 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:27:53,381 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:27:53,387 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:28:23,543 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee7e91aacd69f82520239, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:28:23,546 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee7e926f4caad7a3bfc7e, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:28:28,184 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:28:28,265 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:28:28,265 - sqlalchemy.engine.Engine - INFO - [generated in 0.00048s] ('admin@hrm.com',)
+2025-09-08 19:28:28,275 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\J R\AppData\Local\Programs\Python\Python311\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-08 19:28:28,874 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:28:29,357 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:28:29,389 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:28:29,397 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:28:29,398 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,426 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:28:29,431 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,439 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:28:29,454 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,468 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:28:29,478 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,483 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:28:29,487 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,499 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:28:29,516 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,519 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:28:29,525 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,527 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:28:29,531 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,576 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:28:29,590 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,598 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:28:29,605 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,624 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:28:29,629 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,630 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:28:29,636 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,638 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:28:29,645 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,649 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:28:29,654 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:28:29,669 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:28:29,829 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:28:29,834 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:28:29,835 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:28:29,837 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,840 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:28:29,840 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,843 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:28:29,844 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,845 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:28:29,847 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,848 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:28:29,850 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,853 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:28:29,856 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,857 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:28:29,859 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,860 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:28:29,861 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,863 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:28:29,864 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,867 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:28:29,868 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,869 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:28:29,870 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,872 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:28:29,872 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,874 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:28:29,874 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:28:29,877 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:28:29,879 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:28:29,892 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:28:59,727 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee80d5c066912815dd075, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:29:00,245 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee80dcd076de09f6ca688, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:30:17,849 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:30:17,912 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:30:17,912 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] ('admin@hrm.com',)
+2025-09-08 19:30:17,949 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\J R\AppData\Local\Programs\Python\Python311\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-08 19:30:18,415 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-08 19:30:29,257 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:30:29,264 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:30:29,271 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:30:29,272 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:30:53,640 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:30:53,643 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:30:53,679 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:30:53,679 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:30:53,681 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:30:53,681 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:30:53,682 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,682 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,695 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:30:53,695 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:30:53,696 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,696 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,698 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:30:53,699 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:30:53,699 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,699 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,704 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:30:53,703 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:30:53,705 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,705 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,707 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:30:53,707 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:30:53,710 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,710 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,712 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:30:53,713 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:30:53,713 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,714 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,716 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:30:53,717 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:30:53,718 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,720 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,722 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:30:53,721 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:30:53,723 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,723 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,726 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:30:53,726 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:30:53,727 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,727 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,729 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:30:53,729 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:30:53,730 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,732 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:30:53,733 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,735 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:30:53,737 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,738 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:30:53,739 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,739 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:30:53,740 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,741 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:30:53,743 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:30:53,743 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,744 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:30:53,748 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:30:53,754 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:30:53,750 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:30:53,762 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:30:53,789 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:31:23,869 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee89d3878946bd044de5c, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:31:24,278 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee89d6db53a16e31cdd56, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:31:29,451 - httpx - INFO - HTTP Request: POST http://testserver/auth/login "HTTP/1.1 400 Bad Request"
+2025-09-08 19:31:35,975 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:31:35,997 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:31:36,029 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:31:36,029 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:31:46,304 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:31:46,367 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:31:46,368 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:31:46,369 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:31:46,369 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,374 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:31:46,375 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:31:46,376 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,386 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:31:46,386 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:31:46,387 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,388 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,389 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:31:46,389 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:31:46,391 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,391 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,395 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:31:46,395 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,396 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:31:46,396 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,397 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:31:46,398 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,399 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:31:46,400 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:31:46,400 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,400 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,402 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:31:46,402 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:31:46,402 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,403 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,405 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:31:46,406 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,409 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:31:46,410 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:31:46,415 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,421 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:31:46,422 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,433 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:31:46,439 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,444 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:31:46,448 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,448 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:31:46,450 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,451 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:31:46,452 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,453 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:31:46,454 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,455 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:31:46,457 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:31:46,460 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,456 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,465 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:31:46,465 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:31:46,467 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,466 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:31:46,471 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:31:46,476 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:31:46,475 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:31:46,480 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:31:46,528 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:31:46,528 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:32:16,704 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee8d2a9b93dcd0cda4d6d, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:32:16,705 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee8d264e0c65f539a9fc4, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:32:18,787 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:32:18,866 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-08 19:32:18,867 - sqlalchemy.engine.Engine - INFO - [generated in 0.00048s] ('admin@hrm.com',)
+2025-09-08 19:32:18,874 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\J R\AppData\Local\Programs\Python\Python311\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-08 19:32:19,231 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-08 19:32:19,231 - sqlalchemy.engine.Engine - INFO - [generated in 0.00104s] ('2025-09-08 14:32:19.228212', 1)
+2025-09-08 19:32:19,294 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:32:19,313 - hrm_system - INFO - User logged in: admin@hrm.com
+2025-09-08 19:32:19,318 - httpx - INFO - HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+2025-09-08 19:32:56,157 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:32:56,159 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:32:56,293 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:32:56,294 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:33:24,149 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:33:24,157 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:33:24,345 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:33:24,345 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:33:24,355 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:33:24,355 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:33:24,355 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,357 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,428 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:33:24,428 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:33:24,438 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,442 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:33:24,446 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,440 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,449 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:33:24,451 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,451 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:33:24,453 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:33:24,453 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,453 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,455 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:33:24,457 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,457 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:33:24,458 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,459 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:33:24,460 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:33:24,461 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,466 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:33:24,466 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,469 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,469 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:33:24,469 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:33:24,469 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,469 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,482 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:33:24,488 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:33:24,489 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,489 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,492 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:33:24,492 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:33:24,493 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,493 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,495 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:33:24,497 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,496 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:33:24,501 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,501 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:33:24,502 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,504 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:33:24,506 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,506 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:33:24,508 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,508 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:33:24,509 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,511 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:33:24,511 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:33:24,511 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:33:24,513 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:33:24,515 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:33:24,517 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:33:24,727 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:33:54,848 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee9346ccd23bf1ff51946, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:33:54,848 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68bee934831ed13e4a213f14, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:35:10,610 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:35:10,618 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:37:17,345 - hrm_system - INFO - MongoDB connection closed
+2025-09-08 19:37:17,351 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-08 19:40:47,467 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:40:47,861 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:40:52,899 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:40:52,909 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:40:52,910 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:40:52,911 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,923 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:40:52,924 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,927 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:40:52,927 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,929 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:40:52,929 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,931 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:40:52,933 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,935 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:40:52,935 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,939 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:40:52,940 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,941 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:40:52,942 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,944 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:40:52,944 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,946 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:40:52,947 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,948 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:40:52,949 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,951 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:40:52,952 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,955 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:40:52,957 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:52,960 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:40:52,966 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:40:52,990 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:40:53,090 - hrm_system - INFO - Starting HRM API server...
+2025-09-08 19:40:53,095 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-08 19:40:53,096 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-08 19:40:53,098 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,106 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-08 19:40:53,109 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,112 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-08 19:40:53,113 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,115 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-08 19:40:53,118 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,126 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-08 19:40:53,130 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,133 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-08 19:40:53,135 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,143 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-08 19:40:53,144 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,146 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-08 19:40:53,147 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,150 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-08 19:40:53,151 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,158 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-08 19:40:53,160 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,162 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-08 19:40:53,163 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,167 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-08 19:40:53,174 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,176 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-08 19:40:53,177 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-08 19:40:53,182 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-08 19:40:53,187 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-08 19:40:53,204 - hrm_system - INFO - Connected to MongoDB successfully
+2025-09-08 19:41:23,316 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68beeaf588c2009a4c92523d, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-09-08 19:41:23,446 - hrm_system - ERROR - Failed to create indexes: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 68beeaf4eeab3a63fd3e4cbd, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>

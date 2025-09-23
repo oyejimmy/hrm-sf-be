@@ -44,6 +44,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
-        extra = "ignore"  # Ignore extra fields like MONGODB_URL
+        extra = "allow"  # Allow extra fields like MONGODB_URL
 
 settings = Settings()

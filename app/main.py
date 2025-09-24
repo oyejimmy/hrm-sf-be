@@ -8,6 +8,7 @@ try:
     from .routers import employees, leaves, attendance, performance
     from .routers import payroll, requests, complaints, training
     from .routers import assets, health_insurance, documents, notifications
+    from .routers import announcements, holidays
 except ImportError as e:
     print(f"Router import error: {e}")
 
@@ -42,6 +43,8 @@ try:
     app.include_router(health_insurance.router)
     app.include_router(documents.router)
     app.include_router(notifications.router)
+    app.include_router(announcements.router)
+    app.include_router(holidays.router)
 except Exception as e:
     print(f"Router inclusion error: {e}")
 

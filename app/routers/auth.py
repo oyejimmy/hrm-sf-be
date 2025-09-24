@@ -190,6 +190,11 @@ class ProfileUpdateRequest(BaseModel):
     team_size: Optional[int] = None
     avatar_url: Optional[str] = None
     cover_image_url: Optional[str] = None
+    employment_status: Optional[str] = None
+    employment_type: Optional[str] = None
+    hire_date: Optional[str] = None
+    employee_id: Optional[str] = None
+    manager: Optional[str] = None
     
     # Emergency contact
     emergency_contact_name: Optional[str] = None
@@ -225,54 +230,80 @@ def update_profile(
     db: Session = Depends(get_db)
 ):
     """Update user and employee profile data"""
+    try:
+        # Update user fields
+        user_fields = ['first_name', 'last_name', 'phone', 'email']
+        for field in user_fields:
+            value = getattr(profile_data, field, None)
+            if value is not None:
+                setattr(current_user, field, value)
+        
+        # Get or create employee record
+        employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
+        if not employee:
+            employee_count = db.query(Employee).count()
+            employee_id = f"EMP{str(employee_count + 1).zfill(4)}"
+            employee = Employee(
+                user_id=current_user.id,
+                employee_id=employee_id,
+                hire_date=datetime.utcnow().date()
+            )
+            db.add(employee)
+            db.flush()
+        
+        # Handle date fields specially
+        if profile_data.date_of_birth:
+            try:
+                from datetime import datetime as dt
+                if isinstance(profile_data.date_of_birth, str):
+                    employee.date_of_birth = dt.strptime(profile_data.date_of_birth, '%Y-%m-%d').date()
+                else:
+                    employee.date_of_birth = profile_data.date_of_birth
+            except ValueError:
+                pass  # Skip invalid date
+        
+        if profile_data.hire_date:
+            try:
+                from datetime import datetime as dt
+                if isinstance(profile_data.hire_date, str):
+                    employee.hire_date = dt.strptime(profile_data.hire_date, '%Y-%m-%d').date()
+                else:
+                    employee.hire_date = profile_data.hire_date
+            except ValueError:
+                pass  # Skip invalid date
+        
+        # Update other employee fields
+        employee_fields = [
+            'position', 'work_location', 'gender', 'marital_status', 'employment_status',
+            'address', 'blood_group', 'qualification', 'work_schedule', 'team_size',
+            'avatar_url', 'cover_image_url', 'emergency_contact_name', 'emergency_contact_phone',
+            'emergency_contact_relationship', 'emergency_contact_work_phone', 'emergency_contact_home_phone',
+            'emergency_contact_address', 'salary', 'bonus_target', 'stock_options',
+            'last_salary_increase', 'next_review_date', 'personal_email', 'nationality',
+            'religion', 'languages_known', 'hobbies', 'skills_summary', 'certifications',
+            'education_level', 'university', 'graduation_year'
+        ]
+        
+        for field in employee_fields:
+            value = getattr(profile_data, field, None)
+            if value is not None:
+                setattr(employee, field, value)
+        
+        # Force update timestamp
+        from datetime import datetime
+        employee.updated_at = datetime.utcnow()
+        current_user.updated_at = datetime.utcnow()
+        
+        db.commit()
+        db.refresh(employee)
+        db.refresh(current_user)
+        
+        return {"message": "Profile updated successfully", "updated_at": employee.updated_at}
     
-    # Update user fields
-    user_fields = ['first_name', 'last_name', 'phone', 'email']
-    for field in user_fields:
-        value = getattr(profile_data, field, None)
-        if value is not None:
-            setattr(current_user, field, value)
-    
-    # Get or create employee record
-    employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
-    if not employee:
-        employee_count = db.query(Employee).count()
-        employee_id = f"EMP{str(employee_count + 1).zfill(4)}"
-        employee = Employee(
-            user_id=current_user.id,
-            employee_id=employee_id,
-            hire_date=datetime.utcnow().date()
-        )
-        db.add(employee)
-        db.flush()
-    
-    # Update employee fields
-    employee_fields = [
-        'position', 'work_location', 'gender', 'date_of_birth', 'marital_status',
-        'address', 'blood_group', 'qualification', 'work_schedule', 'team_size',
-        'avatar_url', 'cover_image_url', 'emergency_contact_name', 'emergency_contact_phone',
-        'emergency_contact_relationship', 'emergency_contact_work_phone', 'emergency_contact_home_phone',
-        'emergency_contact_address', 'salary', 'bonus_target', 'stock_options',
-        'last_salary_increase', 'next_review_date', 'personal_email', 'nationality',
-        'religion', 'languages_known', 'hobbies', 'skills_summary', 'certifications',
-        'education_level', 'university', 'graduation_year'
-    ]
-    
-    for field in employee_fields:
-        value = getattr(profile_data, field, None)
-        if value is not None:
-            setattr(employee, field, value)
-    
-    # Force update timestamp
-    from datetime import datetime
-    employee.updated_at = datetime.utcnow()
-    current_user.updated_at = datetime.utcnow()
-    
-    db.commit()
-    db.refresh(employee)
-    db.refresh(current_user)
-    
-    return {"message": "Profile updated successfully", "updated_at": employee.updated_at}
+    except Exception as e:
+        db.rollback()
+        print(f"Profile update error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Profile update failed: {str(e)}")
 
 class SkillUpdateRequest(BaseModel):
     skills: list[dict]  # [{"name": "Python", "level": 85}]

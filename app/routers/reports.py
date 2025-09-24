@@ -1,158 +1,438 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from sqlalchemy import func, extract, text
 from typing import List, Optional, Dict, Any
-from datetime import datetime, date
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_
+from datetime import datetime, timedelta
+from ..database import get_db
+from ..models import (
+    User, Employee, Attendance, Leave, Performance, Payslip, 
+    EmployeeRequest, Complaint, TrainingEnrollment, Asset, InsuranceClaim
+)
+from ..auth import get_current_user
 
-from app.models.sql_models import UserRole, AttendanceStatus, LeaveStatus
-from app.routers.auth import get_current_active_user, require_role
-from app.database import get_db
-from app.db.sqlite import SQLiteService
-from app.models.sql_models import User, Employee, Attendance, LeaveRequest
-from app.core.logger import logger
+router = APIRouter(prefix="/api/reports", tags=["reports"])
 
-router = APIRouter()
-
-@router.get("/dashboard-stats")
-async def get_dashboard_stats(
-    current_user = Depends(get_current_active_user),
-    db: AsyncSession = Depends(get_db)
+@router.get("/dashboard/admin")
+def get_admin_dashboard_stats(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
-    """Get dashboard statistics."""
-    today = date.today()
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
     
-    # Get total employees
-    total_employees_result = await db.execute(select(func.count(Employee.id)))
-    total_employees = total_employees_result.scalar()
+    # Employee Statistics
+    total_employees = db.query(Employee).count()
+    active_employees = db.query(Employee).filter(Employee.status == "active").count()
+    on_leave_today = db.query(Leave).filter(
+        Leave.status == "approved",
+        Leave.start_date <= datetime.now().date(),
+        Leave.end_date >= datetime.now().date()
+    ).count()
     
-    # Get active employees today
-    active_today_result = await db.execute(
-        select(func.count(Attendance.id))
-        .where(and_(Attendance.date == today, Attendance.status == AttendanceStatus.PRESENT))
-    )
-    active_today = active_today_result.scalar()
+    # Attendance Statistics (Today)
+    today = datetime.now().date()
+    present_today = db.query(Attendance).filter(
+        Attendance.date == today,
+        Attendance.status == "present"
+    ).count()
     
-    # Get employees on leave today
-    on_leave_result = await db.execute(
-        select(func.count(LeaveRequest.id))
-        .where(and_(
-            LeaveRequest.start_date <= today,
-            LeaveRequest.end_date >= today,
-            LeaveRequest.status == LeaveStatus.APPROVED
-        ))
-    )
-    on_leave = on_leave_result.scalar()
+    # Leave Statistics
+    pending_leaves = db.query(Leave).filter(Leave.status == "pending").count()
+    approved_leaves_this_month = db.query(Leave).filter(
+        Leave.status == "approved",
+        extract('month', Leave.created_at) == datetime.now().month,
+        extract('year', Leave.created_at) == datetime.now().year
+    ).count()
     
-    # Get pending approvals
-    pending_result = await db.execute(
-        select(func.count(LeaveRequest.id))
-        .where(LeaveRequest.status == LeaveStatus.PENDING)
-    )
-    pending_leave_requests = pending_result.scalar()
+    # Request Statistics
+    pending_requests = db.query(EmployeeRequest).filter(EmployeeRequest.status == "pending").count()
+    
+    # Complaint Statistics
+    pending_complaints = db.query(Complaint).filter(Complaint.status == "pending").count()
     
     return {
-        "total_employees": total_employees or 0,
-        "active_today": active_today or 0,
-        "on_leave": on_leave or 0,
-        "pending_approvals": pending_leave_requests or 0,
-        "recent_activities": []  # Simplified for now
-    }
-
-@router.get("/attendance-report")
-async def get_attendance_report(
-    start_date: date = Query(...),
-    end_date: date = Query(...),
-    department: Optional[str] = None,
-    current_user = Depends(require_role(UserRole.HR)),
-    db: AsyncSession = Depends(get_db)
-):
-    """Generate attendance report for a date range."""
-    # Simplified implementation - return basic structure
-    return {
-        "report_period": {
-            "start_date": start_date,
-            "end_date": end_date
+        "employees": {
+            "total": total_employees,
+            "active": active_employees,
+            "on_leave_today": on_leave_today
         },
-        "department": department,
-        "total_records": 0,
-        "data": [],
-        "message": "Attendance report functionality available - implementation simplified for migration"
-    }
-
-@router.get("/leave-report")
-async def get_leave_report(
-    start_date: date = Query(...),
-    end_date: date = Query(...),
-    department: Optional[str] = None,
-    current_user = Depends(require_role(UserRole.HR)),
-    db: AsyncSession = Depends(get_db)
-):
-    """Generate leave report for a date range."""
-    return {
-        "report_period": {
-            "start_date": start_date,
-            "end_date": end_date
+        "attendance": {
+            "present_today": present_today,
+            "attendance_rate": round((present_today / active_employees * 100) if active_employees > 0 else 0, 2)
         },
-        "department": department,
-        "leave_statistics": {},
-        "total_requests": 0,
-        "data": [],
-        "message": "Leave report functionality available - implementation simplified for migration"
+        "leaves": {
+            "pending": pending_leaves,
+            "approved_this_month": approved_leaves_this_month
+        },
+        "requests": {
+            "pending": pending_requests
+        },
+        "complaints": {
+            "pending": pending_complaints
+        }
     }
 
-@router.get("/employee-summary/{user_id}")
-async def get_employee_summary(
-    user_id: str,
-    year: int = Query(..., ge=2020),
-    current_user = Depends(get_current_active_user),
-    db: AsyncSession = Depends(get_db)
+@router.get("/dashboard/employee")
+def get_employee_dashboard_stats(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
-    """Get comprehensive employee summary."""
-    # Check permissions
-    if (current_user.role == UserRole.EMPLOYEE and 
-        int(user_id) != current_user.id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not enough permissions"
+    try:
+        now = datetime.now()
+        current_year = now.year
+        current_month = now.month
+        
+        # My Leave Balance using raw SQL to avoid ORM issues
+        leave_result = db.execute(
+            text("SELECT COALESCE(SUM(days_requested), 0) FROM leaves WHERE employee_id = :emp_id AND status = 'approved' AND strftime('%Y', start_date) = :year"),
+            {"emp_id": current_user.id, "year": str(current_year)}
+        ).fetchone()
+        total_leave_days = float(leave_result[0]) if leave_result[0] else 0.0
+        
+        # My Attendance This Month using raw SQL
+        attendance_result = db.execute(
+            text("SELECT COUNT(*) as total, SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) as present FROM attendance WHERE employee_id = :emp_id AND strftime('%m', date) = :month AND strftime('%Y', date) = :year"),
+            {"emp_id": current_user.id, "month": f"{current_month:02d}", "year": str(current_year)}
+        ).fetchone()
+        
+        total_working_days = int(attendance_result[0]) if attendance_result[0] else 0
+        present_days = int(attendance_result[1]) if attendance_result[1] else 0
+        
+        # My Requests using raw SQL
+        requests_result = db.execute(
+            text("SELECT COUNT(*) FROM employee_requests WHERE employee_id = :emp_id AND status = 'pending'"),
+            {"emp_id": current_user.id}
+        ).fetchone()
+        my_pending_requests = int(requests_result[0]) if requests_result[0] else 0
+        
+        # My Training Progress using raw SQL
+        training_result = db.execute(
+            text("SELECT COUNT(*) as total, SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed FROM training_enrollments WHERE employee_id = :emp_id"),
+            {"emp_id": current_user.id}
+        ).fetchone()
+        
+        total_trainings = int(training_result[0]) if training_result[0] else 0
+        completed_trainings = int(training_result[1]) if training_result[1] else 0
+        
+        return {
+            "leave_balance": {
+                "used_days": total_leave_days,
+                "remaining_days": max(0, 25 - total_leave_days)
+            },
+            "attendance": {
+                "present_days": present_days,
+                "total_working_days": total_working_days,
+                "attendance_rate": round((present_days / total_working_days * 100) if total_working_days > 0 else 0, 2)
+            },
+            "requests": {
+                "pending": my_pending_requests
+            },
+            "training": {
+                "completed": completed_trainings,
+                "total": total_trainings,
+                "completion_rate": round((completed_trainings / total_trainings * 100) if total_trainings > 0 else 0, 2)
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Dashboard data error: {str(e)}")
+
+@router.get("/attendance/monthly")
+def get_monthly_attendance_report(
+    year: int,
+    month: int,
+    department: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr", "team_lead"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(Attendance).filter(
+        extract('year', Attendance.date) == year,
+        extract('month', Attendance.date) == month
+    )
+    
+    if department:
+        # Join with Employee to filter by department
+        query = query.join(Employee, Attendance.employee_id == Employee.user_id).filter(
+            Employee.department == department
         )
     
-    # Get user and employee info
-    user = await SQLiteService.get_user_by_id(db, int(user_id))
-    employee = await SQLiteService.get_employee_by_user_id(db, int(user_id))
+    attendance_records = query.all()
     
-    if not user or not employee:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User or employee not found"
+    # Group by employee
+    employee_attendance = {}
+    for record in attendance_records:
+        emp_id = record.employee_id
+        if emp_id not in employee_attendance:
+            employee_attendance[emp_id] = {
+                "employee_id": emp_id,
+                "present_days": 0,
+                "absent_days": 0,
+                "late_days": 0,
+                "total_hours": 0
+            }
+        
+        if record.status == "present":
+            employee_attendance[emp_id]["present_days"] += 1
+        elif record.status == "absent":
+            employee_attendance[emp_id]["absent_days"] += 1
+        elif record.status == "late":
+            employee_attendance[emp_id]["late_days"] += 1
+        
+        employee_attendance[emp_id]["total_hours"] += float(record.hours_worked) if record.hours_worked else 0
+    
+    return list(employee_attendance.values())
+
+@router.get("/leave/summary")
+def get_leave_summary_report(
+    year: int,
+    department: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr", "team_lead"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(Leave).filter(
+        extract('year', Leave.start_date) == year,
+        Leave.status == "approved"
+    )
+    
+    if department:
+        query = query.join(Employee, Leave.employee_id == Employee.user_id).filter(
+            Employee.department == department
         )
     
+    leaves = query.all()
+    
+    # Group by leave type
+    leave_summary = {}
+    for leave in leaves:
+        leave_type = leave.leave_type
+        if leave_type not in leave_summary:
+            leave_summary[leave_type] = {
+                "leave_type": leave_type,
+                "total_requests": 0,
+                "total_days": 0
+            }
+        
+        leave_summary[leave_type]["total_requests"] += 1
+        leave_summary[leave_type]["total_days"] += leave.days_requested
+    
+    return list(leave_summary.values())
+
+@router.get("/payroll/summary")
+def get_payroll_summary_report(
+    year: int,
+    month: Optional[int] = None,
+    department: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(Payslip).filter(
+        Payslip.pay_period.like(f"{year}%")
+    )
+    
+    if month:
+        query = query.filter(Payslip.pay_period.like(f"{year}-{month:02d}%"))
+    
+    if department:
+        query = query.join(Employee, Payslip.employee_id == Employee.user_id).filter(
+            Employee.department == department
+        )
+    
+    payslips = query.all()
+    
+    total_gross_pay = sum([p.gross_pay for p in payslips])
+    total_net_pay = sum([p.net_pay for p in payslips])
+    total_deductions = sum([p.total_deductions for p in payslips])
+    
     return {
-        "employee_info": {
-            "user_id": user_id,
-            "employee_id": employee.employee_id,
-            "name": f"{user.first_name} {user.last_name}",
-            "email": user.email,
-            "department": employee.department.value if employee.department else None,
-            "position": employee.position,
-            "hire_date": employee.hire_date
-        },
-        "year": year,
-        "attendance_summary": {
-            "total_days": 0,
-            "present_days": 0,
-            "absent_days": 0,
-            "late_days": 0,
-            "half_days": 0,
-            "total_work_hours": 0,
-            "total_overtime_hours": 0,
-            "attendance_percentage": 0
-        },
-        "leave_summary": {
-            "total_requests": 0,
-            "approved_leaves": 0,
-            "pending_leaves": 0,
-            "rejected_leaves": 0,
-            "total_leave_days": 0
-        },
-        "message": "Employee summary functionality available - detailed calculations simplified for migration"
+        "total_payslips": len(payslips),
+        "total_gross_pay": total_gross_pay,
+        "total_net_pay": total_net_pay,
+        "total_deductions": total_deductions,
+        "average_gross_pay": round(total_gross_pay / len(payslips), 2) if payslips else 0,
+        "average_net_pay": round(total_net_pay / len(payslips), 2) if payslips else 0
+    }
+
+@router.get("/performance/summary")
+def get_performance_summary_report(
+    year: int,
+    department: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(Performance).filter(
+        extract('year', Performance.created_at) == year,
+        Performance.status == "completed"
+    )
+    
+    if department:
+        query = query.join(Employee, Performance.employee_id == Employee.user_id).filter(
+            Employee.department == department
+        )
+    
+    reviews = query.all()
+    
+    if not reviews:
+        return {
+            "total_reviews": 0,
+            "average_rating": 0,
+            "rating_distribution": {}
+        }
+    
+    total_reviews = len(reviews)
+    average_rating = sum([r.overall_rating for r in reviews if r.overall_rating]) / total_reviews
+    
+    # Rating distribution
+    rating_distribution = {}
+    for review in reviews:
+        if review.overall_rating:
+            rating = int(review.overall_rating)
+            rating_distribution[rating] = rating_distribution.get(rating, 0) + 1
+    
+    return {
+        "total_reviews": total_reviews,
+        "average_rating": round(average_rating, 2),
+        "rating_distribution": rating_distribution
+    }
+
+@router.get("/training/progress")
+def get_training_progress_report(
+    department: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(TrainingEnrollment)
+    
+    if department:
+        query = query.join(Employee, TrainingEnrollment.employee_id == Employee.user_id).filter(
+            Employee.department == department
+        )
+    
+    enrollments = query.all()
+    
+    total_enrollments = len(enrollments)
+    completed_trainings = len([e for e in enrollments if e.status == "completed"])
+    in_progress_trainings = len([e for e in enrollments if e.status == "in_progress"])
+    not_started_trainings = len([e for e in enrollments if e.status == "enrolled"])
+    
+    return {
+        "total_enrollments": total_enrollments,
+        "completed_trainings": completed_trainings,
+        "in_progress_trainings": in_progress_trainings,
+        "not_started_trainings": not_started_trainings,
+        "completion_rate": round((completed_trainings / total_enrollments * 100) if total_enrollments > 0 else 0, 2)
+    }
+
+@router.get("/assets/utilization")
+def get_asset_utilization_report(
+    asset_type: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    query = db.query(Asset)
+    if asset_type:
+        query = query.filter(Asset.asset_type == asset_type)
+    
+    assets = query.all()
+    
+    total_assets = len(assets)
+    assigned_assets = len([a for a in assets if a.status == "assigned"])
+    available_assets = len([a for a in assets if a.status == "available"])
+    maintenance_assets = len([a for a in assets if a.status == "maintenance"])
+    
+    return {
+        "total_assets": total_assets,
+        "assigned_assets": assigned_assets,
+        "available_assets": available_assets,
+        "maintenance_assets": maintenance_assets,
+        "utilization_rate": round((assigned_assets / total_assets * 100) if total_assets > 0 else 0, 2)
+    }
+
+@router.get("/complaints/analysis")
+def get_complaints_analysis_report(
+    year: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    complaints = db.query(Complaint).filter(
+        extract('year', Complaint.created_at) == year
+    ).all()
+    
+    total_complaints = len(complaints)
+    resolved_complaints = len([c for c in complaints if c.status == "resolved"])
+    pending_complaints = len([c for c in complaints if c.status == "pending"])
+    in_progress_complaints = len([c for c in complaints if c.status == "in_progress"])
+    
+    # Category breakdown
+    category_breakdown = {}
+    for complaint in complaints:
+        category = complaint.category
+        category_breakdown[category] = category_breakdown.get(category, 0) + 1
+    
+    # Priority breakdown
+    priority_breakdown = {}
+    for complaint in complaints:
+        priority = complaint.priority
+        priority_breakdown[priority] = priority_breakdown.get(priority, 0) + 1
+    
+    return {
+        "total_complaints": total_complaints,
+        "resolved_complaints": resolved_complaints,
+        "pending_complaints": pending_complaints,
+        "in_progress_complaints": in_progress_complaints,
+        "resolution_rate": round((resolved_complaints / total_complaints * 100) if total_complaints > 0 else 0, 2),
+        "category_breakdown": category_breakdown,
+        "priority_breakdown": priority_breakdown
+    }
+
+@router.get("/export/attendance")
+def export_attendance_data(
+    year: int,
+    month: int,
+    format: str = "json",  # json, csv
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    attendance_data = db.query(Attendance).filter(
+        extract('year', Attendance.date) == year,
+        extract('month', Attendance.date) == month
+    ).all()
+    
+    # For now, return JSON format
+    # In a real implementation, you would generate CSV files
+    return {
+        "data": [
+            {
+                "employee_id": att.employee_id,
+                "date": att.date.isoformat(),
+                "status": att.status,
+                "check_in": str(att.check_in) if att.check_in else None,
+                "check_out": str(att.check_out) if att.check_out else None,
+                "hours_worked": att.hours_worked
+            }
+            for att in attendance_data
+        ],
+        "total_records": len(attendance_data)
     }

@@ -1,52 +1,63 @@
-from pydantic import BaseModel, Field
-from typing import Optional
-from datetime import datetime, date
-from enum import Enum
+from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Text, Float, JSON, Boolean
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from ..database import Base
 
-class LeaveType(str, Enum):
-    ANNUAL = "annual"
-    SICK = "sick"
-    MATERNITY = "maternity"
-    PATERNITY = "paternity"
-    EMERGENCY = "emergency"
-    UNPAID = "unpaid"
+class Leave(Base):
+    __tablename__ = "leaves"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    employee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    leave_type = Column(String, nullable=False)  # annual, sick, casual, maternity, paternity, unpaid
+    duration_type = Column(String, default="full_day")  # full_day, half_day_morning, half_day_afternoon
+    start_date = Column(Date, nullable=False)
+    end_date = Column(Date, nullable=False)
+    days_requested = Column(Float, nullable=False)
+    reason = Column(Text, nullable=True)
+    status = Column(String, default="pending")  # pending, approved, rejected, on_hold, cancelled
+    approved_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    approved_at = Column(DateTime(timezone=True), nullable=True)
+    rejection_reason = Column(Text, nullable=True)
+    admin_comments = Column(Text, nullable=True)
+    attachment_url = Column(String, nullable=True)
+    recipient_details = Column(JSON, nullable=True)  # Array of recipients
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relationships
+    employee = relationship("User", foreign_keys=[employee_id], back_populates="leave_requests")
+    approver = relationship("User", foreign_keys=[approved_by])
 
-class LeaveStatus(str, Enum):
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
-    CANCELLED = "cancelled"
+class LeaveBalance(Base):
+    __tablename__ = "leave_balances"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    employee_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    leave_type = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    total_allocated = Column(Float, nullable=False)
+    taken = Column(Float, default=0.0)
+    remaining = Column(Float, nullable=False)
+    carried_forward = Column(Float, default=0.0)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relationships
+    employee = relationship("User")
 
-class LeaveBase(BaseModel):
-    user_id: str
-    leave_type: LeaveType
-    start_date: date
-    end_date: date
-    reason: str = Field(..., min_length=1, max_length=500)
-    status: LeaveStatus = LeaveStatus.PENDING
-
-class LeaveCreate(LeaveBase):
-    pass
-
-class LeaveUpdate(BaseModel):
-    status: Optional[LeaveStatus] = None
-    admin_notes: Optional[str] = Field(None, max_length=500)
-
-class LeaveResponse(LeaveBase):
-    id: str = Field(alias="_id")
-    days_requested: int
-    admin_notes: Optional[str] = None
-    approved_by: Optional[str] = None
-    approved_at: Optional[datetime] = None
-    created_at: datetime
-    updated_at: datetime
-
-    class Config:
-        populate_by_name = True
-
-class LeaveBalance(BaseModel):
-    user_id: str
-    annual_leave_balance: float
-    sick_leave_balance: float
-    total_leave_taken: float
-    year: int
+class LeavePolicy(Base):
+    __tablename__ = "leave_policies"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    leave_type = Column(String, nullable=False)
+    annual_allocation = Column(Float, nullable=False)
+    max_consecutive_days = Column(Integer, nullable=True)
+    min_notice_days = Column(Integer, nullable=True)
+    carry_forward_allowed = Column(Boolean, default=False)
+    max_carry_forward = Column(Float, nullable=True)
+    eligibility_criteria = Column(Text, nullable=True)
+    approval_workflow = Column(JSON, nullable=True)  # Array of approval steps
+    documentation_required = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())

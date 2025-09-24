@@ -1,298 +1,225 @@
-# HRM System - Comprehensive Human Resource Management Platform
+# HRM System Backend
 
-A full-stack Human Resource Management system built with FastAPI (backend) and React with TypeScript (frontend).
+A comprehensive Human Resource Management System backend built with FastAPI, SQLAlchemy, and SQLite.
 
-## 🚀 Features
+## Features
 
-### User Roles & Permissions
-- **Admin**: Full system access and management
-- **HR**: Employee management, attendance, leave, training, performance
-- **Team Lead**: Team management and approvals
-- **Employee**: Personal dashboard, leave requests, attendance, payslips
-
-### Core Modules
-- **Authentication & Authorization**: JWT-based with role-based access control
+- **Authentication & Authorization**: JWT-based authentication with role-based access control
+- **User Management**: User registration, login, profile management
 - **Employee Management**: Complete employee lifecycle management
-- **Attendance Tracking**: Real-time attendance logging and monitoring
-- **Leave Management**: Leave requests, approvals, and balance tracking
-- **Performance Management**: Reviews, scoring, and analytics
-- **Training Management**: Training programs and enrollment tracking
-- **Document Management**: Secure document storage and sharing
-- **Reports & Analytics**: Comprehensive reporting and dashboard analytics
-- **Recruitment**: Job postings and application management
-- **Communication**: Notifications and announcements
+- **Leave Management**: Leave request, approval, and tracking system
+- **Attendance Management**: Check-in/check-out functionality with tracking
+- **Performance Management**: Performance review system
+- **Role-Based Access**: Admin, HR, Team Lead, and Employee roles
 
-## 🛠 Tech Stack
+## Database Schema
 
-### Backend
-- **FastAPI**: Modern Python web framework
-- **SQLite**: Lightweight SQL database with SQLAlchemy ORM
-- **JWT**: Secure authentication with refresh tokens
-- **Pydantic**: Data validation and serialization
-- **Python-Jose**: JWT token handling
-- **Passlib**: Password hashing with bcrypt
-- **SQLAlchemy**: Modern Python SQL toolkit and ORM
+### Tables
+- **users**: User authentication and basic profile
+- **employees**: Detailed employee information
+- **departments**: Department management
+- **leaves**: Leave request management
+- **attendance**: Daily attendance tracking
+- **performance_reviews**: Performance evaluation records
 
-### Frontend
-- **React 19**: Latest React with TypeScript
-- **Ant Design**: Comprehensive UI component library
-- **Redux Toolkit**: State management
-- **React Router**: Client-side routing
-- **Styled Components**: CSS-in-JS styling
-- **Axios**: HTTP client with interceptors
-- **React Query**: Server state management
+### Relationships
+- User (1:1) Employee
+- Department (1:N) Employee
+- Employee (1:N) Employee (Manager-Subordinate)
+- User (1:N) Leave (Employee-Leaves)
+- User (1:N) Attendance (Employee-Attendance)
+- User (1:N) Performance (Employee-Reviews)
 
-## 📁 Project Structure
+## API Endpoints
 
-```
-HRM/
-├── hrm-be/                 # Backend (FastAPI)
-│   ├── app/
-│   │   ├── core/          # Core configuration and utilities
-│   │   ├── db/            # Database connection and setup
-│   │   ├── models/        # Pydantic models
-│   │   ├── routers/       # API route handlers
-│   │   ├── services/      # Business logic services
-│   │   └── main.py        # FastAPI application entry point
-│   └── requirements.txt   # Python dependencies
-├── hrm-fe/                # Frontend (React + TypeScript)
-│   ├── app/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── features/      # Feature-based modules
-│   │   ├── store/         # Redux store and slices
-│   │   ├── services/      # API services
-│   │   ├── styles/        # Global styles and theme
-│   │   └── App.tsx        # Main application component
-│   └── package.json       # Node.js dependencies
-└── README.md              # This file
-```
+### Authentication
+- `POST /auth/signup` - User registration
+- `POST /auth/login` - User login
+- `GET /auth/me` - Get current user info
+- `POST /auth/refresh` - Refresh access token
+- `POST /auth/logout` - User logout
+- `PUT /auth/profile/me` - Complete user profile
 
-## 🚀 Getting Started
+### Employees
+- `GET /api/employees/` - List employees (Admin/HR)
+- `GET /api/employees/me` - Get my profile
+- `GET /api/employees/{id}` - Get employee by ID
+- `POST /api/employees/` - Create employee (Admin/HR)
+- `PUT /api/employees/{id}` - Update employee (Admin/HR)
+- `DELETE /api/employees/{id}` - Delete employee (Admin)
+
+### Leave Management
+- `GET /api/leaves/` - List leave requests
+- `GET /api/leaves/my-leaves` - Get my leave requests
+- `POST /api/leaves/` - Create leave request
+- `PUT /api/leaves/{id}/approve` - Approve leave
+- `PUT /api/leaves/{id}/reject` - Reject leave
+- `DELETE /api/leaves/{id}` - Cancel leave request
+
+### Attendance
+- `GET /api/attendance/` - List attendance records
+- `GET /api/attendance/my-attendance` - Get my attendance
+- `GET /api/attendance/today` - Get today's attendance
+- `POST /api/attendance/check-in` - Check in
+- `POST /api/attendance/check-out` - Check out
+- `POST /api/attendance/` - Create attendance record (Admin/HR)
+
+## Setup Instructions
 
 ### Prerequisites
 - Python 3.8+
-- Node.js 16+
-- MongoDB 4.4+
-- npm or yarn
+- pip
 
-### Backend Setup
+### Installation
 
-1. **Navigate to backend directory**:
+1. **Clone the repository**
    ```bash
    cd hrm-be
    ```
 
-2. **Create virtual environment**:
+2. **Create virtual environment**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   venv\Scripts\activate  # Windows
+   # source venv/bin/activate  # Linux/Mac
    ```
 
-3. **Install dependencies**:
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set up environment variables**:
-   Create a `.env` file in the `hrm-be` directory:
-   ```env
-   DATABASE_NAME=hrm_system
-   SECRET_KEY=your-super-secret-key-change-in-production
+4. **Set up environment variables**
+   ```bash
+   copy .env.example .env  # Windows
+   # cp .env.example .env  # Linux/Mac
+   ```
+   
+   Edit `.env` file with your configuration:
+   ```
+   DATABASE_URL=sqlite:///./hrm.db
+   SECRET_KEY=your-secret-key-here-change-in-production
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=30
    REFRESH_TOKEN_EXPIRE_DAYS=7
-   ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-   ENVIRONMENT=development
-   DEBUG=True
    ```
 
-5. **Initialize the database**:
+5. **Initialize database**
    ```bash
    python init_db.py
    ```
-   This will create the SQLite database and optionally create an admin user.
 
-6. **Run the backend server**:
+6. **Run the application**
    ```bash
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   python run.py
    ```
 
-   The API will be available at `http://localhost:8000`
-   API documentation: `http://localhost:8000/docs`
+The API will be available at `http://localhost:8000`
 
-### Frontend Setup
+### Default Users
 
-1. **Navigate to frontend directory**:
-   ```bash
-   cd hrm-fe
-   ```
+After running `init_db.py`, the following users will be created:
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+- **Admin**: admin@hrm.com / admin123
+- **HR Manager**: hr@hrm.com / hr123  
+- **Employee**: employee@hrm.com / emp123
 
-3. **Set up environment variables**:
-   Create a `.env` file in the `hrm-fe` directory:
-   ```env
-   REACT_APP_API_URL=http://localhost:8000
-   ```
+## API Documentation
 
-4. **Start the development server**:
-   ```bash
-   npm start
-   ```
+Once the server is running, visit:
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
 
-   The application will be available at `http://localhost:3000`
+## Role-Based Access Control
 
-## 🔐 Authentication
+### Admin
+- Full system access
+- Manage all users and employees
+- View all data and reports
+- System configuration
 
-The system uses JWT-based authentication with the following endpoints:
+### HR
+- Employee management access
+- Leave approval and management
+- Attendance management
+- Performance review access
 
-- `POST /auth/signup` - User registration
-- `POST /auth/login` - User login
-- `POST /auth/refresh` - Token refresh
-- `GET /auth/me` - Get current user info
-- `POST /auth/logout` - User logout
+### Team Lead
+- Team-specific access
+- Approve team member leaves
+- View team attendance and performance
+- Limited employee management for team
 
-## 📊 API Endpoints
+### Employee
+- Personal data access only
+- Submit leave requests
+- View own attendance and performance
+- Update personal profile
 
-### Authentication
-- `/auth/*` - Authentication and user management
+## Security Features
 
-### Employee Management
-- `/employees/*` - Employee CRUD operations
-- `/employees/profile/{user_id}` - Employee profile management
+- JWT token authentication
+- Password hashing with bcrypt
+- Role-based authorization
+- Token refresh mechanism
+- Input validation and sanitization
+- SQL injection protection via SQLAlchemy ORM
 
-### Attendance
-- `/attendance/log` - Log attendance
-- `/attendance/today` - Get today's attendance
-- `/attendance/user/{user_id}` - Get user attendance history
-- `/attendance/summary/{user_id}` - Get attendance summary
+## Development
 
-### Leave Management
-- `/leave/request` - Create leave request
-- `/leave/my-requests` - Get user's leave requests
-- `/leave/pending` - Get pending leave requests (HR)
-- `/leave/approve/{request_id}` - Approve/reject leave request
-- `/leave/balance/{user_id}` - Get leave balance
-
-### Reports & Analytics
-- `/reports/dashboard-stats` - Dashboard statistics
-- `/reports/attendance-report` - Attendance reports
-- `/reports/leave-report` - Leave reports
-- `/reports/employee-summary/{user_id}` - Employee summary
-
-### Additional Modules
-- `/recruitment/*` - Recruitment management
-- `/performance/*` - Performance management
-- `/training/*` - Training management
-- `/documents/*` - Document management
-- `/notifications/*` - Notification system
-- `/announcements/*` - Announcement management
-
-## 🎨 UI/UX Features
-
-- **Responsive Design**: Mobile-first approach with Ant Design
-- **Dark/Light Theme**: Theme provider with styled-components
-- **Role-based Navigation**: Dynamic sidebar based on user role
-- **Real-time Updates**: Live data updates and notifications
-- **Accessibility**: WCAG compliant components
-- **Print Support**: Optimized for printing reports
-
-## 🔒 Security Features
-
-- **JWT Authentication**: Secure token-based authentication
-- **Role-based Access Control**: Granular permissions system
-- **Password Hashing**: Bcrypt password hashing
-- **CORS Protection**: Configurable cross-origin resource sharing
-- **Input Validation**: Pydantic model validation
-- **SQL Injection Protection**: MongoDB with parameterized queries
-
-## 📈 Performance & Scalability
-
-- **Async/Await**: Non-blocking I/O operations
-- **Database Indexing**: Optimized MongoDB indexes
-- **Caching**: Redis integration ready
-- **Pagination**: Efficient data loading
-- **Lazy Loading**: Component-based code splitting
-- **API Rate Limiting**: Built-in rate limiting support
-
-## 🧪 Testing
-
-### Backend Testing
-```bash
-cd hrm-be
-pytest tests/ -v
+### Project Structure
+```
+hrm-be/
+├── app/
+│   ├── models/          # Database models
+│   ├── schemas/         # Pydantic schemas
+│   ├── routers/         # API route handlers
+│   ├── auth.py          # Authentication utilities
+│   ├── config.py        # Configuration settings
+│   ├── database.py      # Database connection
+│   └── main.py          # FastAPI application
+├── requirements.txt     # Python dependencies
+├── init_db.py          # Database initialization
+├── run.py              # Application runner
+└── README.md           # This file
 ```
 
-### Frontend Testing
-```bash
-cd hrm-fe
-npm test
-```
+### Adding New Features
 
-## 🚀 Deployment
+1. Create database model in `app/models/`
+2. Create Pydantic schemas in `app/schemas/`
+3. Create API routes in `app/routers/`
+4. Update `app/main.py` to include new router
+5. Run database migrations if needed
 
-### Docker Deployment
-```bash
-# Build and run with Docker Compose
-docker-compose up -d
-```
+## Production Deployment
 
-### Production Environment
-1. Set `ENVIRONMENT=production` in backend `.env`
-2. Update `SECRET_KEY` with a secure random key
-3. Configure production MongoDB connection
-4. Set up reverse proxy (nginx)
-5. Enable HTTPS/SSL certificates
+1. **Environment Setup**
+   - Use PostgreSQL instead of SQLite for production
+   - Set strong SECRET_KEY
+   - Configure proper CORS origins
+   - Set up SSL/HTTPS
 
-## 📝 Development Guidelines
+2. **Security Considerations**
+   - Use environment variables for sensitive data
+   - Implement rate limiting
+   - Add request logging
+   - Set up monitoring and alerting
 
-### Backend Development
-- Follow PEP 8 Python style guide
-- Use type hints for all functions
-- Write comprehensive docstrings
-- Implement proper error handling
-- Use async/await for I/O operations
+3. **Performance Optimization**
+   - Add database indexes
+   - Implement caching
+   - Use connection pooling
+   - Add pagination for large datasets
 
-### Frontend Development
-- Use TypeScript for type safety
-- Follow React best practices
-- Implement proper error boundaries
-- Use Redux Toolkit for state management
-- Write unit tests for components
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the API documentation at `/docs` endpoint
-- Review the code comments and docstrings
-
-## 🔮 Future Enhancements
-
-- **Payroll Automation**: Automated salary calculations
-- **AI Analytics**: Machine learning for performance insights
-- **Mobile App**: React Native mobile application
-- **Chatbot Integration**: AI-powered HR assistant
-- **Multi-language Support**: Internationalization
-- **Advanced Reporting**: Custom report builder
-- **Integration APIs**: Third-party service integrations
-- **Workflow Automation**: Business process automation
-
----
-
-**Built with ❤️ for modern HR management**
+This project is licensed under the MIT License.

@@ -1,70 +1,27 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional, List
-from datetime import datetime
-from enum import Enum
-from bson import ObjectId
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from ..database import Base
 
-class UserRole(str, Enum):
-    ADMIN = "admin"
-    HR = "hr"
-    TEAM_LEAD = "team_lead"
-    EMPLOYEE = "employee"
-
-class UserStatus(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    SUSPENDED = "suspended"
-
-class UserBase(BaseModel):
-    email: EmailStr
-    first_name: str = Field(..., min_length=1, max_length=50)
-    last_name: str = Field(..., min_length=1, max_length=50)
-    role: UserRole
-    status: UserStatus = UserStatus.ACTIVE
-    team_id: Optional[str] = None
-    phone: Optional[str] = None
-    profile_picture: Optional[str] = None
-
-class UserCreate(UserBase):
-    password: str = Field(..., min_length=8)
-
-class UserUpdate(BaseModel):
-    first_name: Optional[str] = Field(None, min_length=1, max_length=50)
-    last_name: Optional[str] = Field(None, min_length=1, max_length=50)
-    role: Optional[UserRole] = None
-    status: Optional[UserStatus] = None
-    team_id: Optional[str] = None
-    phone: Optional[str] = None
-    profile_picture: Optional[str] = None
-
-class UserInDB(UserBase):
-    id: str = Field(alias="_id")
-    password_hash: str
-    created_at: datetime
-    updated_at: datetime
-    last_login: Optional[datetime] = None
-
-    class Config:
-        populate_by_name = True
-        json_encoders = {ObjectId: str}
-
-class UserResponse(UserBase):
-    id: str
-    created_at: datetime
-    updated_at: datetime
-    last_login: Optional[datetime] = None
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    refresh_token: str
-    token_type: str = "bearer"
-    redirect_url: Optional[str] = None
-
-class TokenData(BaseModel):
-    user_id: Optional[str] = None
-    email: Optional[str] = None
-    role: Optional[str] = None
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    role = Column(String, default="employee")  # admin, hr, team_lead, employee
+    status = Column(String, default="active")  # active, inactive, suspended
+    is_profile_complete = Column(Boolean, default=False)
+    profile_picture = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    last_login = Column(DateTime(timezone=True), nullable=True)
+    
+    # Relationships
+    employee = relationship("Employee", back_populates="user", uselist=False)
+    leave_requests = relationship("Leave", foreign_keys="Leave.employee_id", back_populates="employee")
+    attendance_records = relationship("Attendance", foreign_keys="Attendance.employee_id", back_populates="employee")
+    performance_reviews = relationship("Performance", foreign_keys="Performance.employee_id", back_populates="employee")

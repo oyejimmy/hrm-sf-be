@@ -24316,3 +24316,681 @@ FROM users
 WHERE users.id = ?
 2025-09-24 00:02:59,010 - sqlalchemy.engine.Engine - INFO - [cached since 101.6s ago] (2,)
 2025-09-24 00:02:59,027 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:23:10,515 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:23:18,770 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:23:18,792 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:23:18,792 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:23:18,793 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,816 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:23:18,819 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,821 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:23:18,821 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,823 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:23:18,824 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,826 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:23:18,826 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,828 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:23:18,847 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,972 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:23:18,977 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:18,982 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:23:19,011 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,051 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:23:19,118 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,135 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:23:19,146 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,159 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:23:19,163 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,190 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:23:19,223 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,231 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:23:19,240 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,285 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:23:19,312 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,379 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:23:19,391 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,395 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:23:19,417 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,429 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:23:19,463 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,467 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:23:19,468 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,479 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:23:19,480 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,493 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:23:19,494 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:23:19,501 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:23:19,505 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:24:09,134 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:24:15,742 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:24:15,827 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:24:15,933 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:24:16,034 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,082 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:24:16,098 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,101 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:24:16,116 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,134 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:24:16,199 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,277 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:24:16,344 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,368 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:24:16,394 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,401 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:24:16,431 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,477 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:24:16,498 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,511 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:24:16,560 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,567 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:24:16,606 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,623 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:24:16,624 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,630 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:24:16,632 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,636 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:24:16,643 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,653 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:24:16,654 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,656 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:24:16,657 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,660 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:24:16,662 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,681 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:24:16,682 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,690 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:24:16,694 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,697 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:24:16,698 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,701 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:24:16,705 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:24:16,713 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:24:16,716 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:25:13,985 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:25:19,294 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:25:19,299 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:25:19,301 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:25:19,303 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,314 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:25:19,324 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,331 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:25:19,366 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,398 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:25:19,416 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,429 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:25:19,430 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,432 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:25:19,433 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,446 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:25:19,469 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,478 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:25:19,481 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,484 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:25:19,506 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,517 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:25:19,547 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,550 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:25:19,566 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,578 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:25:19,583 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,585 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:25:19,587 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,617 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:25:19,630 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,637 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:25:19,652 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,661 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:25:19,668 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,671 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:25:19,682 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,686 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:25:19,693 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,699 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:25:19,707 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,715 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:25:19,728 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:25:19,748 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:25:19,787 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:30:48,867 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:30:55,059 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:30:55,064 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:30:55,067 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:30:55,067 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,071 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:30:55,071 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,076 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:30:55,086 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,091 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:30:55,092 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,094 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:30:55,095 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,097 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:30:55,102 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,111 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:30:55,155 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,160 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:30:55,176 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,193 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:30:55,203 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,220 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:30:55,224 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,226 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:30:55,227 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,228 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:30:55,229 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,233 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:30:55,242 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,244 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:30:55,245 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,247 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:30:55,256 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,259 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:30:55,260 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,262 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:30:55,263 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,279 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:30:55,280 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,296 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:30:55,313 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,322 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:30:55,329 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:30:55,350 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:30:55,367 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:31:50,283 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:31:55,858 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:31:55,862 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:31:55,863 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:31:55,866 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,872 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:31:55,886 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,892 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:31:55,896 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,907 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:31:55,943 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,958 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:31:55,960 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,984 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:31:55,986 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:55,994 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:31:55,996 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,003 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:31:56,005 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,010 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:31:56,013 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,021 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:31:56,026 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,029 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:31:56,030 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,038 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:31:56,039 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,045 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:31:56,047 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,062 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:31:56,065 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,073 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:31:56,074 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,090 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:31:56,093 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,095 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:31:56,099 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,112 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:31:56,114 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,120 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:31:56,122 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,128 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:31:56,131 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:31:56,160 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:31:56,162 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:36:07,272 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:36:14,968 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:36:14,975 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:36:14,976 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:36:14,977 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:14,981 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:36:14,982 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:14,989 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:36:14,990 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:14,998 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:36:14,999 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,002 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:36:15,003 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,005 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:36:15,005 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,008 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:36:15,008 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,010 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:36:15,012 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,015 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:36:15,046 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,094 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:36:15,099 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,106 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:36:15,107 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,115 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:36:15,118 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,124 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:36:15,126 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,129 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:36:15,132 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,134 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:36:15,135 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,140 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:36:15,142 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,150 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:36:15,151 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,153 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:36:15,154 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,156 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:36:15,157 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,171 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:36:15,181 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:36:15,188 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:36:15,192 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:37:25,826 - hrm_system - ERROR - Authentication error: 
+2025-09-24 00:37:25,955 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:37:25,960 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:37:25,961 - sqlalchemy.engine.Engine - INFO - [cached since 2169s ago] (2,)
+2025-09-24 00:37:25,996 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:37:26,060 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:37:44,249 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:38:37,769 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:38:37,852 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:38:37,853 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:38:37,853 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,859 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:38:37,860 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,868 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:38:37,868 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,873 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:38:37,873 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,879 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:38:37,879 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,884 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:38:37,885 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,888 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:38:37,888 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,891 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:38:37,891 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,894 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:38:37,897 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,901 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:38:37,902 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,903 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:38:37,904 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,905 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:38:37,906 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,908 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:38:37,908 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,910 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:38:37,910 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,912 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:38:37,912 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,916 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:38:37,917 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,918 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:38:37,918 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,920 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:38:37,920 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,922 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:38:37,922 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,925 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:38:37,925 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:38:37,925 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:38:37,932 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:38:38,049 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:38:38,537 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:38:38,539 - sqlalchemy.engine.Engine - INFO - [generated in 0.00071s] (2,)
+2025-09-24 00:38:38,601 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:39:30,044 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:39:30,045 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:39:30,046 - sqlalchemy.engine.Engine - INFO - [cached since 51.51s ago] (2,)
+2025-09-24 00:39:30,054 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:41:17,636 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:41:23,989 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:41:23,999 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:41:24,002 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:41:24,036 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,043 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:41:24,043 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,045 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:41:24,047 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,049 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:41:24,049 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,051 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:41:24,053 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,056 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:41:24,115 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,162 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:41:24,168 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,185 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:41:24,195 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,211 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:41:24,216 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,220 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:41:24,222 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,233 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:41:24,234 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,236 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:41:24,239 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,247 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:41:24,248 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,255 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:41:24,256 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,266 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:41:24,269 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,280 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:41:24,281 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,285 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:41:24,287 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,307 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:41:24,309 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,320 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:41:24,322 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,331 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:41:24,334 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:24,339 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:41:24,345 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:41:27,902 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:41:27,908 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:41:27,908 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:41:27,910 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:27,914 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:41:27,918 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:27,952 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:41:27,966 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,068 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:41:28,069 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,083 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:41:28,084 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,087 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:41:28,090 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,095 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:41:28,096 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,111 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:41:28,118 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,179 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:41:28,188 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,199 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:41:28,199 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,202 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:41:28,203 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,208 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:41:28,215 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,217 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:41:28,219 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,225 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:41:28,231 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,235 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:41:28,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,246 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:41:28,267 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,272 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:41:28,284 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,287 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:41:28,293 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,299 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:41:28,313 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,320 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:41:28,322 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:28,331 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:41:28,348 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:41:35,210 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:41:38,439 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:41:38,444 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:41:38,448 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:41:38,450 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,459 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:41:38,471 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,475 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:41:38,476 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,486 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:41:38,489 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,496 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:41:38,500 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,508 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:41:38,509 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,511 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:41:38,512 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,523 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:41:38,526 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,533 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:41:38,535 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,542 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:41:38,545 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,555 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:41:38,556 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,561 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:41:38,565 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,570 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:41:38,574 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,578 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:41:38,587 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,592 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:41:38,593 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,595 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:41:38,596 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,605 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:41:38,606 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,610 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:41:38,618 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,625 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:41:38,627 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,643 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:41:38,644 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:41:38,657 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:41:38,660 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:41:43,373 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:42:49,220 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:53:18,360 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:53:20,297 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:53:29,598 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:53:30,534 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:53:31,344 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:53:31,910 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,065 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:53:32,078 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,085 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:53:32,129 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,137 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:53:32,163 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,176 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:53:32,177 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,183 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:53:32,196 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,214 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:53:32,220 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,230 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:53:32,245 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,261 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:53:32,310 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,325 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:53:32,368 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,406 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:53:32,498 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,563 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:53:32,564 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,566 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:53:32,577 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,583 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:53:32,615 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,646 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:53:32,667 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,678 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:53:32,778 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,864 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:53:32,923 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:32,988 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:53:33,021 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:33,118 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:53:33,263 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:33,386 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:53:33,487 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:33,600 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:53:33,697 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:53:34,164 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 00:53:34,201 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:53:34,201 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2025-09-24 00:53:34,201 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,209 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("teams")
+2025-09-24 00:53:34,209 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,212 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("employees")
+2025-09-24 00:53:34,212 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,225 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("attendance")
+2025-09-24 00:53:34,226 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,229 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("leave_requests")
+2025-09-24 00:53:34,230 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,233 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2025-09-24 00:53:34,233 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,238 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("notifications")
+2025-09-24 00:53:34,238 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,241 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("announcements")
+2025-09-24 00:53:34,241 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,243 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("performance_reviews")
+2025-09-24 00:53:34,244 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,249 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_programs")
+2025-09-24 00:53:34,249 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,259 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("training_enrollments")
+2025-09-24 00:53:34,260 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,266 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("assets")
+2025-09-24 00:53:34,267 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,270 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("payslips")
+2025-09-24 00:53:34,270 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,272 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("health_insurance_policies")
+2025-09-24 00:53:34,272 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,274 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_dependents")
+2025-09-24 00:53:34,274 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,277 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("panel_hospitals")
+2025-09-24 00:53:34,278 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,280 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_claims")
+2025-09-24 00:53:34,281 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,283 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_cards")
+2025-09-24 00:53:34,284 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,293 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("insurance_providers")
+2025-09-24 00:53:34,293 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,299 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("pre_authorizations")
+2025-09-24 00:53:34,299 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-09-24 00:53:34,304 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:53:34,325 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 00:53:34,446 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:53:36,679 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:53:36,681 - sqlalchemy.engine.Engine - INFO - [generated in 0.00131s] (2,)
+2025-09-24 00:53:36,737 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:53:36,738 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:53:36,740 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-24 00:53:36,741 - sqlalchemy.engine.Engine - INFO - [generated in 0.00071s] ('jimmy@test.com',)
+2025-09-24 00:53:37,292 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-24 00:53:37,292 - sqlalchemy.engine.Engine - INFO - [generated in 0.00055s] ('2025-09-23 19:53:37.289476', 2)
+2025-09-24 00:53:37,303 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:53:37,324 - hrm_system - INFO - User logged in: jimmy@test.com
+2025-09-24 00:53:38,104 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:53:38,105 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:53:38,107 - sqlalchemy.engine.Engine - INFO - [cached since 1.428s ago] (2,)
+2025-09-24 00:53:38,111 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:54:01,406 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:54:01,408 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:54:01,408 - sqlalchemy.engine.Engine - INFO - [cached since 24.73s ago] (2,)
+2025-09-24 00:54:01,418 - hrm_system - INFO - User logged out: jimmy@test.com
+2025-09-24 00:54:01,420 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:54:08,086 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:54:08,088 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.email = ?
+2025-09-24 00:54:08,088 - sqlalchemy.engine.Engine - INFO - [cached since 31.35s ago] ('jimmy@test.com',)
+2025-09-24 00:54:09,021 - sqlalchemy.engine.Engine - INFO - UPDATE users SET updated_at=CURRENT_TIMESTAMP, last_login=? WHERE users.id = ?
+2025-09-24 00:54:09,021 - sqlalchemy.engine.Engine - INFO - [cached since 31.73s ago] ('2025-09-23 19:54:09.018024', 2)
+2025-09-24 00:54:09,043 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-09-24 00:54:09,063 - hrm_system - INFO - User logged in: jimmy@test.com
+2025-09-24 00:54:09,417 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-09-24 00:54:09,419 - sqlalchemy.engine.Engine - INFO - SELECT users.id, users.email, users.password_hash, users.first_name, users.last_name, users.role, users.status, users.team_id, users.phone, users.profile_picture, users.created_at, users.updated_at, users.last_login 
+FROM users 
+WHERE users.id = ?
+2025-09-24 00:54:09,420 - sqlalchemy.engine.Engine - INFO - [cached since 32.74s ago] (2,)
+2025-09-24 00:54:09,439 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-09-24 00:55:10,561 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 00:58:22,243 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:17:33,593 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:17:34,024 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:17:34,171 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:17:34,200 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:17:34,356 - hrm_system - ERROR - Authentication error: Could not determine join condition between parent/child tables on relationship User.attendance_records - there are multiple foreign key paths linking the tables.  Specify the 'foreign_keys' argument, ...
+2025-09-24 01:17:34,815 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:17:34,853 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:18:11,323 - hrm_system - ERROR - Authentication error: Could not determine join condition between parent/child tables on relationship User.attendance_records - there are multiple foreign key paths linking the tables.  Specify the 'foreign_keys' argument, ...
+2025-09-24 01:20:39,587 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:20:46,724 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:20:46,824 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:20:50,293 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:20:57,505 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:20:57,527 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:21:03,122 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:21:11,376 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:21:11,389 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:21:20,068 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:21:20,080 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:21:32,704 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:21:38,143 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:21:38,191 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:22:15,994 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:22:20,974 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:22:21,000 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:22:29,915 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:22:43,518 - hrm_system - ERROR - Login error: Could not determine join condition between parent/child tables on relationship User.attendance_records - there are multiple foreign key paths linking the tables.  Specify the 'foreign_keys' argument, ...
+2025-09-24 01:22:45,718 - hrm_system - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(users)]'. Original exception was: Could not determine join condition betw...
+2025-09-24 01:22:48,927 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:22:48,947 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:23:39,373 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:23:39,696 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:24:49,329 - hrm_system - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(users)]'. Original exception was: Could not determine join condition betw...
+2025-09-24 01:24:50,420 - hrm_system - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(users)]'. Original exception was: Could not determine join condition betw...
+2025-09-24 01:25:05,655 - hrm_system - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(users)]'. Original exception was: Could not determine join condition betw...
+2025-09-24 01:25:07,804 - hrm_system - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[User(users)]'. Original exception was: Could not determine join condition betw...
+2025-09-24 01:26:34,473 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:27:06,234 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:27:06,360 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:27:17,935 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:27:33,752 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:27:33,771 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:27:45,259 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:27:45,502 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:28:00,103 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:28:31,481 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:28:31,772 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:28:46,997 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:28:47,159 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:28:52,521 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:28:52,582 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:29:16,063 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:29:16,670 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:36:54,615 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:36:54,915 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:39:57,264 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:40:04,782 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:40:04,843 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:40:08,371 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:40:08,418 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:40:55,075 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:41:05,410 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:41:05,441 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:41:16,585 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:41:16,682 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:41:29,279 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:41:29,380 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:42:08,936 - hrm_system - INFO - Shutting down HRM API server...
+2025-09-24 01:42:22,563 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:42:22,643 - hrm_system - INFO - SQLite database initialized successfully
+2025-09-24 01:42:40,615 - hrm_system - INFO - Starting HRM API server...
+2025-09-24 01:42:40,714 - hrm_system - INFO - SQLite database initialized successfully

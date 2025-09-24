@@ -1,112 +1,135 @@
-#!/usr/bin/env python3
-"""
-Database initialization script for HRM System.
-This script creates all tables and can optionally create an admin user.
-"""
+from app.database import engine, SessionLocal, Base
+from app.models.user import User
+from app.models.employee import Employee
+from app.models.department import Department
+from app.auth import get_password_hash
+from datetime import date
 
-import asyncio
-import sys
-from datetime import datetime
-from app.database import create_tables
-from app.db.sqlite import SQLiteService
-from app.database import AsyncSessionLocal
-from app.core.security import get_password_hash
-from app.models.sql_models import UserRole, UserStatus
-
-async def init_database():
-    """Initialize the database with tables."""
-    print("Creating database tables...")
-    await create_tables()
-    print("Database tables created successfully!")
-
-async def create_admin_user():
-    """Create an admin user."""
-    try:
-        async with AsyncSessionLocal() as db:
-            # Check if admin user already exists
-            admin_user = await SQLiteService.get_user_by_email(db, "admin@hrm.com")
-            if admin_user:
-                print("Admin user already exists!")
-                return
-            
-            # Create admin user
-            admin_data = {
-                "email": "admin@hrm.com",
-                "first_name": "Admin",
-                "last_name": "User",
-                "role": UserRole.ADMIN,
-                "status": UserStatus.ACTIVE,
-                "password_hash": get_password_hash("admin123"),
-                "phone": "+1234567890"
-            }
-            
-            admin_user = await SQLiteService.create_user(db, admin_data)
-            print(f"Admin user created with ID: {admin_user.id}")
-            print("Email: admin@hrm.com")
-            print("Password: admin123")
-    except Exception as e:
-        print(f"Error creating admin user: {e}")
-        # Create a simple admin user directly
-        print("Creating admin user with basic method...")
-        await create_simple_admin()
-
-async def create_simple_admin():
-    """Create admin user with simple method."""
-    from sqlalchemy import text
-    from app.database import engine
-    
-    async with engine.begin() as conn:
-        # Check if user exists
-        result = await conn.execute(
-            text("SELECT id FROM users WHERE email = :email"),
-            {"email": "admin@hrm.com"}
-        )
-        if result.fetchone():
-            print("Admin user already exists!")
-            return
-        
-        # Insert admin user
-        await conn.execute(
-            text("""
-                INSERT INTO users (email, password_hash, first_name, last_name, role, status, phone)
-                VALUES (:email, :password_hash, :first_name, :last_name, :role, :status, :phone)
-            """),
-            {
-                "email": "admin@hrm.com",
-                "password_hash": get_password_hash("admin123"),
-                "first_name": "Admin",
-                "last_name": "User",
-                "role": "ADMIN",
-                "status": "ACTIVE",
-                "phone": "+1234567890"
-            }
-        )
-        print("Admin user created successfully!")
-        print("Email: admin@hrm.com")
-        print("Password: admin123")
-
-async def main():
-    """Main function."""
-    print("HRM System Database Initialization")
-    print("=" * 40)
+def init_database():
+    # Create all tables
+    Base.metadata.create_all(bind=engine)
+    """Initialize database with sample data"""
+    db = SessionLocal()
     
     try:
-        # Initialize database
-        await init_database()
+        # Create departments
+        departments = [
+            {"name": "Human Resources", "description": "HR Department"},
+            {"name": "Information Technology", "description": "IT Department"},
+            {"name": "Finance", "description": "Finance Department"},
+            {"name": "Marketing", "description": "Marketing Department"},
+            {"name": "Sales", "description": "Sales Department"},
+        ]
         
-        # Create admin user automatically
-        print("\nCreating admin user...")
-        await create_admin_user()
+        for dept_data in departments:
+            existing_dept = db.query(Department).filter(Department.name == dept_data["name"]).first()
+            if not existing_dept:
+                dept = Department(**dept_data)
+                db.add(dept)
         
-        print("\nDatabase initialization completed successfully!")
-        print("\nYou can now start the server with:")
-        print("python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000")
+        db.commit()
+        
+        # Create admin user
+        admin_email = "admin@hrm.com"
+        existing_admin = db.query(User).filter(User.email == admin_email).first()
+        
+        if not existing_admin:
+            admin_user = User(
+                email=admin_email,
+                hashed_password=get_password_hash("admin123"),
+                first_name="Admin",
+                last_name="User",
+                phone="+1234567890",
+                role="admin",
+                is_profile_complete=True
+            )
+            db.add(admin_user)
+            db.commit()
+            db.refresh(admin_user)
+            
+            # Create admin employee record
+            hr_dept = db.query(Department).filter(Department.name == "Human Resources").first()
+            admin_employee = Employee(
+                user_id=admin_user.id,
+                employee_id="EMP0001",
+                department_id=hr_dept.id,
+                position="System Administrator",
+                employment_status="full_time",
+                hire_date=date.today(),
+                work_location="office"
+            )
+            db.add(admin_employee)
+        
+        # Create HR user
+        hr_email = "hr@hrm.com"
+        existing_hr = db.query(User).filter(User.email == hr_email).first()
+        
+        if not existing_hr:
+            hr_user = User(
+                email=hr_email,
+                hashed_password=get_password_hash("hr123"),
+                first_name="HR",
+                last_name="Manager",
+                phone="+1234567891",
+                role="hr",
+                is_profile_complete=True
+            )
+            db.add(hr_user)
+            db.commit()
+            db.refresh(hr_user)
+            
+            # Create HR employee record
+            hr_dept = db.query(Department).filter(Department.name == "Human Resources").first()
+            hr_employee = Employee(
+                user_id=hr_user.id,
+                employee_id="EMP0002",
+                department_id=hr_dept.id,
+                position="HR Manager",
+                employment_status="full_time",
+                hire_date=date.today(),
+                work_location="office"
+            )
+            db.add(hr_employee)
+        
+        # Create sample employee
+        emp_email = "employee@hrm.com"
+        existing_emp = db.query(User).filter(User.email == emp_email).first()
+        
+        if not existing_emp:
+            emp_user = User(
+                email=emp_email,
+                hashed_password=get_password_hash("emp123"),
+                first_name="John",
+                last_name="Doe",
+                phone="+1234567892",
+                role="employee",
+                is_profile_complete=True
+            )
+            db.add(emp_user)
+            db.commit()
+            db.refresh(emp_user)
+            
+            # Create employee record
+            it_dept = db.query(Department).filter(Department.name == "Information Technology").first()
+            employee = Employee(
+                user_id=emp_user.id,
+                employee_id="EMP0003",
+                department_id=it_dept.id,
+                position="Software Developer",
+                employment_status="full_time",
+                hire_date=date.today(),
+                work_location="office"
+            )
+            db.add(employee)
+        
+        db.commit()
+        print("Database initialized successfully!")
         
     except Exception as e:
-        print(f"Error during initialization: {e}")
-        import traceback
-        traceback.print_exc()
-        sys.exit(1)
+        print(f"Error initializing database: {e}")
+        db.rollback()
+    finally:
+        db.close()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    init_database()

@@ -1,287 +1,244 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
+from sqlalchemy.orm import Session
 from typing import List, Optional
-from datetime import datetime
-from sqlalchemy.ext.asyncio import AsyncSession
+from ..database import get_db
+from ..models.user import User
+from ..models.employee import Employee
+from ..models.department import Department
+from ..schemas.employee import EmployeeCreate, EmployeeResponse, EmployeeUpdate, ProfileData
+from ..auth import get_current_user, require_role
 
-from app.models.employee import EmployeeCreate, EmployeeUpdate, EmployeeResponse, EmployeeProfile
-from app.models.sql_models import UserRole
-from app.routers.auth import get_current_active_user, require_role
-from app.database import get_db
-from app.db.sqlite import SQLiteService
-from app.core.logger import logger
-from app.core.security import sanitize_log_input
+router = APIRouter(prefix="/api/employees", tags=["Employees"])
 
-router = APIRouter()
+@router.get("/", response_model=List[EmployeeResponse])
+def get_employees(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=1000),
+    department_id: Optional[int] = None,
+    current_user: User = Depends(require_role(["admin", "hr"])),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Employee)
+    
+    if department_id:
+        query = query.filter(Employee.department_id == department_id)
+    
+    employees = query.offset(skip).limit(limit).all()
+    return employees
+
+@router.get("/me", response_model=EmployeeResponse)
+def get_my_profile(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
+    if not employee:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Employee profile not found"
+        )
+    return employee
+
+@router.get("/me/profile", response_model=ProfileData)
+def get_my_formatted_profile(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get formatted profile data for frontend"""
+    from ..models.skill import EmployeeSkill
+    
+    employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
+    if not employee:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Employee profile not found"
+        )
+    
+    # Get department name
+    dept_name = employee.department.name if employee.department else "N/A"
+    
+    # Get manager name
+    manager_name = "N/A"
+    if employee.manager:
+        manager_user = db.query(User).filter(User.id == employee.manager.user_id).first()
+        if manager_user:
+            manager_name = f"{manager_user.first_name} {manager_user.last_name}"
+    
+    # Get skills
+    skills = db.query(EmployeeSkill).filter(EmployeeSkill.employee_id == employee.id).all()
+    skills_data = [{"name": skill.skill_name, "level": skill.proficiency_level} for skill in skills]
+    
+    # Format profile data
+    profile_data = {
+        "personalInfo": {
+            "name": f"{current_user.first_name} {current_user.last_name}",
+            "position": employee.position or "N/A",
+            "department": dept_name,
+            "location": employee.work_location or "N/A",
+            "email": current_user.email,
+            "phone": current_user.phone or "N/A",
+            "hireDate": employee.hire_date.strftime("%b %d, %Y") if employee.hire_date else "N/A",
+            "employmentType": employee.employment_status.replace("_", " ").title(),
+            "employeeId": employee.employee_id,
+            "manager": manager_name,
+            "qualification": employee.qualification or "N/A",
+            "bloodGroup": employee.blood_group or "N/A",
+            "avatar": employee.avatar_url,
+            "coverImage": employee.cover_image_url
+        },
+        "emergencyContacts": [{
+            "id": 1,
+            "name": employee.emergency_contact_name or "N/A",
+            "relationship": employee.emergency_contact_relationship or "N/A",
+            "mobile": employee.emergency_contact_phone or "N/A",
+            "workPhone": employee.emergency_contact_work_phone or "N/A",
+            "homePhone": employee.emergency_contact_home_phone or "N/A",
+            "address": employee.emergency_contact_address or "N/A"
+        }] if employee.emergency_contact_name else [],
+        "jobInfo": {
+            "title": employee.position or "N/A",
+            "department": dept_name,
+            "reportsTo": manager_name,
+            "teamSize": employee.team_size or 0,
+            "startDate": employee.hire_date.strftime("%b %d, %Y") if employee.hire_date else "N/A",
+            "employmentType": employee.employment_status.replace("_", " ").title(),
+            "workSchedule": employee.work_schedule or "Standard (9:00 AM - 6:00 PM)",
+            "location": employee.work_location or "Office"
+        },
+        "compensation": {
+            "salary": f"${employee.salary:,.0f} monthly" if employee.salary else "N/A",
+            "bonus": employee.bonus_target or "N/A",
+            "stockOptions": employee.stock_options or "N/A",
+            "lastIncrease": employee.last_salary_increase or "N/A",
+            "nextReview": employee.next_review_date or "N/A"
+        },
+        "skills": skills_data,
+        "documents": [
+            {"name": "Employment Contract", "date": "Mar 01, 2021", "type": "Contract"},
+            {"name": "NDA Agreement", "date": "Mar 02, 2021", "type": "Legal"},
+            {"name": "Performance Review 2023", "date": "Dec 15, 2023", "type": "Review"}
+        ]
+    }
+    
+    return profile_data
+
+@router.get("/{employee_id}", response_model=EmployeeResponse)
+def get_employee(
+    employee_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Check permissions
+    if current_user.role not in ["admin", "hr"]:
+        # Team leads can only view their team members
+        if current_user.role == "team_lead":
+            employee = db.query(Employee).filter(Employee.id == employee_id).first()
+            if not employee or employee.manager_id != current_user.id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied"
+                )
+        # Employees can only view their own profile
+        elif current_user.role == "employee":
+            employee = db.query(Employee).filter(
+                Employee.id == employee_id,
+                Employee.user_id == current_user.id
+            ).first()
+            if not employee:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied"
+                )
+    
+    employee = db.query(Employee).filter(Employee.id == employee_id).first()
+    if not employee:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Employee not found"
+        )
+    
+    return employee
 
 @router.post("/", response_model=EmployeeResponse)
-async def create_employee(
+def create_employee(
     employee_data: EmployeeCreate,
-    current_user = Depends(require_role(UserRole.ADMIN)),
-    db: AsyncSession = Depends(get_db)
+    current_user: User = Depends(require_role(["admin", "hr"])),
+    db: Session = Depends(get_db)
 ):
-    """Create a new employee."""
     # Check if user exists
-    user = await SQLiteService.get_user_by_id(db, employee_data.user_id)
+    user = db.query(User).filter(User.id == employee_data.user_id).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
     
-    # Check if employee already exists for this user
-    existing_employee = await SQLiteService.get_employee_by_user_id(db, employee_data.user_id)
-    if existing_employee:
+    # Check if employee already exists
+    if db.query(Employee).filter(Employee.user_id == employee_data.user_id).first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Employee record already exists for this user"
+            detail="Employee profile already exists"
         )
     
-    # Check if employee ID is unique
-    existing_emp_id = await SQLiteService.get_employee_by_employee_id(db, employee_data.employee_id)
-    if existing_emp_id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Employee ID already exists"
-        )
+    db_employee = Employee(**employee_data.dict())
+    db.add(db_employee)
+    db.commit()
+    db.refresh(db_employee)
     
-    # Create employee
-    employee_dict = employee_data.dict()
-    employee = await SQLiteService.create_employee(db, employee_dict)
-    
-    logger.info(f"Employee created: {sanitize_log_input(employee_data.employee_id)}")
-    
-    return EmployeeResponse(
-        id=str(employee.id),
-        user_id=employee.user_id,
-        employee_id=employee.employee_id,
-        department=employee.department,
-        position=employee.position,
-        position_level=employee.position_level,
-        employment_status=employee.employment_status,
-        hire_date=employee.hire_date,
-        salary=employee.salary,
-        manager_id=employee.manager_id,
-        work_location=employee.work_location,
-        work_schedule=employee.work_schedule,
-        created_at=employee.created_at,
-        updated_at=employee.updated_at
-    )
-
-@router.get("/", response_model=List[EmployeeResponse])
-async def get_employees(
-    skip: int = Query(0, ge=0),
-    limit: int = Query(20, ge=1, le=100),
-    department: Optional[str] = None,
-    current_user = Depends(get_current_active_user),
-    db: AsyncSession = Depends(get_db)
-):
-    """Get list of employees with pagination and filtering."""
-    # Apply role-based filtering
-    manager_id = None
-    user_id = None
-    
-    if current_user.role == UserRole.TEAM_LEAD:
-        manager_id = current_user.id
-    elif current_user.role == UserRole.EMPLOYEE:
-        # Employees can only see their own record
-        user_id = current_user.id
-    
-    employees = await SQLiteService.get_employees(
-        db, skip=skip, limit=limit, department=department, 
-        manager_id=manager_id, user_id=user_id
-    )
-    
-    return [EmployeeResponse(
-        id=str(emp.id),
-        user_id=emp.user_id,
-        employee_id=emp.employee_id,
-        department=emp.department,
-        position=emp.position,
-        position_level=emp.position_level,
-        employment_status=emp.employment_status,
-        hire_date=emp.hire_date,
-        salary=emp.salary,
-        manager_id=emp.manager_id,
-        work_location=emp.work_location,
-        work_schedule=emp.work_schedule,
-        created_at=emp.created_at,
-        updated_at=emp.updated_at
-    ) for emp in employees]
-
-@router.get("/{employee_id}", response_model=EmployeeResponse)
-async def get_employee(
-    employee_id: str,
-    current_user = Depends(get_current_active_user),
-    db: AsyncSession = Depends(get_db)
-):
-    """Get employee by ID."""
-    employee = await SQLiteService.get_employee_by_id(db, int(employee_id))
-    if not employee:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Employee not found"
-        )
-    
-    # Check permissions
-    if (current_user.role == UserRole.EMPLOYEE and 
-        employee.user_id != current_user.id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not enough permissions"
-        )
-    
-    return EmployeeResponse(
-        id=str(employee.id),
-        user_id=employee.user_id,
-        employee_id=employee.employee_id,
-        department=employee.department,
-        position=employee.position,
-        position_level=employee.position_level,
-        employment_status=employee.employment_status,
-        hire_date=employee.hire_date,
-        salary=employee.salary,
-        manager_id=employee.manager_id,
-        work_location=employee.work_location,
-        work_schedule=employee.work_schedule,
-        created_at=employee.created_at,
-        updated_at=employee.updated_at
-    )
+    return db_employee
 
 @router.put("/{employee_id}", response_model=EmployeeResponse)
-async def update_employee(
-    employee_id: str,
+def update_employee(
+    employee_id: int,
     employee_data: EmployeeUpdate,
-    current_user = Depends(require_role(UserRole.ADMIN)),
-    db: AsyncSession = Depends(get_db)
+    current_user: User = Depends(require_role(["admin", "hr"])),
+    db: Session = Depends(get_db)
 ):
-    """Update employee information."""
-    employee = await SQLiteService.get_employee_by_id(db, int(employee_id))
+    employee = db.query(Employee).filter(Employee.id == employee_id).first()
     if not employee:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Employee not found"
         )
     
-    # Prepare update data
-    update_data = {k: v for k, v in employee_data.dict().items() if v is not None}
-    if update_data:
-        updated_employee = await SQLiteService.update_employee(db, int(employee_id), update_data)
-        
-        logger.info(f"Employee updated: {sanitize_log_input(employee_id)}")
-        
-        return EmployeeResponse(
-            id=str(updated_employee.id),
-            user_id=updated_employee.user_id,
-            employee_id=updated_employee.employee_id,
-            department=updated_employee.department,
-            position=updated_employee.position,
-            position_level=updated_employee.position_level,
-            employment_status=updated_employee.employment_status,
-            hire_date=updated_employee.hire_date,
-            salary=updated_employee.salary,
-            manager_id=updated_employee.manager_id,
-            work_location=updated_employee.work_location,
-            work_schedule=updated_employee.work_schedule,
-            created_at=updated_employee.created_at,
-            updated_at=updated_employee.updated_at
-        )
+    for field, value in employee_data.dict(exclude_unset=True).items():
+        setattr(employee, field, value)
     
-    return EmployeeResponse(
-        id=str(employee.id),
-        user_id=employee.user_id,
-        employee_id=employee.employee_id,
-        department=employee.department,
-        position=employee.position,
-        position_level=employee.position_level,
-        employment_status=employee.employment_status,
-        hire_date=employee.hire_date,
-        salary=employee.salary,
-        manager_id=employee.manager_id,
-        work_location=employee.work_location,
-        work_schedule=employee.work_schedule,
-        created_at=employee.created_at,
-        updated_at=employee.updated_at
-    )
+    db.commit()
+    db.refresh(employee)
+    
+    return employee
 
 @router.delete("/{employee_id}")
-async def delete_employee(
-    employee_id: str,
-    current_user = Depends(require_role(UserRole.ADMIN)),
-    db: AsyncSession = Depends(get_db)
+def delete_employee(
+    employee_id: int,
+    current_user: User = Depends(require_role(["admin"])),
+    db: Session = Depends(get_db)
 ):
-    """Delete employee record."""
-    success = await SQLiteService.delete_employee(db, int(employee_id))
-    if not success:
+    employee = db.query(Employee).filter(Employee.id == employee_id).first()
+    if not employee:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Employee not found"
         )
     
-    logger.info(f"Employee deleted: {sanitize_log_input(employee_id)}")
+    db.delete(employee)
+    db.commit()
     
     return {"message": "Employee deleted successfully"}
 
-@router.get("/profile/{user_id}", response_model=EmployeeProfile)
-async def get_employee_profile(
-    user_id: str,
-    current_user = Depends(get_current_active_user),
-    db: AsyncSession = Depends(get_db)
+@router.get("/team/{manager_id}", response_model=List[EmployeeResponse])
+def get_team_members(
+    manager_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
-    """Get complete employee profile."""
     # Check permissions
-    if (current_user.role == UserRole.EMPLOYEE and 
-        int(user_id) != current_user.id):
+    if current_user.role not in ["admin", "hr"] and current_user.id != manager_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not enough permissions"
+            detail="Access denied"
         )
     
-    employee = await SQLiteService.get_employee_by_user_id(db, int(user_id))
-    if not employee:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Employee not found"
-        )
-    
-    # Get user information
-    user = await SQLiteService.get_user_by_id(db, int(user_id))
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-    
-    # Create profile response
-    return EmployeeProfile(
-        id=str(employee.id),
-        user_id=employee.user_id,
-        employee_id=employee.employee_id,
-        first_name=user.first_name,
-        last_name=user.last_name,
-        email=user.email,
-        phone=user.phone,
-        profile_picture=user.profile_picture,
-        department=employee.department,
-        position=employee.position,
-        position_level=employee.position_level,
-        employment_status=employee.employment_status,
-        hire_date=employee.hire_date,
-        salary=employee.salary,
-        manager_id=employee.manager_id,
-        work_location=employee.work_location,
-        work_schedule=employee.work_schedule,
-        date_of_birth=employee.date_of_birth,
-        gender=employee.gender,
-        marital_status=employee.marital_status,
-        nationality=employee.nationality,
-        address=employee.address,
-        emergency_contact_name=employee.emergency_contact_name,
-        emergency_contact_phone=employee.emergency_contact_phone,
-        emergency_contact_relationship=employee.emergency_contact_relationship,
-        skills=employee.skills,
-        certifications=employee.certifications,
-        education=employee.education,
-        work_experience=employee.work_experience,
-        created_at=employee.created_at,
-        updated_at=employee.updated_at
-    )
+    team_members = db.query(Employee).filter(Employee.manager_id == manager_id).all()
+    return team_members

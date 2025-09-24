@@ -89,6 +89,19 @@ def get_employee_dashboard_stats(
         ).fetchone()
         total_leave_days = float(leave_result[0]) if leave_result[0] else 0.0
         
+        # Personal and Sick leave breakdown
+        personal_leave_result = db.execute(
+            text("SELECT COALESCE(SUM(days_requested), 0) FROM leaves WHERE employee_id = :emp_id AND status = 'approved' AND leave_type = 'personal' AND strftime('%Y', start_date) = :year"),
+            {"emp_id": current_user.id, "year": str(current_year)}
+        ).fetchone()
+        personal_used = float(personal_leave_result[0]) if personal_leave_result[0] else 0.0
+        
+        sick_leave_result = db.execute(
+            text("SELECT COALESCE(SUM(days_requested), 0) FROM leaves WHERE employee_id = :emp_id AND status = 'approved' AND leave_type = 'sick' AND strftime('%Y', start_date) = :year"),
+            {"emp_id": current_user.id, "year": str(current_year)}
+        ).fetchone()
+        sick_used = float(sick_leave_result[0]) if sick_leave_result[0] else 0.0
+        
         # My Attendance This Month using raw SQL
         attendance_result = db.execute(
             text("SELECT COUNT(*) as total, SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) as present FROM attendance WHERE employee_id = :emp_id AND strftime('%m', date) = :month AND strftime('%Y', date) = :year"),
@@ -98,12 +111,34 @@ def get_employee_dashboard_stats(
         total_working_days = int(attendance_result[0]) if attendance_result[0] else 0
         present_days = int(attendance_result[1]) if attendance_result[1] else 0
         
-        # My Requests using raw SQL
-        requests_result = db.execute(
+        # Last month attendance for comparison
+        last_month = current_month - 1 if current_month > 1 else 12
+        last_month_year = current_year if current_month > 1 else current_year - 1
+        
+        last_month_attendance_result = db.execute(
+            text("SELECT COUNT(*) as total, SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) as present FROM attendance WHERE employee_id = :emp_id AND strftime('%m', date) = :month AND strftime('%Y', date) = :year"),
+            {"emp_id": current_user.id, "month": f"{last_month:02d}", "year": str(last_month_year)}
+        ).fetchone()
+        
+        last_month_total = int(last_month_attendance_result[0]) if last_month_attendance_result[0] else 0
+        last_month_present = int(last_month_attendance_result[1]) if last_month_attendance_result[1] else 0
+        last_month_rate = round((last_month_present / last_month_total * 100) if last_month_total > 0 else 0, 2)
+        
+        # My Requests using raw SQL - Leave requests
+        leave_requests_result = db.execute(
+            text("SELECT COUNT(*) FROM leaves WHERE employee_id = :emp_id AND status = 'pending'"),
+            {"emp_id": current_user.id}
+        ).fetchone()
+        pending_leave_requests = int(leave_requests_result[0]) if leave_requests_result[0] else 0
+        
+        # Other requests
+        other_requests_result = db.execute(
             text("SELECT COUNT(*) FROM employee_requests WHERE employee_id = :emp_id AND status = 'pending'"),
             {"emp_id": current_user.id}
         ).fetchone()
-        my_pending_requests = int(requests_result[0]) if requests_result[0] else 0
+        pending_other_requests = int(other_requests_result[0]) if other_requests_result[0] else 0
+        
+        my_pending_requests = pending_leave_requests + pending_other_requests
         
         # My Training Progress using raw SQL
         training_result = db.execute(
@@ -117,15 +152,20 @@ def get_employee_dashboard_stats(
         return {
             "leave_balance": {
                 "used_days": total_leave_days,
-                "remaining_days": max(0, 25 - total_leave_days)
+                "remaining_days": max(0, 25 - total_leave_days),
+                "personal_remaining": max(0, 15 - personal_used),
+                "sick_remaining": max(0, 10 - sick_used)
             },
             "attendance": {
                 "present_days": present_days,
                 "total_working_days": total_working_days,
-                "attendance_rate": round((present_days / total_working_days * 100) if total_working_days > 0 else 0, 2)
+                "attendance_rate": round((present_days / total_working_days * 100) if total_working_days > 0 else 0, 2),
+                "last_month_rate": last_month_rate
             },
             "requests": {
-                "pending": my_pending_requests
+                "pending": my_pending_requests,
+                "pending_leaves": pending_leave_requests,
+                "pending_other": pending_other_requests
             },
             "training": {
                 "completed": completed_trainings,

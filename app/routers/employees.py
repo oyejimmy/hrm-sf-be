@@ -83,8 +83,31 @@ def get_my_formatted_profile(
             "manager": manager_name,
             "qualification": employee.qualification or "N/A",
             "bloodGroup": employee.blood_group or "N/A",
+            "gender": employee.gender or "N/A",
+            "dateOfBirth": employee.date_of_birth.strftime("%Y-%m-%d") if employee.date_of_birth else "N/A",
+            "maritalStatus": employee.marital_status or "N/A",
+            "address": employee.address or "N/A",
+            "nationality": employee.nationality or "N/A",
+            "religion": employee.religion or "N/A",
+            "languagesKnown": employee.languages_known or "N/A",
+            "hobbies": employee.hobbies or "N/A",
+            "personalEmail": employee.personal_email or "N/A",
+            "educationLevel": employee.education_level or "N/A",
+            "university": employee.university or "N/A",
+            "graduationYear": employee.graduation_year or "N/A",
+            "certifications": employee.certifications or "N/A",
+            "skillsSummary": employee.skills_summary or "N/A",
             "avatar": employee.avatar_url,
-            "coverImage": employee.cover_image_url
+            "avatar_url": employee.avatar_url,
+            "coverImage": employee.cover_image_url,
+            "cover_image_url": employee.cover_image_url,
+            # Emergency contact fields in personalInfo for easy access
+            "emergency_contact_name": employee.emergency_contact_name,
+            "emergency_contact_phone": employee.emergency_contact_phone,
+            "emergency_contact_relationship": employee.emergency_contact_relationship,
+            "emergency_contact_work_phone": employee.emergency_contact_work_phone,
+            "emergency_contact_home_phone": employee.emergency_contact_home_phone,
+            "emergency_contact_address": employee.emergency_contact_address
         },
         "emergencyContacts": [{
             "id": 1,
@@ -101,9 +124,9 @@ def get_my_formatted_profile(
             "reportsTo": manager_name,
             "teamSize": employee.team_size or 0,
             "startDate": employee.hire_date.strftime("%b %d, %Y") if employee.hire_date else "N/A",
-            "employmentType": employee.employment_status.replace("_", " ").title(),
-            "workSchedule": employee.work_schedule or "Standard (9:00 AM - 6:00 PM)",
-            "location": employee.work_location or "Office"
+            "employmentStatus": employee.employment_status or "N/A",
+            "workLocation": employee.work_location or "N/A",
+            "workSchedule": employee.work_schedule or "Standard (9:00 AM - 6:00 PM)"
         },
         "compensation": {
             "salary": f"${employee.salary:,.0f} monthly" if employee.salary else "N/A",

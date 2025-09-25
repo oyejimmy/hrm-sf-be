@@ -364,6 +364,81 @@ def end_break(
         print(f"Error in end_break: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to end break: {str(e)}")
 
+@router.get("/records")
+def get_attendance_records(
+    limit: int = 30,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get attendance records with break data"""
+    try:
+        attendance_records = db.query(Attendance).filter(
+            Attendance.employee_id == current_user.id
+        ).order_by(Attendance.date.desc()).limit(limit).all()
+        
+        def safe_format_time(time_value):
+            """Safely format time values to string"""
+            if not time_value:
+                return None
+            try:
+                if isinstance(time_value, str):
+                    # Handle datetime string format like '2025-09-24 09:00:00'
+                    if ' ' in time_value:
+                        return time_value.split(' ')[1]
+                    # Handle time string format like '09:00:00' or '9:31:00'
+                    time_parts = time_value.split(':')
+                    if len(time_parts) >= 2:
+                        hour = time_parts[0].zfill(2)
+                        minute = time_parts[1].zfill(2)
+                        second = time_parts[2].zfill(2) if len(time_parts) > 2 else '00'
+                        return f"{hour}:{minute}:{second}"
+                    return time_value
+                else:
+                    return time_value.strftime('%H:%M:%S')
+            except Exception:
+                return str(time_value) if time_value else None
+        
+        records = []
+        for record in attendance_records:
+            try:
+                # Calculate total break time safely
+                total_break_minutes = 0
+                break_details = []
+                
+                try:
+                    for br in record.break_records:
+                        if br.duration_minutes:
+                            total_break_minutes += br.duration_minutes
+                        
+                        break_details.append({
+                            "start_time": safe_format_time(br.start_time),
+                            "end_time": safe_format_time(br.end_time),
+                            "duration_minutes": br.duration_minutes,
+                            "break_type": br.break_type
+                        })
+                except Exception:
+                    pass  # Skip break records if there's an issue
+                
+                records.append({
+                    "id": record.id,
+                    "date": record.date.isoformat() if record.date else None,
+                    "check_in": safe_format_time(record.check_in),
+                    "check_out": safe_format_time(record.check_out),
+                    "status": record.status or "unknown",
+                    "hours_worked": record.hours_worked,
+                    "total_break_minutes": total_break_minutes,
+                    "break_details": break_details,
+                    "notes": record.notes
+                })
+            except Exception as e:
+                print(f"Error processing record {record.id}: {e}")
+                continue
+        
+        return records
+    except Exception as e:
+        print(f"Error in get_attendance_records: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get attendance records: {str(e)}")
+
 @router.get("/calendar")
 def get_attendance_calendar(
     year: int,

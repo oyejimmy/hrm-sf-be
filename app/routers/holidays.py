@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, text
 from datetime import datetime
 from typing import List
 from ..database import get_db
@@ -9,7 +9,7 @@ from ..models.notification import Holiday
 from ..auth import get_current_user
 from pydantic import BaseModel
 
-router = APIRouter(prefix="/api/holidays", tags=["Holidays"])
+router = APIRouter()
 
 class HolidayResponse(BaseModel):
     id: int
@@ -22,32 +22,45 @@ class HolidayResponse(BaseModel):
     class Config:
         from_attributes = True
 
-@router.get("/", response_model=List[HolidayResponse])
-def get_holidays(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
+@router.get("/")
+def get_holidays(db: Session = Depends(get_db)):
     """Get all holidays"""
     try:
-        holidays = db.query(Holiday).order_by(Holiday.date).all()
+        # Use raw SQL to get holidays data
+        result = db.execute("SELECT id, name, date, holiday_type, description FROM holidays ORDER BY date").fetchall()
         
-        result = []
-        for holiday in holidays:
-            # Format date and get day name
-            holiday_date = holiday.date
-            day_name = holiday_date.strftime('%A')
-            formatted_date = holiday_date.strftime('%B %d, %Y')
-            
-            result.append({
-                "id": holiday.id,
-                "name": holiday.name,
-                "date": formatted_date,
-                "day": day_name,
-                "description": holiday.description or "",
-                "holiday_type": holiday.holiday_type
+        holidays = []
+        for row in result:
+            holidays.append({
+                "id": row[0],
+                "name": row[1], 
+                "date": str(row[2]),
+                "holiday_type": row[3] or "general",
+                "description": row[4] or ""
             })
         
-        return result
+        print(f"Found {len(holidays)} holidays")
+        return holidays
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get holidays: {str(e)}")
+        print(f"Database error: {e}")
+        # Try alternative query
+        try:
+            from sqlalchemy import text
+            result = db.execute(text("SELECT id, name, date, holiday_type, description FROM holidays ORDER BY date")).fetchall()
+            
+            holidays = []
+            for row in result:
+                holidays.append({
+                    "id": row[0],
+                    "name": row[1], 
+                    "date": str(row[2]),
+                    "holiday_type": row[3] or "general",
+                    "description": row[4] or ""
+                })
+            
+            print(f"Found {len(holidays)} holidays (alternative query)")
+            return holidays
+        except Exception as e2:
+            print(f"Alternative query error: {e2}")
+            return []

@@ -13,6 +13,7 @@ class EmployeeBase(BaseModel):
     date_of_birth: Optional[date] = None
     marital_status: Optional[str] = None
     address: Optional[str] = None
+    office_address: Optional[str] = None
     emergency_contact_name: Optional[str] = None
     emergency_contact_phone: Optional[str] = None
     
@@ -61,6 +62,7 @@ class EmployeeUpdate(BaseModel):
     department_id: Optional[int] = None
     manager_id: Optional[int] = None
     address: Optional[str] = None
+    office_address: Optional[str] = None
     emergency_contact_name: Optional[str] = None
     emergency_contact_phone: Optional[str] = None
     blood_group: Optional[str] = None

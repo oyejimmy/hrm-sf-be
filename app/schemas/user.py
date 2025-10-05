@@ -20,6 +20,7 @@ class UserResponse(UserBase):
     id: int
     status: str
     is_profile_complete: bool
+    temp_password: Optional[str] = None
     created_at: datetime
     last_login: Optional[datetime] = None
     redirect_url: Optional[str] = None

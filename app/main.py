@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
+from .models import user, employee, department, position, notification, language, technical_skill  # Import models to ensure tables are created
 from .routers import (
-    auth, reports, employees, leaves, attendance, performance,
+    auth, reports, employees, positions, leaves, attendance, performance,
     payroll, requests, complaints, training, assets, health_insurance,
-    documents, notifications, announcements, holidays, recruitment
+    documents, notifications, announcements, holidays, recruitment, languages, technical_skills
 )
 
 app = FastAPI(title="HRM System API")
@@ -23,7 +24,8 @@ Base.metadata.create_all(bind=engine)
 # Include routers
 app.include_router(auth.router)
 app.include_router(reports.router)
-app.include_router(employees.router)
+app.include_router(employees.router, prefix="/api/employees", tags=["employees"])
+app.include_router(positions.router, prefix="/api/positions", tags=["positions"])
 app.include_router(leaves.router)
 app.include_router(attendance.router)
 app.include_router(performance.router)
@@ -36,8 +38,10 @@ app.include_router(health_insurance.router)
 app.include_router(documents.router)
 app.include_router(notifications.router)
 app.include_router(announcements.router)
-app.include_router(holidays.router)
+app.include_router(holidays.router, prefix="/api/holidays", tags=["holidays"])
 app.include_router(recruitment.router)
+app.include_router(languages.router)
+app.include_router(technical_skills.router)
 
 @app.get("/")
 def read_root():
@@ -46,3 +50,4 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+

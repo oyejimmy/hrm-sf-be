@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Time, Text, Float, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Time, Text, Float, Boolean, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from ..database import Base
@@ -17,9 +17,12 @@ class Attendance(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
+    # Unique constraint to prevent duplicate attendance records for same employee on same date
+    __table_args__ = (UniqueConstraint('employee_id', 'date', name='unique_employee_date'),)
+    
     # Relationships
     employee = relationship("User", foreign_keys=[employee_id], back_populates="attendance_records")
-    break_records = relationship("BreakRecord", back_populates="attendance")
+    break_records = relationship("BreakRecord", back_populates="attendance", cascade="all, delete-orphan")
 
 class BreakRecord(Base):
     __tablename__ = "break_records"

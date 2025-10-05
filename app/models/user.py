@@ -9,6 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
+    title = Column(String, nullable=True)  # Mr, Mrs, Ms, Dr, Prof, etc.
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
     phone = Column(String, nullable=True)
@@ -16,6 +17,7 @@ class User(Base):
     status = Column(String, default="active")  # active, inactive, suspended
     is_profile_complete = Column(Boolean, default=False)
     profile_picture = Column(String, nullable=True)
+    temp_password = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     last_login = Column(DateTime(timezone=True), nullable=True)

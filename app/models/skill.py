@@ -11,4 +11,4 @@ class EmployeeSkill(Base):
     proficiency_level = Column(Float, nullable=False)  # 0-100
     
     # Relationships
-    employee = relationship("Employee", back_populates="skills")
+    employee = relationship("Employee")

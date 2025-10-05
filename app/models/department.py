@@ -15,3 +15,4 @@ class Department(Base):
     
     # Relationships
     employees = relationship("Employee", back_populates="department")
+    positions = relationship("Position", back_populates="department")

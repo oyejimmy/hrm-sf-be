@@ -21,6 +21,8 @@ class Leave(Base):
     admin_comments = Column(Text, nullable=True)
     attachment_url = Column(String, nullable=True)
     recipient_details = Column(JSON, nullable=True)  # Array of recipients
+    notification_sent = Column(Boolean, default=False)
+    admin_notified = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     

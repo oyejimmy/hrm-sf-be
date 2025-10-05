@@ -10,16 +10,21 @@ class Employee(Base):
     user_id = Column(Integer, ForeignKey("users.id"), unique=True, nullable=False)
     employee_id = Column(String, unique=True, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=True)
-    position = Column(String, nullable=True)
+    position_id = Column(Integer, ForeignKey("positions.id"), nullable=True)
+    position = Column(String, nullable=True)  # Keep for backward compatibility
+    employment_type = Column(String, nullable=True)  # permanent, contract, temporary, internship, freelance, consultant
     employment_status = Column(String, default="full_time")  # full_time, part_time, contract, intern
     hire_date = Column(Date, nullable=True)
     salary = Column(Float, nullable=True)
+    salary_in_words = Column(String, nullable=True)
     manager_id = Column(Integer, ForeignKey("employees.id"), nullable=True)
     work_location = Column(String, default="office")  # office, remote, hybrid, field
+    work_type = Column(String, default="office")  # office, remote, hybrid
     gender = Column(String, nullable=True)
     date_of_birth = Column(Date, nullable=True)
     marital_status = Column(String, nullable=True)
     address = Column(Text, nullable=True)
+    office_address = Column(Text, nullable=True)
     emergency_contact_name = Column(String, nullable=True)
     emergency_contact_phone = Column(String, nullable=True)
     
@@ -30,6 +35,7 @@ class Employee(Base):
     team_size = Column(Integer, default=0)
     avatar_url = Column(String, nullable=True)
     cover_image_url = Column(String, nullable=True)
+    profile_crop = Column(Text, nullable=True)  # JSON string for crop data
     
     # Emergency contact details
     emergency_contact_relationship = Column(String, nullable=True)
@@ -47,7 +53,8 @@ class Employee(Base):
     personal_email = Column(String, nullable=True)
     nationality = Column(String, nullable=True)
     religion = Column(String, nullable=True)
-    languages_known = Column(String, nullable=True)
+    languages_known = Column(String, nullable=True)  # JSON string of language IDs
+    technical_skills = Column(String, nullable=True)  # JSON string of skill IDs
     hobbies = Column(String, nullable=True)
     skills_summary = Column(Text, nullable=True)
     certifications = Column(String, nullable=True)
@@ -61,6 +68,6 @@ class Employee(Base):
     # Relationships
     user = relationship("User", back_populates="employee")
     department = relationship("Department", back_populates="employees")
+    position_ref = relationship("Position", back_populates="employees", foreign_keys=[position_id])
     manager = relationship("Employee", remote_side=[id])
     subordinates = relationship("Employee", back_populates="manager")
-    skills = relationship("EmployeeSkill", back_populates="employee")

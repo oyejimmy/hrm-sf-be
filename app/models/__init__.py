@@ -14,3 +14,6 @@ from .health_insurance import HealthInsurancePolicy, InsuranceDependent, Insuran
 from .payroll import Payslip, PayslipEarning, PayslipDeduction, SalaryStructure, Bonus
 from .request import EmployeeRequest, RequestLog, HRDocument
 from .notification import Notification, Announcement, AnnouncementRead, Holiday, Task
+from .access_request import AccessRequest
+from .language import Language
+from .technical_skill import TechnicalSkill

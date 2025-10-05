@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
+from sqlalchemy import and_, func
 from typing import List, Optional
-from datetime import date
+from datetime import date, datetime
 from ..database import get_db
 from ..models.user import User
 from ..models.leave import Leave
@@ -93,12 +94,36 @@ def create_leave_request(
         start_date=leave_data.start_date,
         end_date=leave_data.end_date,
         days_requested=days_requested,
-        reason=leave_data.reason
+        reason=leave_data.reason,
+        admin_notified=True  # Mark as notified since we'll create notification
     )
     
     db.add(db_leave)
     db.commit()
     db.refresh(db_leave)
+    
+    # Create notification for admin/HR
+    from ..models.notification import Notification
+    
+    # Get all admin and HR users
+    admin_users = db.query(User).filter(User.role.in_(["admin", "hr"])).all()
+    
+    for admin_user in admin_users:
+        notification = Notification(
+            recipient_id=admin_user.id,
+            sender_id=current_user.id,
+            title="New Leave Request",
+            message=f"{current_user.first_name} {current_user.last_name} has requested {leave_data.leave_type} leave from {leave_data.start_date} to {leave_data.end_date}",
+            notification_type="leave_request",
+            priority="medium",
+            is_system_generated=True,
+            related_entity_type="leave_request",
+            related_entity_id=db_leave.id,
+            action_url=f"/admin/leaves/{db_leave.id}"
+        )
+        db.add(notification)
+    
+    db.commit()
     
     return db_leave
 
@@ -128,6 +153,23 @@ def approve_leave(
     leave.status = "approved"
     leave.approved_by = current_user.id
     leave.approved_at = db.func.now()
+    
+    # Create notification for employee
+    from ..models.notification import Notification
+    
+    notification = Notification(
+        recipient_id=leave.employee_id,
+        sender_id=current_user.id,
+        title="Leave Request Approved",
+        message=f"Your {leave.leave_type} leave request from {leave.start_date} to {leave.end_date} has been approved by {current_user.first_name} {current_user.last_name}",
+        notification_type="leave_approval",
+        priority="high",
+        is_system_generated=True,
+        related_entity_type="leave_request",
+        related_entity_id=leave.id,
+        action_url=f"/employee/leaves/{leave.id}"
+    )
+    db.add(notification)
     
     db.commit()
     db.refresh(leave)
@@ -162,6 +204,23 @@ def reject_leave(
     leave.approved_by = current_user.id
     leave.approved_at = db.func.now()
     leave.rejection_reason = rejection_data.rejection_reason
+    
+    # Create notification for employee
+    from ..models.notification import Notification
+    
+    notification = Notification(
+        recipient_id=leave.employee_id,
+        sender_id=current_user.id,
+        title="Leave Request Rejected",
+        message=f"Your {leave.leave_type} leave request from {leave.start_date} to {leave.end_date} has been rejected by {current_user.first_name} {current_user.last_name}. Reason: {rejection_data.rejection_reason or 'No reason provided'}",
+        notification_type="leave_rejection",
+        priority="high",
+        is_system_generated=True,
+        related_entity_type="leave_request",
+        related_entity_id=leave.id,
+        action_url=f"/employee/leaves/{leave.id}"
+    )
+    db.add(notification)
     
     db.commit()
     db.refresh(leave)
@@ -199,3 +258,114 @@ def cancel_leave(
     db.commit()
     
     return {"message": "Leave request cancelled successfully"}
+
+# Admin endpoints for leave management
+@router.get("/admin/stats")
+def get_admin_leave_stats(
+    current_user: User = Depends(require_role(["admin", "hr"])),
+    db: Session = Depends(get_db)
+):
+    """Get leave statistics for admin dashboard"""
+    try:
+        # Get pending leave requests count
+        pending_count = db.query(Leave).filter(Leave.status == "pending").count()
+        
+        # Get approved leaves for this month
+        from datetime import datetime
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        
+        approved_this_month = db.query(Leave).filter(
+            and_(
+                Leave.status == "approved",
+                func.extract('month', Leave.start_date) == current_month,
+                func.extract('year', Leave.start_date) == current_year
+            )
+        ).count()
+        
+        # Get rejected leaves count
+        rejected_count = db.query(Leave).filter(Leave.status == "rejected").count()
+        
+        return {
+            "pendingRequests": pending_count,
+            "approvedThisMonth": approved_this_month,
+            "rejectedRequests": rejected_count,
+            "totalRequests": db.query(Leave).count()
+        }
+    except Exception as e:
+        print(f"Error in get_admin_leave_stats: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get leave stats: {str(e)}")
+
+@router.get("/admin/pending")
+def get_pending_leave_requests(
+    current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
+    db: Session = Depends(get_db)
+):
+    """Get all pending leave requests for admin/HR"""
+    try:
+        query = db.query(Leave).filter(Leave.status == "pending")
+        
+        # Team leads can only see their team's requests
+        if current_user.role == "team_lead":
+            from ..models.employee import Employee
+            team_member_ids = db.query(Employee.user_id).filter(Employee.manager_id == current_user.id).all()
+            team_member_ids = [id[0] for id in team_member_ids]
+            query = query.filter(Leave.employee_id.in_(team_member_ids))
+        
+        leaves = query.all()
+        
+        # Format response with employee details
+        result = []
+        for leave in leaves:
+            employee = db.query(User).filter(User.id == leave.employee_id).first()
+            result.append({
+                "id": leave.id,
+                "employeeId": leave.employee_id,
+                "employeeName": employee.full_name if employee else "Unknown",
+                "leaveType": leave.leave_type,
+                "startDate": leave.start_date.isoformat(),
+                "endDate": leave.end_date.isoformat(),
+                "daysRequested": leave.days_requested,
+                "reason": leave.reason,
+                "status": leave.status,
+                "createdAt": leave.created_at.isoformat() if leave.created_at else None
+            })
+        
+        return result
+    except Exception as e:
+        print(f"Error in get_pending_leave_requests: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get pending requests: {str(e)}")
+
+@router.get("/admin/notifications")
+def get_admin_leave_notifications(
+    current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
+    db: Session = Depends(get_db)
+):
+    """Get leave notifications for admin"""
+    try:
+        notifications = []
+        
+        # Get recent pending leave requests
+        recent_leaves = db.query(Leave).filter(
+            Leave.status == "pending"
+        ).order_by(Leave.created_at.desc()).limit(10).all()
+        
+        for leave in recent_leaves:
+            employee = db.query(User).filter(User.id == leave.employee_id).first()
+            if employee:
+                notifications.append({
+                    "id": f"leave_{leave.id}",
+                    "type": "leave_request",
+                    "employeeId": str(leave.employee_id),
+                    "employeeName": employee.full_name,
+                    "message": f"{employee.full_name} requested {leave.leave_type} leave from {leave.start_date} to {leave.end_date}",
+                    "timestamp": leave.created_at.isoformat() if leave.created_at else datetime.now().isoformat(),
+                    "read": False,
+                    "priority": "medium",
+                    "leaveId": leave.id
+                })
+        
+        return notifications
+    except Exception as e:
+        print(f"Error in get_admin_leave_notifications: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get notifications: {str(e)}")

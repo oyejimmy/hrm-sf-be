@@ -5,8 +5,9 @@ from typing import List, Optional
 from datetime import date, datetime
 from ..database import get_db
 from ..models.user import User
-from ..models.leave import Leave
+from ..models.leave import Leave, LeaveBalance
 from ..schemas.leave import LeaveCreate, LeaveResponse, LeaveUpdate
+from datetime import datetime
 from ..auth import get_current_user, require_role
 
 router = APIRouter(prefix="/api/leaves", tags=["Leave Management"])
@@ -46,8 +47,36 @@ def get_my_leaves(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    leaves = db.query(Leave).filter(Leave.employee_id == current_user.id).all()
-    return leaves
+    try:
+        leaves = db.query(Leave).filter(Leave.employee_id == current_user.id).order_by(Leave.created_at.desc()).all()
+        
+        # Create response with duration field for each leave
+        response_leaves = []
+        for leave in leaves:
+            response_dict = {
+                "id": leave.id,
+                "employee_id": leave.employee_id,
+                "leave_type": leave.leave_type,
+                "start_date": leave.start_date,
+                "end_date": leave.end_date,
+                "days_requested": leave.days_requested,
+                "duration": leave.days_requested,
+                "reason": leave.reason,
+                "status": leave.status,
+                "approved_by": leave.approved_by,
+                "approved_at": leave.approved_at,
+                "rejection_reason": leave.rejection_reason,
+                "created_at": leave.created_at
+            }
+            response_leaves.append(response_dict)
+        
+        return response_leaves
+    except Exception as e:
+        print(f"Error fetching my leaves: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch leave requests: {str(e)}"
+        )
 
 @router.get("/{leave_id}", response_model=LeaveResponse)
 def get_leave(
@@ -85,47 +114,75 @@ def create_leave_request(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    # Calculate days requested
-    days_requested = (leave_data.end_date - leave_data.start_date).days + 1
-    
-    db_leave = Leave(
-        employee_id=current_user.id,
-        leave_type=leave_data.leave_type,
-        start_date=leave_data.start_date,
-        end_date=leave_data.end_date,
-        days_requested=days_requested,
-        reason=leave_data.reason,
-        admin_notified=True  # Mark as notified since we'll create notification
-    )
-    
-    db.add(db_leave)
-    db.commit()
-    db.refresh(db_leave)
-    
-    # Create notification for admin/HR
-    from ..models.notification import Notification
-    
-    # Get all admin and HR users
-    admin_users = db.query(User).filter(User.role.in_(["admin", "hr"])).all()
-    
-    for admin_user in admin_users:
-        notification = Notification(
-            recipient_id=admin_user.id,
-            sender_id=current_user.id,
-            title="New Leave Request",
-            message=f"{current_user.first_name} {current_user.last_name} has requested {leave_data.leave_type} leave from {leave_data.start_date} to {leave_data.end_date}",
-            notification_type="leave_request",
-            priority="medium",
-            is_system_generated=True,
-            related_entity_type="leave_request",
-            related_entity_id=db_leave.id,
-            action_url=f"/admin/leaves/{db_leave.id}"
+    try:
+        # Calculate days requested if not provided
+        if not hasattr(leave_data, 'days_requested') or leave_data.days_requested is None:
+            days_requested = (leave_data.end_date - leave_data.start_date).days + 1
+        else:
+            days_requested = leave_data.days_requested
+        
+        db_leave = Leave(
+            employee_id=current_user.id,
+            leave_type=leave_data.leave_type,
+            start_date=leave_data.start_date,
+            end_date=leave_data.end_date,
+            days_requested=days_requested,
+            reason=leave_data.reason,
+            admin_notified=True  # Mark as notified since we'll create notification
         )
-        db.add(notification)
-    
-    db.commit()
-    
-    return db_leave
+        
+        db.add(db_leave)
+        db.commit()
+        db.refresh(db_leave)
+        
+        # Create notification for admin/HR
+        from ..models.notification import Notification
+        
+        # Get all admin and HR users
+        admin_users = db.query(User).filter(User.role.in_(["admin", "hr"])).all()
+        
+        for admin_user in admin_users:
+            notification = Notification(
+                recipient_id=admin_user.id,
+                sender_id=current_user.id,
+                title="New Leave Request",
+                message=f"{current_user.first_name} {current_user.last_name} has requested {leave_data.leave_type} leave from {leave_data.start_date} to {leave_data.end_date}",
+                notification_type="leave_request",
+                priority="medium",
+                is_system_generated=True,
+                related_entity_type="leave_request",
+                related_entity_id=db_leave.id,
+                action_url=f"/admin/leaves/{db_leave.id}"
+            )
+            db.add(notification)
+        
+        db.commit()
+        
+        # Create response with duration field
+        response_dict = {
+            "id": db_leave.id,
+            "employee_id": db_leave.employee_id,
+            "leave_type": db_leave.leave_type,
+            "start_date": db_leave.start_date,
+            "end_date": db_leave.end_date,
+            "days_requested": db_leave.days_requested,
+            "duration": db_leave.days_requested,
+            "reason": db_leave.reason,
+            "status": db_leave.status,
+            "approved_by": db_leave.approved_by,
+            "approved_at": db_leave.approved_at,
+            "rejection_reason": db_leave.rejection_reason,
+            "created_at": db_leave.created_at
+        }
+        return response_dict
+        
+    except Exception as e:
+        db.rollback()
+        print(f"Error creating leave request: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create leave request: {str(e)}"
+        )
 
 @router.put("/{leave_id}/approve", response_model=LeaveResponse)
 def approve_leave(
@@ -153,6 +210,18 @@ def approve_leave(
     leave.status = "approved"
     leave.approved_by = current_user.id
     leave.approved_at = db.func.now()
+    
+    # Update leave balance
+    current_year = datetime.now().year
+    balance = db.query(LeaveBalance).filter(
+        LeaveBalance.employee_id == leave.employee_id,
+        LeaveBalance.leave_type == leave.leave_type,
+        LeaveBalance.year == current_year
+    ).first()
+    
+    if balance:
+        balance.taken += leave.days_requested
+        balance.remaining = balance.total_allocated - balance.taken
     
     # Create notification for employee
     from ..models.notification import Notification
@@ -335,6 +404,33 @@ def get_pending_leave_requests(
     except Exception as e:
         print(f"Error in get_pending_leave_requests: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get pending requests: {str(e)}")
+
+@router.get("/balance")
+def get_leave_balance(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get current user's leave balance"""
+    try:
+        from datetime import datetime
+        current_year = datetime.now().year
+        
+        balances = db.query(LeaveBalance).filter(
+            and_(
+                LeaveBalance.employee_id == current_user.id,
+                LeaveBalance.year == current_year
+            )
+        ).all()
+        
+        return [{
+            "leave_type": balance.leave_type,
+            "total_allocated": balance.total_allocated,
+            "taken": balance.taken,
+            "remaining": balance.remaining
+        } for balance in balances]
+    except Exception as e:
+        print(f"Error in get_leave_balance: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get leave balance: {str(e)}")
 
 @router.get("/admin/notifications")
 def get_admin_leave_notifications(

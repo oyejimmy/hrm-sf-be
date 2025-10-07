@@ -123,37 +123,21 @@ class Bonus(BonusBase):
         from_attributes = True
 
 class PayslipResponse(Payslip):
-    pass
+    earnings: Optional[List[dict]] = None
+    deductions: Optional[List[dict]] = None
+    employee_name: Optional[str] = None
+    
+    class Config:
+        from_attributes = True
 
 class SalaryStructureResponse(SalaryStructure):
-    pass
+    employee_name: Optional[str] = None
+    
+    class Config:
+        from_attributes = True
 
 class BonusResponse(Bonus):
-    pass
-class PayslipResponse(BaseModel):
-    id: int
-    employee_id: int
-    pay_period: str
-    gross_pay: float
-    net_pay: float
-    status: str
-    class Config:
-        from_attributes = True
-
-class SalaryStructureResponse(BaseModel):
-    id: int
-    employee_id: int
-    basic_salary: float
-    allowances: float
-    is_active: bool
-    class Config:
-        from_attributes = True
-
-class BonusResponse(BaseModel):
-    id: int
-    employee_id: int
-    bonus_type: str
-    amount: float
-    status: str
+    employee_name: Optional[str] = None
+    
     class Config:
         from_attributes = True

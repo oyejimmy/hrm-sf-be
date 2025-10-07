@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import date, datetime
 
@@ -24,6 +24,7 @@ class LeaveResponse(LeaveBase):
     approved_at: Optional[datetime] = None
     rejection_reason: Optional[str] = None
     created_at: datetime
+    duration: Optional[float] = None
     
     class Config:
         from_attributes = True

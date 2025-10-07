@@ -1,15 +1,15 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from pydantic import BaseModel, Field
+from typing import Optional, List, Literal
 from datetime import datetime
 
 class ComplaintBase(BaseModel):
-    title: str
-    description: str
-    category: str
-    priority: str = "medium"
+    title: str = Field(..., min_length=1, max_length=200)
+    description: str = Field(..., min_length=1)
+    category: str = Field(..., min_length=1)
+    priority: Literal["low", "medium", "high"] = "medium"
 
 class ComplaintCreate(ComplaintBase):
-    attachments: Optional[List[str]] = None
+    pass
 
 class ComplaintUpdate(BaseModel):
     status: Optional[str] = None

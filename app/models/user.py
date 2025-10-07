@@ -25,5 +25,17 @@ class User(Base):
     # Relationships
     employee = relationship("Employee", back_populates="user", uselist=False)
     leave_requests = relationship("Leave", foreign_keys="Leave.employee_id", back_populates="employee")
-    attendance_records = relationship("Attendance", foreign_keys="Attendance.employee_id", back_populates="employee")
+    # attendance_records = relationship("Attendance", foreign_keys="Attendance.employee_id", back_populates="employee")  # Commented out - attendance module not available
     performance_reviews = relationship("Performance", foreign_keys="Performance.employee_id", back_populates="employee")
+    requests = relationship("Request", foreign_keys="Request.user_id", back_populates="user")
+    
+    @property
+    def full_name(self):
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        elif self.first_name:
+            return self.first_name
+        elif self.last_name:
+            return self.last_name
+        else:
+            return self.email.split('@')[0]

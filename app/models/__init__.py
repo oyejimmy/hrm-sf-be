@@ -3,7 +3,6 @@ from .employee import Employee
 from .skill import EmployeeSkill
 from .department import Department
 from .leave import Leave, LeaveBalance, LeavePolicy
-from .attendance import Attendance, BreakRecord
 from .performance import Performance
 from .asset import Asset, AssetRequest
 from .complaint import Complaint, ComplaintComment
@@ -12,7 +11,8 @@ from .training import TrainingProgram, TrainingSession, TrainingEnrollment, Trai
 from .recruitment import JobPosting, Candidate, JobApplication, Interview
 from .health_insurance import HealthInsurancePolicy, InsuranceDependent, InsuranceClaim, PanelHospital, CoverageDetail
 from .payroll import Payslip, PayslipEarning, PayslipDeduction, SalaryStructure, Bonus
-from .request import EmployeeRequest, RequestLog, HRDocument
+from .request import Request
+from .position import Position
 from .notification import Notification, Announcement, AnnouncementRead, Holiday, Task
 from .access_request import AccessRequest
 from .language import Language

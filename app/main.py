@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from .models import user, employee, department, position, notification, language, technical_skill, payroll  # Import models to ensure tables are created
+from .models import user, employee, department, position, notification, language, technical_skill, payroll, attendance  # Import models to ensure tables are created
 from .routers import (
-    auth, reports, employees, positions, leaves, performance,
+    auth, reports, employees, positions, leaves, attendance, performance,
     payroll, requests, complaints, training, assets, health_insurance,
     documents, notifications, announcements, holidays, recruitment, languages, technical_skills, leave_types
 )
@@ -27,7 +27,7 @@ app.include_router(reports.router)
 app.include_router(employees.router, prefix="/api/employees", tags=["employees"])
 app.include_router(positions.router, prefix="/api/positions", tags=["positions"])
 app.include_router(leaves.router)
-
+app.include_router(attendance.router)
 app.include_router(performance.router)
 # app.include_router(payroll.router)
 from .routers import payroll_simple

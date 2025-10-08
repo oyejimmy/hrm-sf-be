@@ -14,7 +14,7 @@ class NotificationCreate(NotificationBase):
     related_entity_type: Optional[str] = None
     related_entity_id: Optional[int] = None
     action_url: Optional[str] = None
-    metadata: Optional[dict] = None
+    extra_data: Optional[dict] = None
     expires_at: Optional[datetime] = None
 
 class NotificationUpdate(BaseModel):
@@ -29,7 +29,7 @@ class Notification(NotificationBase):
     related_entity_type: Optional[str] = None
     related_entity_id: Optional[int] = None
     action_url: Optional[str] = None
-    metadata: Optional[dict] = None
+    extra_data: Optional[dict] = None
     expires_at: Optional[datetime] = None
     created_at: datetime
     read_at: Optional[datetime] = None

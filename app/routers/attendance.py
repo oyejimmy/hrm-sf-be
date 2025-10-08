@@ -510,6 +510,41 @@ async def create_attendance_record(
     return attendance
 
 # Admin endpoints for compatibility
+@router.get("/admin/stats", response_model=dict)
+async def get_admin_attendance_stats(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get attendance statistics for admin dashboard"""
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Access denied")
+    
+    today = date.today()
+    
+    # Get today's stats
+    today_present = db.query(Attendance).filter(
+        and_(Attendance.date == today, Attendance.status == "present")
+    ).count()
+    
+    today_absent = db.query(Attendance).filter(
+        and_(Attendance.date == today, Attendance.status == "absent")
+    ).count()
+    
+    today_late = db.query(Attendance).filter(
+        and_(Attendance.date == today, Attendance.status == "late")
+    ).count()
+    
+    # Get total employees
+    total_employees = db.query(User).filter(User.role == "employee").count()
+    
+    return {
+        "todayPresent": today_present,
+        "todayAbsent": today_absent,
+        "todayLate": today_late,
+        "totalEmployees": total_employees,
+        "attendanceRate": round((today_present / max(total_employees, 1)) * 100, 1)
+    }
+
 @router.get("/admin/all-today", response_model=List[AttendanceResponse])
 async def get_all_attendance_today(
     current_user: User = Depends(get_current_user),

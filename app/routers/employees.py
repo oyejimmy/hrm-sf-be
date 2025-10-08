@@ -97,6 +97,8 @@ def get_managers(
         "position": mgr.position
     } for mgr in managers]
 
+
+
 @router.get("/me/profile")
 def get_my_profile(
     current_user: User = Depends(get_current_user),
@@ -666,6 +668,51 @@ def update_profile_images(
             "coverImage": employee_record.cover_image_url
         }
     }
+
+@router.get("/me")
+def get_my_employee_data(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Get current user's employee data for Leave Management and other features
+    """
+    try:
+        employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
+        if not employee:
+            raise HTTPException(status_code=404, detail="Employee profile not found")
+        
+        # Format data for Leave Management requirements
+        manager_name = None
+        if employee.manager and employee.manager.user:
+            manager_name = f"{employee.manager.user.first_name} {employee.manager.user.last_name}"
+        
+        department_name = employee.department.name if employee.department else None
+        
+        return {
+            "id": employee.id,
+            "user_id": employee.user_id,
+            "employee_id": employee.employee_id,
+            "name": f"{current_user.first_name} {current_user.last_name}",
+            "email": current_user.email,
+            "phone": current_user.phone,
+            "position": employee.position,
+            "department": department_name,
+            "manager": manager_name,
+            "salary": employee.salary,
+            "employment_status": employee.employment_status,
+            "work_location": employee.work_location,
+            "hire_date": str(employee.hire_date) if employee.hire_date else None,
+            "role": current_user.role,
+            "status": getattr(current_user, 'status', 'active'),
+            "active": getattr(current_user, 'active', True),
+            "created_at": employee.created_at.isoformat() if employee.created_at else None
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching employee data: {str(e)}")
 
 @router.get("/{employee_id}")
 def get_employee_details(

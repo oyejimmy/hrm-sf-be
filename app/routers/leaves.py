@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, func
 from typing import List, Optional
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from ..database import get_db
 from ..models.user import User
 from ..models.leave import Leave, LeaveBalance
@@ -78,6 +78,35 @@ def get_my_leaves(
             detail=f"Failed to fetch leave requests: {str(e)}"
         )
 
+
+
+@router.get("/balance")
+def get_leave_balance(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get current user's leave balance"""
+    try:
+        from datetime import datetime
+        current_year = datetime.now().year
+        
+        balances = db.query(LeaveBalance).filter(
+            and_(
+                LeaveBalance.employee_id == current_user.id,
+                LeaveBalance.year == current_year
+            )
+        ).all()
+        
+        return [{
+            "leave_type": balance.leave_type,
+            "total_allocated": balance.total_allocated,
+            "taken": balance.taken,
+            "remaining": balance.remaining
+        } for balance in balances]
+    except Exception as e:
+        print(f"Error in get_leave_balance: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get leave balance: {str(e)}")
+
 @router.get("/{leave_id}", response_model=LeaveResponse)
 def get_leave(
     leave_id: int,
@@ -116,7 +145,7 @@ def create_leave_request(
 ):
     try:
         # Calculate days requested if not provided
-        if not hasattr(leave_data, 'days_requested') or leave_data.days_requested is None:
+        if leave_data.days_requested is None or leave_data.days_requested == 0:
             days_requested = (leave_data.end_date - leave_data.start_date).days + 1
         else:
             days_requested = leave_data.days_requested
@@ -190,60 +219,39 @@ def approve_leave(
     current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
     db: Session = Depends(get_db)
 ):
-    leave = db.query(Leave).filter(Leave.id == leave_id).first()
-    if not leave:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Leave request not found"
-        )
-    
-    # Team leads can only approve their team's leaves
-    if current_user.role == "team_lead":
-        from ..models.employee import Employee
-        employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
-        if not employee or employee.manager_id != current_user.id:
+    try:
+        leave = db.query(Leave).filter(Leave.id == leave_id).first()
+        if not leave:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied"
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Leave request not found"
             )
-    
-    leave.status = "approved"
-    leave.approved_by = current_user.id
-    leave.approved_at = db.func.now()
-    
-    # Update leave balance
-    current_year = datetime.now().year
-    balance = db.query(LeaveBalance).filter(
-        LeaveBalance.employee_id == leave.employee_id,
-        LeaveBalance.leave_type == leave.leave_type,
-        LeaveBalance.year == current_year
-    ).first()
-    
-    if balance:
-        balance.taken += leave.days_requested
-        balance.remaining = balance.total_allocated - balance.taken
-    
-    # Create notification for employee
-    from ..models.notification import Notification
-    
-    notification = Notification(
-        recipient_id=leave.employee_id,
-        sender_id=current_user.id,
-        title="Leave Request Approved",
-        message=f"Your {leave.leave_type} leave request from {leave.start_date} to {leave.end_date} has been approved by {current_user.first_name} {current_user.last_name}",
-        notification_type="leave_approval",
-        priority="high",
-        is_system_generated=True,
-        related_entity_type="leave_request",
-        related_entity_id=leave.id,
-        action_url=f"/employee/leaves/{leave.id}"
-    )
-    db.add(notification)
-    
-    db.commit()
-    db.refresh(leave)
-    
-    return leave
+        
+        # Team leads can only approve their team's leaves
+        if current_user.role == "team_lead":
+            from ..models.employee import Employee
+            employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+            if not employee or employee.manager_id != current_user.id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied"
+                )
+        
+        leave.status = "approved"
+        leave.approved_by = current_user.id
+        leave.approved_at = datetime.now(timezone.utc)
+        
+        db.commit()
+        db.refresh(leave)
+        
+        return leave
+    except Exception as e:
+        db.rollback()
+        print(f"Error approving leave: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to approve leave request: {str(e)}"
+        )
 
 @router.put("/{leave_id}/reject", response_model=LeaveResponse)
 def reject_leave(
@@ -252,49 +260,40 @@ def reject_leave(
     current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
     db: Session = Depends(get_db)
 ):
-    leave = db.query(Leave).filter(Leave.id == leave_id).first()
-    if not leave:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Leave request not found"
-        )
-    
-    # Team leads can only reject their team's leaves
-    if current_user.role == "team_lead":
-        from ..models.employee import Employee
-        employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
-        if not employee or employee.manager_id != current_user.id:
+    try:
+        leave = db.query(Leave).filter(Leave.id == leave_id).first()
+        if not leave:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied"
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Leave request not found"
             )
-    
-    leave.status = "rejected"
-    leave.approved_by = current_user.id
-    leave.approved_at = db.func.now()
-    leave.rejection_reason = rejection_data.rejection_reason
-    
-    # Create notification for employee
-    from ..models.notification import Notification
-    
-    notification = Notification(
-        recipient_id=leave.employee_id,
-        sender_id=current_user.id,
-        title="Leave Request Rejected",
-        message=f"Your {leave.leave_type} leave request from {leave.start_date} to {leave.end_date} has been rejected by {current_user.first_name} {current_user.last_name}. Reason: {rejection_data.rejection_reason or 'No reason provided'}",
-        notification_type="leave_rejection",
-        priority="high",
-        is_system_generated=True,
-        related_entity_type="leave_request",
-        related_entity_id=leave.id,
-        action_url=f"/employee/leaves/{leave.id}"
-    )
-    db.add(notification)
-    
-    db.commit()
-    db.refresh(leave)
-    
-    return leave
+        
+        # Team leads can only reject their team's leaves
+        if current_user.role == "team_lead":
+            from ..models.employee import Employee
+            employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+            if not employee or employee.manager_id != current_user.id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied"
+                )
+        
+        leave.status = "rejected"
+        leave.approved_by = current_user.id
+        leave.approved_at = datetime.now(timezone.utc)
+        leave.rejection_reason = rejection_data.rejection_reason
+        
+        db.commit()
+        db.refresh(leave)
+        
+        return leave
+    except Exception as e:
+        db.rollback()
+        print(f"Error rejecting leave: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to reject leave request: {str(e)}"
+        )
 
 @router.delete("/{leave_id}")
 def cancel_leave(
@@ -404,33 +403,6 @@ def get_pending_leave_requests(
     except Exception as e:
         print(f"Error in get_pending_leave_requests: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get pending requests: {str(e)}")
-
-@router.get("/balance")
-def get_leave_balance(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Get current user's leave balance"""
-    try:
-        from datetime import datetime
-        current_year = datetime.now().year
-        
-        balances = db.query(LeaveBalance).filter(
-            and_(
-                LeaveBalance.employee_id == current_user.id,
-                LeaveBalance.year == current_year
-            )
-        ).all()
-        
-        return [{
-            "leave_type": balance.leave_type,
-            "total_allocated": balance.total_allocated,
-            "taken": balance.taken,
-            "remaining": balance.remaining
-        } for balance in balances]
-    except Exception as e:
-        print(f"Error in get_leave_balance: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to get leave balance: {str(e)}")
 
 @router.get("/admin/notifications")
 def get_admin_leave_notifications(

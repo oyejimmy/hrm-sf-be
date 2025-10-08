@@ -6,7 +6,7 @@ class LeaveBase(BaseModel):
     leave_type: str
     start_date: date
     end_date: date
-    days_requested: float
+    days_requested: Optional[float] = None
     reason: Optional[str] = None
 
 class LeaveCreate(LeaveBase):

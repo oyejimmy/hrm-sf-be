@@ -25,7 +25,7 @@ class User(Base):
     # Relationships
     employee = relationship("Employee", back_populates="user", uselist=False)
     leave_requests = relationship("Leave", foreign_keys="Leave.employee_id", back_populates="employee")
-    # attendance_records = relationship("Attendance", foreign_keys="Attendance.employee_id", back_populates="employee")  # Commented out - attendance module not available
+    attendance_records = relationship("Attendance", foreign_keys="Attendance.employee_id", back_populates="employee")
     performance_reviews = relationship("Performance", foreign_keys="Performance.employee_id", back_populates="employee")
     requests = relationship("Request", foreign_keys="Request.user_id", back_populates="user")
     

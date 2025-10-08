@@ -3,11 +3,10 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional
 from ..database import get_db
-from ..models import Notification, Announcement, AnnouncementRead, Holiday, Task, User
+from ..models.notification import Notification
+from ..models.user import User
 from ..schemas.notification import (
-    NotificationCreate, NotificationUpdate, NotificationResponse,
-    AnnouncementCreate, AnnouncementResponse, HolidayCreate, HolidayResponse,
-    TaskCreate, TaskResponse
+    NotificationCreate, NotificationUpdate, NotificationResponse
 )
 from ..auth import get_current_user
 
@@ -142,128 +141,3 @@ def mark_all_notifications_read(
     db.commit()
     return {"message": "All notifications marked as read"}
 
-# Announcements
-@router.get("/announcements/", response_model=List[AnnouncementResponse])
-def get_announcements(
-    skip: int = 0,
-    limit: int = 100,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    return db.query(Announcement).offset(skip).limit(limit).all()
-
-@router.post("/announcements/", response_model=AnnouncementResponse)
-def create_announcement(
-    announcement: AnnouncementCreate,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    if current_user.role not in ["admin", "hr"]:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    
-    db_announcement = Announcement(**announcement.dict(), created_by=current_user.id)
-    db.add(db_announcement)
-    db.commit()
-    db.refresh(db_announcement)
-    return db_announcement
-
-@router.put("/announcements/{announcement_id}/read")
-def mark_announcement_read(
-    announcement_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    # Check if already read
-    existing_read = db.query(AnnouncementRead).filter(
-        AnnouncementRead.announcement_id == announcement_id,
-        AnnouncementRead.user_id == current_user.id
-    ).first()
-    
-    if not existing_read:
-        read_record = AnnouncementRead(
-            announcement_id=announcement_id,
-            user_id=current_user.id
-        )
-        db.add(read_record)
-        db.commit()
-    
-    return {"message": "Announcement marked as read"}
-
-# Holidays
-@router.get("/holidays/", response_model=List[HolidayResponse])
-def get_holidays(
-    skip: int = 0,
-    limit: int = 100,
-    year: Optional[int] = None,
-    db: Session = Depends(get_db)
-):
-    query = db.query(Holiday)
-    if year:
-        query = query.filter(Holiday.date.like(f"{year}%"))
-    return query.offset(skip).limit(limit).all()
-
-@router.post("/holidays/", response_model=HolidayResponse)
-def create_holiday(
-    holiday: HolidayCreate,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    if current_user.role not in ["admin", "hr"]:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    
-    db_holiday = Holiday(**holiday.dict())
-    db.add(db_holiday)
-    db.commit()
-    db.refresh(db_holiday)
-    return db_holiday
-
-# Tasks
-@router.get("/tasks/", response_model=List[TaskResponse])
-def get_tasks(
-    skip: int = 0,
-    limit: int = 100,
-    assigned_to: Optional[int] = None,
-    status: Optional[str] = None,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    query = db.query(Task)
-    if current_user.role == "employee":
-        query = query.filter(Task.assigned_to == current_user.id)
-    elif assigned_to:
-        query = query.filter(Task.assigned_to == assigned_to)
-    if status:
-        query = query.filter(Task.status == status)
-    return query.offset(skip).limit(limit).all()
-
-@router.post("/tasks/", response_model=TaskResponse)
-def create_task(
-    task: TaskCreate,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    if current_user.role not in ["admin", "hr", "team_lead"]:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    
-    db_task = Task(**task.dict(), created_by=current_user.id)
-    db.add(db_task)
-    db.commit()
-    db.refresh(db_task)
-    return db_task
-
-@router.put("/tasks/{task_id}/complete")
-def complete_task(
-    task_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    task = db.query(Task).filter(Task.id == task_id).first()
-    if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
-    
-    if task.assigned_to != current_user.id and current_user.role not in ["admin", "hr"]:
-        raise HTTPException(status_code=403, detail="Not authorized")
-    
-    task.status = "completed"
-    db.commit()
-    return {"message": "Task completed successfully"}

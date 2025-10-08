@@ -12,7 +12,7 @@ from ..auth import get_current_user, require_role
 
 router = APIRouter(prefix="/api/leaves", tags=["Leave Management"])
 
-@router.get("/", response_model=List[LeaveResponse])
+@router.get("/")
 def get_leaves(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=1000),
@@ -40,7 +40,46 @@ def get_leaves(
         query = query.filter(Leave.employee_id == employee_id)
     
     leaves = query.offset(skip).limit(limit).all()
-    return leaves
+    
+    # Format response with employee details
+    result = []
+    for leave in leaves:
+        from ..models.employee import Employee
+        from ..models.department import Department
+        from ..models.position import Position
+        user = db.query(User).filter(User.id == leave.employee_id).first()
+        employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+        department = None
+        position = None
+        if employee:
+            if employee.department_id:
+                department = db.query(Department).filter(Department.id == employee.department_id).first()
+            if employee.position_id:
+                position = db.query(Position).filter(Position.id == employee.position_id).first()
+        result.append({
+            "id": leave.id,
+            "employee_id": leave.employee_id,
+            "leave_type": leave.leave_type,
+            "start_date": leave.start_date,
+            "end_date": leave.end_date,
+            "days_requested": leave.days_requested,
+            "reason": leave.reason,
+            "status": leave.status,
+            "created_at": leave.created_at,
+            "approved_by": leave.approved_by,
+            "approved_at": leave.approved_at,
+            "rejection_reason": leave.rejection_reason,
+            "employeeName": user.full_name if user else "Unknown",
+            "employeeId": employee.employee_id if employee else str(leave.employee_id),
+            "department": department.name if department else None,
+            "position": position.title if position else employee.position if employee else None,
+            "leaveType": leave.leave_type,
+            "startDate": leave.start_date.isoformat(),
+            "endDate": leave.end_date.isoformat(),
+            "daysRequested": leave.days_requested
+        })
+    
+    return result
 
 @router.get("/my-leaves", response_model=List[LeaveResponse])
 def get_my_leaves(
@@ -213,9 +252,69 @@ def create_leave_request(
             detail=f"Failed to create leave request: {str(e)}"
         )
 
-@router.put("/{leave_id}/approve", response_model=LeaveResponse)
+@router.put("/{leave_id}/approve")
 def approve_leave(
     leave_id: int,
+    current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
+    db: Session = Depends(get_db)
+):
+    try:
+        print(f"Attempting to approve leave ID: {leave_id}")
+        print(f"Current user: {current_user.email}, Role: {current_user.role}")
+        
+        # Check if leave exists
+        leave = db.query(Leave).filter(Leave.id == leave_id).first()
+        if not leave:
+            print(f"Leave with ID {leave_id} not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Leave request not found"
+            )
+        
+        print(f"Found leave: ID={leave.id}, Status={leave.status}, Employee={leave.employee_id}")
+        
+        if leave.status != "pending":
+            print(f"Leave status is {leave.status}, not pending")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Cannot approve leave with status: {leave.status}"
+            )
+        
+        # Update leave status
+        print("Updating leave status to approved")
+        leave.status = "approved"
+        leave.approved_by = current_user.id
+        leave.approved_at = datetime.now(timezone.utc)
+        
+        print("Committing changes to database")
+        db.commit()
+        db.refresh(leave)
+        
+        print("Leave approved successfully")
+        return {
+            "message": "Leave request approved successfully",
+            "leave_id": leave.id,
+            "status": leave.status
+        }
+        
+    except HTTPException as he:
+        print(f"HTTP Exception: {he.detail}")
+        db.rollback()
+        raise
+    except Exception as e:
+        print(f"Unexpected error approving leave: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Internal server error: {str(e)}"
+        )
+
+@router.put("/{leave_id}/reject")
+def reject_leave(
+    leave_id: int,
+    rejection_data: dict,
     current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
     db: Session = Depends(get_db)
 ):
@@ -227,45 +326,10 @@ def approve_leave(
                 detail="Leave request not found"
             )
         
-        # Team leads can only approve their team's leaves
-        if current_user.role == "team_lead":
-            from ..models.employee import Employee
-            employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
-            if not employee or employee.manager_id != current_user.id:
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail="Access denied"
-                )
-        
-        leave.status = "approved"
-        leave.approved_by = current_user.id
-        leave.approved_at = datetime.now(timezone.utc)
-        
-        db.commit()
-        db.refresh(leave)
-        
-        return leave
-    except Exception as e:
-        db.rollback()
-        print(f"Error approving leave: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to approve leave request: {str(e)}"
-        )
-
-@router.put("/{leave_id}/reject", response_model=LeaveResponse)
-def reject_leave(
-    leave_id: int,
-    rejection_data: LeaveUpdate,
-    current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
-    db: Session = Depends(get_db)
-):
-    try:
-        leave = db.query(Leave).filter(Leave.id == leave_id).first()
-        if not leave:
+        if leave.status != "pending":
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Leave request not found"
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Only pending leave requests can be rejected"
             )
         
         # Team leads can only reject their team's leaves
@@ -278,21 +342,28 @@ def reject_leave(
                     detail="Access denied"
                 )
         
+        # Update leave status
         leave.status = "rejected"
         leave.approved_by = current_user.id
         leave.approved_at = datetime.now(timezone.utc)
-        leave.rejection_reason = rejection_data.rejection_reason
+        leave.rejection_reason = rejection_data.get('rejection_reason', '')
         
+        # Commit the changes
         db.commit()
         db.refresh(leave)
         
         return leave
+    except HTTPException:
+        db.rollback()
+        raise
     except Exception as e:
         db.rollback()
         print(f"Error rejecting leave: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to reject leave request: {str(e)}"
+            detail="Failed to reject leave request"
         )
 
 @router.delete("/{leave_id}")
@@ -343,13 +414,17 @@ def get_admin_leave_stats(
         current_month = datetime.now().month
         current_year = datetime.now().year
         
+        # Use strftime for SQLite compatibility
+        print(f"DEBUG: Looking for approved leaves in month {current_month:02d} year {current_year}")
         approved_this_month = db.query(Leave).filter(
             and_(
                 Leave.status == "approved",
-                func.extract('month', Leave.start_date) == current_month,
-                func.extract('year', Leave.start_date) == current_year
+                Leave.approved_at.isnot(None),
+                func.strftime('%m', Leave.approved_at) == f"{current_month:02d}",
+                func.strftime('%Y', Leave.approved_at) == str(current_year)
             )
         ).count()
+        print(f"DEBUG: Found {approved_this_month} approved leaves this month")
         
         # Get rejected leaves count
         rejected_count = db.query(Leave).filter(Leave.status == "rejected").count()
@@ -385,11 +460,24 @@ def get_pending_leave_requests(
         # Format response with employee details
         result = []
         for leave in leaves:
-            employee = db.query(User).filter(User.id == leave.employee_id).first()
+            from ..models.employee import Employee
+            from ..models.department import Department
+            from ..models.position import Position
+            user = db.query(User).filter(User.id == leave.employee_id).first()
+            employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+            department = None
+            position = None
+            if employee:
+                if employee.department_id:
+                    department = db.query(Department).filter(Department.id == employee.department_id).first()
+                if employee.position_id:
+                    position = db.query(Position).filter(Position.id == employee.position_id).first()
             result.append({
                 "id": leave.id,
-                "employeeId": leave.employee_id,
-                "employeeName": employee.full_name if employee else "Unknown",
+                "employeeId": employee.employee_id if employee else str(leave.employee_id),
+                "employeeName": user.full_name if user else "Unknown",
+                "department": department.name if department else None,
+                "position": position.title if position else employee.position if employee else None,
                 "leaveType": leave.leave_type,
                 "startDate": leave.start_date.isoformat(),
                 "endDate": leave.end_date.isoformat(),
@@ -403,6 +491,38 @@ def get_pending_leave_requests(
     except Exception as e:
         print(f"Error in get_pending_leave_requests: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get pending requests: {str(e)}")
+
+@router.get("/debug/{leave_id}")
+def debug_leave(
+    leave_id: int,
+    current_user: User = Depends(require_role(["admin", "hr", "team_lead"])),
+    db: Session = Depends(get_db)
+):
+    """Debug endpoint to check leave data"""
+    try:
+        leave = db.query(Leave).filter(Leave.id == leave_id).first()
+        if not leave:
+            return {"error": f"Leave {leave_id} not found"}
+        
+        from ..models.employee import Employee
+        user = db.query(User).filter(User.id == leave.employee_id).first()
+        employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+        
+        return {
+            "leave_id": leave.id,
+            "employee_id": leave.employee_id,
+            "employee_name": user.full_name if user else "Unknown",
+            "employee_code": employee.employee_id if employee else str(leave.employee_id),
+            "leave_type": leave.leave_type,
+            "status": leave.status,
+            "start_date": str(leave.start_date),
+            "end_date": str(leave.end_date),
+            "approved_by": leave.approved_by,
+            "approved_at": str(leave.approved_at) if leave.approved_at else None,
+            "created_at": str(leave.created_at) if leave.created_at else None
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 @router.get("/admin/notifications")
 def get_admin_leave_notifications(
@@ -419,14 +539,16 @@ def get_admin_leave_notifications(
         ).order_by(Leave.created_at.desc()).limit(10).all()
         
         for leave in recent_leaves:
-            employee = db.query(User).filter(User.id == leave.employee_id).first()
-            if employee:
+            from ..models.employee import Employee
+            user = db.query(User).filter(User.id == leave.employee_id).first()
+            employee = db.query(Employee).filter(Employee.user_id == leave.employee_id).first()
+            if user:
                 notifications.append({
                     "id": f"leave_{leave.id}",
                     "type": "leave_request",
-                    "employeeId": str(leave.employee_id),
-                    "employeeName": employee.full_name,
-                    "message": f"{employee.full_name} requested {leave.leave_type} leave from {leave.start_date} to {leave.end_date}",
+                    "employeeId": employee.employee_id if employee else str(leave.employee_id),
+                    "employeeName": user.full_name,
+                    "message": f"{user.full_name} requested {leave.leave_type} leave from {leave.start_date} to {leave.end_date}",
                     "timestamp": leave.created_at.isoformat() if leave.created_at else datetime.now().isoformat(),
                     "read": False,
                     "priority": "medium",

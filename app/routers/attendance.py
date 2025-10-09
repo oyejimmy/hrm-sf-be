@@ -457,7 +457,7 @@ async def get_attendance_stats(
 @router.get("/", response_model=List[AttendanceResponse])
 async def get_all_attendance(
     skip: int = Query(0, description="Number of records to skip"),
-    limit: int = Query(100, description="Number of records to fetch"),
+    limit: int = Query(1000, description="Number of records to fetch"),
     employee_id: Optional[int] = Query(None, description="Filter by employee ID"),
     date_from: Optional[date] = Query(None, description="Start date filter"),
     date_to: Optional[date] = Query(None, description="End date filter"),
@@ -470,7 +470,7 @@ async def get_all_attendance(
     
     query = db.query(Attendance)
     
-    # Apply filters
+    # Apply filters only if provided
     if employee_id:
         query = query.filter(Attendance.employee_id == employee_id)
     if date_from:
@@ -478,7 +478,12 @@ async def get_all_attendance(
     if date_to:
         query = query.filter(Attendance.date <= date_to)
     
-    records = query.order_by(Attendance.date.desc()).offset(skip).limit(limit).all()
+    # Get all records without skip/limit if no filters applied
+    if not employee_id and not date_from and not date_to and skip == 0:
+        records = query.order_by(Attendance.date.desc()).all()
+    else:
+        records = query.order_by(Attendance.date.desc()).offset(skip).limit(limit).all()
+    
     return records
 
 @router.post("/", response_model=AttendanceResponse)
@@ -510,53 +515,9 @@ async def create_attendance_record(
     return attendance
 
 # Admin endpoints for compatibility
-@router.get("/admin/stats", response_model=dict)
-async def get_admin_attendance_stats(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Get attendance statistics for admin dashboard"""
-    if current_user.role not in ["admin", "hr"]:
-        raise HTTPException(status_code=403, detail="Access denied")
-    
-    today = date.today()
-    
-    # Get today's stats
-    today_present = db.query(Attendance).filter(
-        and_(Attendance.date == today, Attendance.status == "present")
-    ).count()
-    
-    today_absent = db.query(Attendance).filter(
-        and_(Attendance.date == today, Attendance.status == "absent")
-    ).count()
-    
-    today_late = db.query(Attendance).filter(
-        and_(Attendance.date == today, Attendance.status == "late")
-    ).count()
-    
-    # Get total employees
-    total_employees = db.query(User).filter(User.role == "employee").count()
-    
-    return {
-        "todayPresent": today_present,
-        "todayAbsent": today_absent,
-        "todayLate": today_late,
-        "totalEmployees": total_employees,
-        "attendanceRate": round((today_present / max(total_employees, 1)) * 100, 1)
-    }
 
-@router.get("/admin/all-today", response_model=List[AttendanceResponse])
-async def get_all_attendance_today(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Get all attendance records for today (Admin/HR only)"""
-    if current_user.role not in ["admin", "hr"]:
-        raise HTTPException(status_code=403, detail="Access denied")
-    
-    today = date.today()
-    records = db.query(Attendance).filter(Attendance.date == today).all()
-    return records
+
+
 
 @router.get("/admin/notifications", response_model=List[dict])
 async def get_admin_attendance_notifications(
@@ -602,3 +563,32 @@ async def process_auto_absence(
         raise HTTPException(status_code=403, detail="Access denied")
     
     return {"message": "Auto-absence processing completed", "status": "success"}
+
+@router.get("/all", response_model=List[dict])
+async def get_all_attendance_records(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get all attendance records with employee details"""
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Access denied")
+    
+    records = db.query(Attendance).join(User, Attendance.employee_id == User.id).all()
+    
+    result = []
+    for record in records:
+        result.append({
+            "id": record.id,
+            "employee_id": record.employee_id,
+            "employee_email": record.employee.email,
+            "employee_name": f"{record.employee.first_name} {record.employee.last_name}",
+            "date": record.date,
+            "check_in": record.check_in,
+            "check_out": record.check_out,
+            "status": record.status,
+            "hours_worked": record.hours_worked,
+            "notes": record.notes,
+            "created_at": record.created_at
+        })
+    
+    return result

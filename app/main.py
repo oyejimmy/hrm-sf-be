@@ -5,7 +5,7 @@ from .models import user, employee, department, position, notification, language
 from .routers import (
     auth, reports, employees, positions, leaves, attendance, performance,
     payroll, requests, complaints, training, assets, health_insurance,
-    documents, notifications, announcements, holidays, recruitment, languages, technical_skills, leave_types
+    documents, notifications, announcements, holidays, recruitment, languages, technical_skills, leave_types, admin
 )
 
 app = FastAPI(title="HRM System API")
@@ -45,6 +45,7 @@ app.include_router(recruitment.router)
 app.include_router(languages.router)
 app.include_router(technical_skills.router)
 app.include_router(leave_types.router)
+app.include_router(admin.router)
 
 @app.get("/")
 def read_root():

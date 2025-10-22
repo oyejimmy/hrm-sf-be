@@ -4,6 +4,7 @@ from .skill import EmployeeSkill
 from .department import Department
 from .leave import Leave, LeaveBalance, LeavePolicy
 from .performance import Performance
+from .attendance import Attendance, BreakRecord
 from .asset import Asset, AssetRequest
 from .complaint import Complaint, ComplaintComment
 from .document import Document, DocumentVersion, DocumentType

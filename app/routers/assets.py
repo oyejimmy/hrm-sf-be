@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_
 from typing import List, Optional
 from datetime import date, datetime
+from pydantic import BaseModel
 from ..database import get_db
 from ..models import Asset, AssetRequest, User, Employee
 from ..schemas.asset import AssetCreate, AssetUpdate, AssetResponse, AssetRequestCreate, AssetRequestUpdate, AssetRequestResponse
@@ -44,13 +45,6 @@ def get_assets(
     
     return query.offset(skip).limit(limit).all()
 
-@router.get("/my-assets", response_model=List[AssetResponse])
-def get_my_assets(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    return db.query(Asset).filter(Asset.assigned_to == current_user.id).all()
-
 @router.get("/stats")
 def get_asset_stats(
     db: Session = Depends(get_db),
@@ -79,6 +73,146 @@ def get_asset_stats(
             "maintenance_assets": db.query(Asset).filter(Asset.status == "maintenance").count(),
             "pending_requests": db.query(AssetRequest).filter(AssetRequest.status == "pending").count()
         }
+
+@router.get("/my-assets", response_model=List[AssetResponse])
+def get_my_assets(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    return db.query(Asset).filter(Asset.assigned_to == current_user.id).all()
+
+@router.get("/available", response_model=List[AssetResponse])
+def get_available_assets(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    return db.query(Asset).filter(Asset.status == "available").all()
+
+@router.get("/my-requests", response_model=List[AssetRequestResponse])
+def get_my_requests(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    return db.query(AssetRequest).filter(
+        AssetRequest.employee_id == current_user.id
+    ).order_by(AssetRequest.created_at.desc()).all()
+
+@router.get("/activity")
+def get_asset_activity(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Return recent asset activities for the current user
+    activities = []
+    
+    # Get recent assignments
+    recent_assets = db.query(Asset).filter(
+        and_(Asset.assigned_to == current_user.id, Asset.assigned_date.isnot(None))
+    ).order_by(Asset.assigned_date.desc()).limit(5).all()
+    
+    for asset in recent_assets:
+        activities.append({
+            "id": f"assign_{asset.id}",
+            "description": f"{asset.name} assigned to you",
+            "created_at": asset.assigned_date.isoformat() if asset.assigned_date else None
+        })
+    
+    # Get recent requests
+    recent_requests = db.query(AssetRequest).filter(
+        AssetRequest.employee_id == current_user.id
+    ).order_by(AssetRequest.created_at.desc()).limit(5).all()
+    
+    for request in recent_requests:
+        status_text = "submitted" if request.status == "pending" else request.status
+        activities.append({
+            "id": f"request_{request.id}",
+            "description": f"Asset request {status_text}",
+            "created_at": request.created_at.isoformat()
+        })
+    
+    # Sort by date and return latest 10
+    activities.sort(key=lambda x: x["created_at"] or "", reverse=True)
+    return activities[:10]
+
+
+
+class AssetReturnRequest(BaseModel):
+    asset_id: int
+    reason: str
+
+@router.post("/return")
+def return_asset(
+    return_data: AssetReturnRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Check if asset is assigned to current user
+    asset = db.query(Asset).filter(
+        and_(Asset.id == return_data.asset_id, Asset.assigned_to == current_user.id)
+    ).first()
+    
+    if not asset:
+        raise HTTPException(status_code=404, detail="Asset not found or not assigned to you")
+    
+    # Create a return request
+    return_request = AssetRequest(
+        employee_id=current_user.id,
+        asset_id=return_data.asset_id,
+        asset_type=asset.asset_type,
+        request_type="return",
+        reason=return_data.reason,
+        requested_date=date.today(),
+        status="pending"
+    )
+    
+    db.add(return_request)
+    db.commit()
+    
+    return {"message": "Asset return request submitted successfully"}
+
+# Asset Requests - moved before parameterized routes
+@router.get("/requests", response_model=List[AssetRequestResponse])
+def get_asset_requests(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, le=1000),
+    status: Optional[str] = Query(None),
+    request_type: Optional[str] = Query(None),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    query = db.query(AssetRequest)
+    
+    # Role-based filtering
+    if current_user.role == "employee":
+        query = query.filter(AssetRequest.employee_id == current_user.id)
+    
+    # Apply filters
+    if status:
+        query = query.filter(AssetRequest.status == status)
+    if request_type:
+        query = query.filter(AssetRequest.request_type == request_type)
+    
+    return query.order_by(AssetRequest.created_at.desc()).offset(skip).limit(limit).all()
+
+@router.post("/requests", response_model=AssetRequestResponse)
+def create_asset_request(
+    request: AssetRequestCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Validate asset exists if asset_id is provided
+    if request.asset_id:
+        asset = db.query(Asset).filter(Asset.id == request.asset_id).first()
+        if not asset:
+            raise HTTPException(status_code=404, detail="Asset not found")
+        if asset.status != "available" and request.request_type == "request":
+            raise HTTPException(status_code=400, detail="Asset is not available")
+    
+    db_request = AssetRequest(**request.dict(), employee_id=current_user.id)
+    db.add(db_request)
+    db.commit()
+    db.refresh(db_request)
+    return db_request
 
 @router.get("/{asset_id}", response_model=AssetResponse)
 def get_asset(asset_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
@@ -222,30 +356,6 @@ def delete_asset(
     db.commit()
     return {"message": "Asset deleted successfully"}
 
-# Asset Requests
-@router.get("/requests/", response_model=List[AssetRequestResponse])
-def get_asset_requests(
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, le=1000),
-    status: Optional[str] = Query(None),
-    request_type: Optional[str] = Query(None),
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    query = db.query(AssetRequest)
-    
-    # Role-based filtering
-    if current_user.role == "employee":
-        query = query.filter(AssetRequest.employee_id == current_user.id)
-    
-    # Apply filters
-    if status:
-        query = query.filter(AssetRequest.status == status)
-    if request_type:
-        query = query.filter(AssetRequest.request_type == request_type)
-    
-    return query.order_by(AssetRequest.created_at.desc()).offset(skip).limit(limit).all()
-
 @router.get("/requests/my-requests", response_model=List[AssetRequestResponse])
 def get_my_asset_requests(
     db: Session = Depends(get_db),
@@ -254,26 +364,6 @@ def get_my_asset_requests(
     return db.query(AssetRequest).filter(
         AssetRequest.employee_id == current_user.id
     ).order_by(AssetRequest.created_at.desc()).all()
-
-@router.post("/requests/", response_model=AssetRequestResponse)
-def create_asset_request(
-    request: AssetRequestCreate,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    # Validate asset exists if asset_id is provided
-    if request.asset_id:
-        asset = db.query(Asset).filter(Asset.id == request.asset_id).first()
-        if not asset:
-            raise HTTPException(status_code=404, detail="Asset not found")
-        if asset.status != "available" and request.request_type == "request":
-            raise HTTPException(status_code=400, detail="Asset is not available")
-    
-    db_request = AssetRequest(**request.dict(), employee_id=current_user.id)
-    db.add(db_request)
-    db.commit()
-    db.refresh(db_request)
-    return db_request
 
 @router.put("/requests/{request_id}", response_model=AssetRequestResponse)
 def update_asset_request(

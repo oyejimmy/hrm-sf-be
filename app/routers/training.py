@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
+from datetime import date
 from ..database import get_db
 from ..models import TrainingProgram, TrainingSession, TrainingEnrollment, TrainingRoadmap, User, Employee
 from ..schemas.training import (
@@ -18,15 +19,15 @@ def get_training_programs(
     skip: int = 0,
     limit: int = 100,
     category: Optional[str] = None,
-    status: Optional[str] = None,
+    is_active: Optional[bool] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     query = db.query(TrainingProgram)
     if category:
         query = query.filter(TrainingProgram.category == category)
-    if status:
-        query = query.filter(TrainingProgram.status == status)
+    if is_active is not None:
+        query = query.filter(TrainingProgram.is_active == is_active)
     return query.offset(skip).limit(limit).all()
 
 @router.get("/programs/{program_id}", response_model=TrainingProgramResponse)
@@ -99,7 +100,6 @@ def get_training_sessions(
     skip: int = 0,
     limit: int = 100,
     program_id: Optional[int] = None,
-    instructor_id: Optional[int] = None,
     status: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
@@ -107,8 +107,6 @@ def get_training_sessions(
     query = db.query(TrainingSession)
     if program_id:
         query = query.filter(TrainingSession.program_id == program_id)
-    if instructor_id:
-        query = query.filter(TrainingSession.instructor_id == instructor_id)
     if status:
         query = query.filter(TrainingSession.status == status)
     return query.offset(skip).limit(limit).all()
@@ -179,7 +177,8 @@ def enroll_in_training(
     db_enrollment = TrainingEnrollment(
         employee_id=employee_id,
         program_id=program_id,
-        enrolled_by=current_user.id,
+        enrollment_date=date.today(),
+        assigned_by=current_user.id,
         status="enrolled"
     )
     db.add(db_enrollment)
@@ -190,7 +189,7 @@ def enroll_in_training(
 @router.put("/enrollments/{enrollment_id}/progress")
 def update_training_progress(
     enrollment_id: int,
-    progress: int,
+    progress_data: dict,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -201,9 +200,11 @@ def update_training_progress(
     if current_user.role == "employee" and enrollment.employee_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    enrollment.progress = progress
+    progress = progress_data.get("progress", 0)
+    enrollment.progress_percentage = progress
     if progress >= 100:
         enrollment.status = "completed"
+        enrollment.completion_date = date.today()
     elif progress > 0:
         enrollment.status = "in_progress"
     
@@ -224,7 +225,9 @@ def complete_training(
         raise HTTPException(status_code=403, detail="Not authorized")
     
     enrollment.status = "completed"
-    enrollment.progress = 100
+    enrollment.progress_percentage = 100
+    enrollment.completion_date = date.today()
+    enrollment.certificate_issued = True
     db.commit()
     return {"message": "Training completed successfully"}
 
@@ -287,7 +290,7 @@ def get_training_stats(
         raise HTTPException(status_code=403, detail="Not authorized")
     
     total_programs = db.query(TrainingProgram).count()
-    active_programs = db.query(TrainingProgram).filter(TrainingProgram.status == "active").count()
+    active_programs = db.query(TrainingProgram).filter(TrainingProgram.is_active == True).count()
     total_enrollments = db.query(TrainingEnrollment).count()
     completed_trainings = db.query(TrainingEnrollment).filter(TrainingEnrollment.status == "completed").count()
     

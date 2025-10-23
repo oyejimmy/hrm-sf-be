@@ -121,37 +121,3 @@ class TrainingEnrollmentResponse(TrainingEnrollment):
 
 class TrainingRoadmapResponse(TrainingRoadmap):
     pass
-class TrainingProgramResponse(BaseModel):
-    id: int
-    title: str
-    description: str
-    status: str
-    created_at: datetime
-    class Config:
-        from_attributes = True
-
-class TrainingSessionResponse(BaseModel):
-    id: int
-    program_id: int
-    session_name: str
-    status: str
-    start_date: datetime
-    class Config:
-        from_attributes = True
-
-class TrainingEnrollmentResponse(BaseModel):
-    id: int
-    employee_id: int
-    program_id: int
-    status: str
-    progress: float
-    class Config:
-        from_attributes = True
-
-class TrainingRoadmapResponse(BaseModel):
-    id: int
-    title: str
-    description: str
-    created_at: datetime
-    class Config:
-        from_attributes = True

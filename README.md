@@ -104,25 +104,12 @@ A comprehensive Human Resource Management System backend built with FastAPI, SQL
    REFRESH_TOKEN_EXPIRE_DAYS=7
    ```
 
-5. **Initialize database**
-   ```bash
-   python init_db.py
-   ```
-
-6. **Run the application**
+5. **Run the application**
    ```bash
    python run.py
    ```
 
 The API will be available at `http://localhost:8000`
-
-### Default Users
-
-After running `init_db.py`, the following users will be created:
-
-- **Admin**: admin@hrm.com / admin123
-- **HR Manager**: hr@hrm.com / hr123  
-- **Employee**: employee@hrm.com / emp123
 
 ## API Documentation
 
@@ -178,8 +165,8 @@ hrm-be/
 │   ├── config.py        # Configuration settings
 │   ├── database.py      # Database connection
 │   └── main.py          # FastAPI application
-├── requirements.txt     # Python dependencies
-├── init_db.py          # Database initialization
+├── docs/               # Architecture and API documentation
+├── requirements.txt    # Python dependencies
 ├── run.py              # Application runner
 └── README.md           # This file
 ```

@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from typing import Optional
+import hashlib
+import bcrypt
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
@@ -9,14 +10,28 @@ from .database import get_db
 from .models.user import User
 from .config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    if not hashed_password:
+        return False
+
+    if hashed_password.startswith("sha256$"):
+        expected = hashed_password.split("$", 1)[1]
+        return hashlib.sha256(plain_password.encode("utf-8")).hexdigest() == expected
+
+    try:
+        return bcrypt.checkpw(
+            plain_password.encode("utf-8"),
+            hashed_password.encode("utf-8"),
+        )
+    except Exception:
+        return False
+
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()

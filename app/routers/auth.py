@@ -465,6 +465,7 @@ def complete_onboarding(
                 department_id=department.id if department else None
             )
             db.add(employee)
+            db.flush()  # Flush to get employee.id before inserting skills
         else:
             # Update existing employee's department
             if department:

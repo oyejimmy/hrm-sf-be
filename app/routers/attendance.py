@@ -524,21 +524,60 @@ async def get_admin_attendance_notifications(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get attendance notifications for admin (Admin/HR only)"""
+    """Get real attendance notifications for admin based on today's data."""
     if current_user.role not in ["admin", "hr"]:
         raise HTTPException(status_code=403, detail="Access denied")
-    
-    # Mock notifications for now
-    notifications = [
-        {
-            "id": "1",
+
+    today = date.today()
+    notifications = []
+
+    # Late arrivals today (checked in after 09:00)
+    late_count = db.query(Attendance).filter(
+        Attendance.date == today,
+        Attendance.status == "late"
+    ).count()
+    if late_count > 0:
+        notifications.append({
+            "id": "late-today",
             "type": "warning",
             "title": "Late Arrivals",
-            "message": "5 employees arrived late today",
+            "message": f"{late_count} employee(s) arrived late today",
             "time": "Today",
             "read": False
-        }
-    ]
+        })
+
+    # Absent employees today (no attendance record at all or status = absent)
+    absent_count = db.query(Attendance).filter(
+        Attendance.date == today,
+        Attendance.status == "absent"
+    ).count()
+    if absent_count > 0:
+        notifications.append({
+            "id": "absent-today",
+            "type": "info",
+            "title": "Absent Employees",
+            "message": f"{absent_count} employee(s) marked absent today",
+            "time": "Today",
+            "read": False
+        })
+
+    # Employees still checked in (no check-out by end of day)
+    checked_in_only = db.query(Attendance).filter(
+        Attendance.date == today,
+        Attendance.check_in.isnot(None),
+        Attendance.check_out.is_(None),
+        Attendance.status == "present"
+    ).count()
+    if checked_in_only > 0:
+        notifications.append({
+            "id": "still-checked-in",
+            "type": "info",
+            "title": "Still Checked In",
+            "message": f"{checked_in_only} employee(s) have not checked out yet",
+            "time": "Today",
+            "read": False
+        })
+
     return notifications
 
 @router.post("/admin/export-report", response_model=dict)

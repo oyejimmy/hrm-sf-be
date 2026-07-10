@@ -166,13 +166,45 @@ def get_monthly_attendance_report(
 ):
     if current_user.role not in ["admin", "hr", "team_lead"]:
         raise HTTPException(status_code=403, detail="Not authorized")
-    
-    # Return mock data for now since attendance module is not available
+
+    from ..models.attendance import Attendance
+    from sqlalchemy import extract, func
+
     if month == 0:
-        monthly_rates = [85.5, 87.2, 89.1, 86.8, 88.3, 90.1, 87.9, 89.5, 88.7, 86.4, 87.8, 89.2]
+        # Return monthly attendance rates for the full year
+        monthly_rates = []
+        for m in range(1, 13):
+            total = db.query(Attendance).filter(
+                extract('year', Attendance.date) == year,
+                extract('month', Attendance.date) == m
+            ).count()
+            present = db.query(Attendance).filter(
+                extract('year', Attendance.date) == year,
+                extract('month', Attendance.date) == m,
+                Attendance.status.in_(["present", "late"])
+            ).count()
+            rate = round((present / total * 100), 1) if total > 0 else 0.0
+            monthly_rates.append(rate)
         return {"monthly_rates": monthly_rates}
     else:
-        return []
+        # Return individual records for that month
+        query = db.query(Attendance).filter(
+            extract('year', Attendance.date) == year,
+            extract('month', Attendance.date) == month
+        )
+        records = query.all()
+        return [
+            {
+                "id": r.id,
+                "employee_id": r.employee_id,
+                "date": r.date.isoformat(),
+                "check_in": str(r.check_in) if r.check_in else None,
+                "check_out": str(r.check_out) if r.check_out else None,
+                "status": r.status,
+                "hours_worked": r.hours_worked,
+            }
+            for r in records
+        ]
 
 @router.get("/leave/summary")
 def get_leave_summary_report(

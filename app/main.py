@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base, SessionLocal
-from .models import user, employee, department, position, notification, language, technical_skill, payroll, attendance  # Import models to ensure tables are created
+from .models import user, employee, department, position, notification, language, technical_skill, payroll, attendance, setting  # Import models to ensure tables are created
 from .models.user import User
 from .auth import get_password_hash
 from .routers import (
     auth, reports, employees, positions, leaves, attendance, performance,
     payroll, requests, complaints, training, assets, health_insurance,
-    documents, notifications, announcements, holidays, recruitment, languages, technical_skills, leave_types, admin
+    documents, notifications, announcements, holidays, recruitment, languages, technical_skills, leave_types, admin,
+    settings as settings_router
 )
 
 app = FastAPI(title="HRM System API")
@@ -31,9 +32,12 @@ Base.metadata.create_all(bind=engine)
 
 
 def seed_demo_users() -> None:
+    from .models.employee import Employee
+
     demo_users = [
         {"email": "admin@hrm.com", "password": "admin123", "role": "admin", "first_name": "Admin", "last_name": "User"},
         {"email": "hr@hrm.com", "password": "hr123", "role": "hr", "first_name": "HR", "last_name": "Manager"},
+        {"email": "teamlead@hrm.com", "password": "lead123", "role": "team_lead", "first_name": "Taylor", "last_name": "Lead"},
         {"email": "employee@hrm.com", "password": "emp123", "role": "employee", "first_name": "Employee", "last_name": "User"},
     ]
 
@@ -56,6 +60,29 @@ def seed_demo_users() -> None:
                 )
             )
         db.commit()
+
+        # Ensure the team lead has an employee record so team features work
+        lead_user = db.query(User).filter(User.email == "teamlead@hrm.com").first()
+        if lead_user:
+            lead_emp = db.query(Employee).filter(Employee.user_id == lead_user.id).first()
+            if not lead_emp:
+                emp_count = db.query(Employee).count()
+                lead_emp = Employee(
+                    user_id=lead_user.id,
+                    employee_id=f"EMP{emp_count + 1:04d}",
+                    position="Team Lead",
+                    employment_status="full_time",
+                )
+                db.add(lead_emp)
+                db.commit()
+
+            # Assign the demo employee to report to the team lead
+            emp_user = db.query(User).filter(User.email == "employee@hrm.com").first()
+            if emp_user:
+                emp_record = db.query(Employee).filter(Employee.user_id == emp_user.id).first()
+                if emp_record and emp_record.manager_id is None:
+                    emp_record.manager_id = lead_user.id
+                    db.commit()
     except Exception:
         db.rollback()
         raise
@@ -88,6 +115,7 @@ app.include_router(languages.router)
 app.include_router(technical_skills.router)
 app.include_router(leave_types.router)
 app.include_router(admin.router)
+app.include_router(settings_router.router)
 
 @app.get("/")
 def read_root():

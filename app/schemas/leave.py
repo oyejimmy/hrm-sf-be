@@ -10,7 +10,7 @@ class LeaveBase(BaseModel):
     reason: Optional[str] = None
 
 class LeaveCreate(LeaveBase):
-    pass
+    duration_type: Optional[str] = "full_day"  # full_day, half_day_morning, half_day_afternoon
 
 class LeaveUpdate(BaseModel):
     status: str

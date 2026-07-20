@@ -73,9 +73,7 @@ app.include_router(positions.router, prefix="/api/positions", tags=["positions"]
 app.include_router(leaves.router)
 app.include_router(attendance.router)
 app.include_router(performance.router)
-# app.include_router(payroll.router)
-from .routers import payroll_simple
-app.include_router(payroll_simple.router)
+app.include_router(payroll.router)
 app.include_router(requests.router)
 app.include_router(complaints.router)
 app.include_router(training.router)

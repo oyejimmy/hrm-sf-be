@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
+from datetime import datetime
 from ..database import get_db
 from ..models import JobPosting, Candidate, JobApplication, Interview, User
 from ..schemas.recruitment import (
@@ -147,11 +148,9 @@ def get_candidates(
     query = db.query(Candidate)
     if job_id:
         # Filter candidates who applied for specific job
-        applications = db.query(JobApplication).filter(JobApplication.job_id == job_id).all()
+        applications = db.query(JobApplication).filter(JobApplication.job_posting_id == job_id).all()
         candidate_ids = [app.candidate_id for app in applications]
         query = query.filter(Candidate.id.in_(candidate_ids))
-    if status:
-        query = query.filter(Candidate.status == status)
     return query.offset(skip).limit(limit).all()
 
 @router.get("/candidates/{candidate_id}", response_model=CandidateResponse)
@@ -199,12 +198,24 @@ def get_job_applications(
     
     query = db.query(JobApplication)
     if job_id:
-        query = query.filter(JobApplication.job_id == job_id)
+        query = query.filter(JobApplication.job_posting_id == job_id)
     if candidate_id:
         query = query.filter(JobApplication.candidate_id == candidate_id)
     if status:
         query = query.filter(JobApplication.status == status)
     return query.offset(skip).limit(limit).all()
+
+# Hiring pipeline state machine: forward movement plus rejection/withdrawal.
+VALID_TRANSITIONS = {
+    "applied": {"screening", "rejected", "withdrawn"},
+    "screening": {"interview", "rejected", "withdrawn"},
+    "interview": {"offer", "rejected", "withdrawn"},
+    "offer": {"hired", "rejected", "withdrawn"},
+    "hired": set(),
+    "rejected": set(),
+    "withdrawn": set(),
+}
+
 
 @router.put("/applications/{application_id}/status")
 def update_application_status(
@@ -215,14 +226,117 @@ def update_application_status(
 ):
     if current_user.role not in ["admin", "hr"]:
         raise HTTPException(status_code=403, detail="Not authorized")
-    
+
     application = db.query(JobApplication).filter(JobApplication.id == application_id).first()
     if not application:
         raise HTTPException(status_code=404, detail="Application not found")
-    
+
+    current = application.status or "applied"
+    if status not in VALID_TRANSITIONS:
+        raise HTTPException(status_code=422, detail=f"Unknown status '{status}'. Valid statuses: {', '.join(VALID_TRANSITIONS)}")
+    if status not in VALID_TRANSITIONS.get(current, set()):
+        raise HTTPException(
+            status_code=409,
+            detail=f"Cannot move an application from '{current}' to '{status}'. Allowed next steps: {', '.join(VALID_TRANSITIONS.get(current, set())) or 'none'}",
+        )
+
     application.status = status
     db.commit()
-    return {"message": "Application status updated successfully"}
+    return {"message": "Application status updated", "status": status}
+
+
+# ── Offers ──────────────────────────────────────────────────────────────────
+
+@router.post("/applications/{application_id}/offer")
+def extend_offer(
+    application_id: int,
+    offer: dict,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Extend an offer to a candidate whose application is at the interview stage.
+
+    Body: { "salary": number, "start_date": "YYYY-MM-DD",
+            "expiry_date": "YYYY-MM-DD", "notes": str, "benefits": str }
+    """
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    application = db.query(JobApplication).filter(JobApplication.id == application_id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+    if application.status != "interview":
+        raise HTTPException(status_code=409, detail=f"Offers can only be extended after interviews (current stage: {application.status})")
+    if not offer.get("salary"):
+        raise HTTPException(status_code=422, detail="An offer must include a salary")
+
+    application.status = "offer"
+    application.offer_details = {
+        "salary": offer.get("salary"),
+        "start_date": offer.get("start_date"),
+        "expiry_date": offer.get("expiry_date"),
+        "benefits": offer.get("benefits"),
+        "notes": offer.get("notes"),
+        "extended_by": current_user.id,
+        "extended_at": datetime.utcnow().isoformat(),
+        "decision": None,
+    }
+    db.commit()
+    return {"message": "Offer extended", "application_id": application.id, "offer": application.offer_details}
+
+
+@router.put("/applications/{application_id}/offer/accept")
+def accept_offer(
+    application_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    application = db.query(JobApplication).filter(JobApplication.id == application_id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+    if application.status != "offer":
+        raise HTTPException(status_code=409, detail="Only applications with an extended offer can be accepted")
+
+    application.status = "hired"
+    details = dict(application.offer_details or {})
+    details["decision"] = "accepted"
+    details["decided_at"] = datetime.utcnow().isoformat()
+    application.offer_details = details
+    db.commit()
+    return {
+        "message": "Offer accepted — candidate marked as hired. Create their employee record from Employee Management to start onboarding.",
+        "application_id": application.id,
+        "candidate_id": application.candidate_id,
+    }
+
+
+@router.put("/applications/{application_id}/offer/decline")
+def decline_offer(
+    application_id: int,
+    body: dict = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role not in ["admin", "hr"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    application = db.query(JobApplication).filter(JobApplication.id == application_id).first()
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+    if application.status != "offer":
+        raise HTTPException(status_code=409, detail="Only applications with an extended offer can be declined")
+
+    application.status = "rejected"
+    application.rejection_reason = (body or {}).get("reason") or "Offer declined by candidate"
+    details = dict(application.offer_details or {})
+    details["decision"] = "declined"
+    details["decided_at"] = datetime.utcnow().isoformat()
+    application.offer_details = details
+    db.commit()
+    return {"message": "Offer declined", "application_id": application.id}
 
 # Interviews
 @router.get("/interviews/", response_model=List[InterviewResponse])

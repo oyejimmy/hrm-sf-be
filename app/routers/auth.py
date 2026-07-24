@@ -13,6 +13,46 @@ from ..auth import verify_password, get_password_hash, create_access_token, crea
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
+# Staff roles skip onboarding and go straight to their portal. Everyone else has
+# to complete their employee profile first.
+STAFF_LANDING = {
+    "admin": "/admin/dashboard",
+    "hr": "/admin/dashboard",
+    "accountant": "/accountant/dashboard",
+    "it": "/it/dashboard",
+}
+PROFILE_LANDING = {
+    "team_lead": "/team-lead/dashboard",
+    "employee": "/employee/dashboard",
+}
+
+
+def resolve_redirect_url(user: User, db: Session) -> str:
+    """Where this user should land after authenticating.
+
+    Shared by /auth/login and /auth/me — these used to hold separate copies of
+    the same rules, which silently drifted (a new role added to one landed on
+    /onboarding via the other). Keep this the only implementation.
+    """
+    if user.temp_password:
+        return "/change-password"
+
+    if user.role in STAFF_LANDING:
+        return STAFF_LANDING[user.role]
+
+    employee = db.query(Employee).filter(Employee.user_id == user.id).first()
+    profile_incomplete = (
+        not employee
+        or not employee.avatar_url
+        or not employee.emergency_contact_relationship
+        or not employee.personal_email
+        or not employee.gender
+    )
+    if profile_incomplete:
+        return "/onboarding"
+
+    return PROFILE_LANDING.get(user.role, "/employee/dashboard")
+
 @router.post("/access-request", response_model=AccessRequestResponse)
 def create_access_request(request_data: AccessRequestCreate, db: Session = Depends(get_db)):
     # Check if request already exists
@@ -65,36 +105,8 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
     
     # Set redirect URL based on user status
     user_response = UserResponse.from_orm(user)
-    
-    # Priority 1: If user has temp password, redirect to change password
-    if user.temp_password:
-        user_response.redirect_url = "/change-password"
-    # Priority 2: Check if required profile fields are missing (except admin/HR)
-    elif user.role in ["admin", "hr"]:
-        role_redirects = {
-            "admin": "/admin/dashboard",
-            "hr": "/admin/dashboard"
-        }
-        user_response.redirect_url = role_redirects.get(user.role, "/admin/dashboard")
-    else:
-        employee = db.query(Employee).filter(Employee.user_id == user.id).first()
-        required_fields_missing = (
-            not employee or
-            not employee.avatar_url or
-            not employee.emergency_contact_relationship or
-            not employee.personal_email or
-            not employee.gender
-        )
-        
-        if required_fields_missing:
-            user_response.redirect_url = "/onboarding"
-        else:
-            role_redirects = {
-                "team_lead": "/team-lead/dashboard",
-                "employee": "/employee/dashboard"
-            }
-            user_response.redirect_url = role_redirects.get(user.role, "/employee/dashboard")
-    
+    user_response.redirect_url = resolve_redirect_url(user, db)
+
     return Token(
         access_token=access_token,
         refresh_token=refresh_token,
@@ -104,36 +116,7 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
 @router.get("/me", response_model=UserResponse)
 def get_current_user_info(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     user_response = UserResponse.from_orm(current_user)
-    
-    # Priority 1: If user has temp password, redirect to change password
-    if current_user.temp_password:
-        user_response.redirect_url = "/change-password"
-    # Priority 2: Check if required profile fields are missing (except admin/HR)
-    elif current_user.role in ["admin", "hr"]:
-        role_redirects = {
-            "admin": "/admin/dashboard",
-            "hr": "/admin/dashboard"
-        }
-        user_response.redirect_url = role_redirects.get(current_user.role, "/admin/dashboard")
-    else:
-        employee = db.query(Employee).filter(Employee.user_id == current_user.id).first()
-        required_fields_missing = (
-            not employee or
-            not employee.avatar_url or
-            not employee.emergency_contact_relationship or
-            not employee.personal_email or
-            not employee.gender
-        )
-        
-        if required_fields_missing:
-            user_response.redirect_url = "/onboarding"
-        else:
-            role_redirects = {
-                "team_lead": "/team-lead/dashboard", 
-                "employee": "/employee/dashboard"
-            }
-            user_response.redirect_url = role_redirects.get(current_user.role, "/employee/dashboard")
-    
+    user_response.redirect_url = resolve_redirect_url(current_user, db)
     return user_response
 
 @router.post("/refresh")

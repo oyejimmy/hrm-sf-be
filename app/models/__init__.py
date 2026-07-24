@@ -5,13 +5,14 @@ from .department import Department
 from .leave import Leave, LeaveBalance, LeavePolicy
 from .performance import Performance
 from .attendance import Attendance, BreakRecord
-from .asset import Asset, AssetRequest
+from .asset import Asset, AssetRequest, AssetAssignmentLog, PurchaseRequisition, InvoiceDocument
 from .complaint import Complaint, ComplaintComment
 from .document import Document, DocumentVersion, DocumentType
 from .training import TrainingProgram, TrainingSession, TrainingEnrollment, TrainingRoadmap
 from .recruitment import JobPosting, Candidate, JobApplication, Interview
 from .health_insurance import HealthInsurancePolicy, InsuranceDependent, InsuranceClaim, PanelHospital, CoverageDetail
 from .payroll import Payslip, PayslipEarning, PayslipDeduction, SalaryStructure, Bonus
+from .finance import Expense, Invoice, FinancialAuditLog
 from .request import Request
 from .position import Position
 from .notification import Notification, Announcement, AnnouncementRead, Holiday, Task

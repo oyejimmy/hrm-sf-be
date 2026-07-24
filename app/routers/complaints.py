@@ -60,7 +60,10 @@ def get_complaint_stats(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    if current_user.role == "employee":
+    # Only admin/HR get the company-wide roll-up. IT, Accounts and team leads
+    # are employees too and reach this from "My Complaints", so they must get
+    # their OWN counts — matching `selectIsAdminOrHR` on the client.
+    if current_user.role not in ("admin", "hr"):
         # Employee stats
         my_complaints = db.query(Complaint).filter(Complaint.employee_id == current_user.id).count()
         pending = db.query(Complaint).filter(

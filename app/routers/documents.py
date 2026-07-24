@@ -71,7 +71,11 @@ def get_document_stats(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    if current_user.role == "employee":
+    # Only admin/HR get the company-wide roll-up. IT, Accounts and team leads
+    # are employees too and reach this from "My Documents", so they must get
+    # their OWN counts — matching `selectIsAdminOrHR` on the client, which is
+    # what decides which of the two views renders.
+    if current_user.role not in ("admin", "hr"):
         my_docs = db.query(Document).filter(Document.employee_id == current_user.id).count()
         pending_docs = db.query(Document).filter(
             and_(Document.employee_id == current_user.id, Document.status == "pending")

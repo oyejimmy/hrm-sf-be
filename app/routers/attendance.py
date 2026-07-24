@@ -629,5 +629,57 @@ async def get_all_attendance_records(
             "notes": record.notes,
             "created_at": record.created_at
         })
-    
+
+    return result
+
+
+@router.get("/team", response_model=List[dict])
+async def get_team_attendance(
+    target_date: Optional[str] = Query(None, description="ISO date (YYYY-MM-DD); defaults to today"),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Attendance snapshot for the current team lead's team on a given date.
+
+    Team membership is defined by employees whose manager_id equals the
+    team lead's user id. Admin/HR see all employees.
+    """
+    from ..models.employee import Employee
+    from ..models.department import Department
+
+    if current_user.role not in ("admin", "hr", "team_lead"):
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    try:
+        day = datetime.strptime(target_date, "%Y-%m-%d").date() if target_date else date.today()
+    except ValueError:
+        raise HTTPException(status_code=422, detail="target_date must be YYYY-MM-DD")
+
+    emp_query = db.query(Employee)
+    if current_user.role == "team_lead":
+        emp_query = emp_query.filter(Employee.manager_id == current_user.id)
+    members = emp_query.all()
+
+    result = []
+    for emp in members:
+        user = db.query(User).filter(User.id == emp.user_id).first()
+        if not user:
+            continue
+        record = db.query(Attendance).filter(
+            Attendance.employee_id == emp.user_id,
+            Attendance.date == day,
+        ).first()
+        dept = db.query(Department).filter(Department.id == emp.department_id).first() if emp.department_id else None
+        result.append({
+            "employee_id": emp.employee_id,
+            "user_id": emp.user_id,
+            "employee_name": user.full_name,
+            "department": dept.name if dept else None,
+            "position": emp.position,
+            "date": day.isoformat(),
+            "status": record.status if record else "absent",
+            "check_in": str(record.check_in) if record and record.check_in else None,
+            "check_out": str(record.check_out) if record and record.check_out else None,
+            "hours_worked": record.hours_worked if record else None,
+        })
     return result
